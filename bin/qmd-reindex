@@ -1,0 +1,13 @@
+#!/bin/bash
+# Refresh the repository's qmd index in the background when qmd is available.
+
+command -v qmd >/dev/null 2>&1 || exit 0
+
+REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)" || exit 0
+[ -f "$REPO_ROOT/.config/qmd/index.yml" ] || exit 0
+
+(
+  cd "$REPO_ROOT" || exit 0
+  qmd update >/dev/null 2>&1 || exit 0
+  qmd embed >/dev/null 2>&1
+) &

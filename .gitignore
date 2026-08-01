@@ -1,0 +1,11 @@
+.DS_Store
+.cache/
+
+# Generated slicer output
+*.gcode
+*.gcode.3mf
+
+# Local scratch files
+*.log
+*.tmp
+*.bak

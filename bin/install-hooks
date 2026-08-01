@@ -1,0 +1,18 @@
+#!/bin/bash
+# Configure this checkout to use the repository's qmd refresh hooks.
+
+set -euo pipefail
+
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+cd "$REPO_ROOT"
+
+git config core.hooksPath bin/hooks
+echo "Configured Git hooks from bin/hooks"
+
+if command -v qmd >/dev/null 2>&1; then
+  qmd update
+  qmd embed
+  echo "Indexed repository memory with qmd"
+else
+  echo "qmd is not installed; hooks will skip indexing until it is available"
+fi

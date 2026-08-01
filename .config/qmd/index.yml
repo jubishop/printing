@@ -1,0 +1,6 @@
+collections:
+  memory:
+    path: ./memory
+    pattern: "**/*.md"
+    ignore:
+      - archive/**

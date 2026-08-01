@@ -1,0 +1,70 @@
+name: Print job
+description: Plan and track a model from profile preflight through outcome
+title: "[Print] "
+labels:
+  - planned
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Record the exact upstream profile and intended result. Move durable findings into a print log and repository memory after the job.
+
+  - type: input
+    id: source
+    attributes:
+      label: Model URL
+      description: Link to the canonical model or exact MakerWorld profile.
+      placeholder: https://makerworld.com/...
+    validations:
+      required: true
+
+  - type: input
+    id: profile
+    attributes:
+      label: Profile
+      description: Exact profile name or profile ID, if applicable.
+
+  - type: textarea
+    id: goal
+    attributes:
+      label: Goal
+      description: What should be printed, and what would make the result successful?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: workflow
+    attributes:
+      label: Expected workflow
+      options:
+        - Decide after profile preflight
+        - Bambu Handy
+        - Bambu Studio
+    validations:
+      required: true
+
+  - type: textarea
+    id: setup
+    attributes:
+      label: Intended setup
+      description: Material, colors, plate, nozzle, support routing, and any other known constraints.
+
+  - type: textarea
+    id: changes
+    attributes:
+      label: Requested changes
+      description: Orientation, supports, strength, tuning, model edits, or other deviations from the source profile.
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance checks
+      description: Fit, dimensions, appearance, strength, or other checks needed after printing.
+
+  - type: checkboxes
+    id: public_repo
+    attributes:
+      label: Public repository check
+      options:
+        - label: No third-party file will be committed unless its redistribution terms have been checked and recorded.
+          required: true
