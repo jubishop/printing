@@ -1,0 +1,33 @@
+{
+  "type": "process",
+  "name": "SKADIS Firm-Grip 4-pack PETG Support @BBL X2D",
+  "print_settings_id": "SKADIS Firm-Grip 4-pack PETG Support @BBL X2D",
+  "inherits": "0.20mm Standard @BBL X2D",
+  "from": "User",
+  "instantiation": "true",
+  "description": "Settings-only recreation of MakerWorld profile 1418278 plate 2 for X2D, PETG objects and support bodies, and dedicated PLA/PETG support interface on filament 2.",
+  "compatible_printers": [
+    "Bambu Lab X2D 0.4 nozzle"
+  ],
+  "layer_height": "0.2",
+  "wall_loops": "3",
+  "sparse_infill_density": "30%",
+  "sparse_infill_pattern": "gyroid",
+  "enable_support": "1",
+  "support_type": "normal(manual)",
+  "support_style": "default",
+  "support_filament": "0",
+  "support_interface_filament": "2",
+  "support_interface_not_for_body": "1",
+  "support_top_z_distance": "0",
+  "support_interface_spacing": "0",
+  "support_interface_pattern": "rectilinear_interlaced",
+  "support_interface_speed": [
+    "50",
+    "50",
+    "50",
+    "50"
+  ],
+  "raft_first_layer_expansion": "-1",
+  "enable_prime_tower": "1"
+}

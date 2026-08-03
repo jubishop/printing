@@ -29,8 +29,8 @@ preflight.
   troubleshooting guidance, and historical cases.
 - [`prints/`](prints/TEMPLATE.md): reproducible records of individual print
   attempts and outcomes.
-- [`models/`](models/README.md): model files only when their licenses permit
-  redistribution, with provenance recorded alongside them.
+- [`models/`](models/README.md): redistributable model files plus settings-only
+  reconstruction recipes for licensed projects that cannot be republished.
 - [GitHub issues](https://github.com/jubishop/printing/issues): the print queue,
   tuning work, and other lifecycle-tracked tasks.
 
@@ -49,7 +49,18 @@ preflight.
 Downloaded models and print profiles are not committed merely because they are
 available online. Record the upstream creator, URL, profile ID, license, and the
 date the license was checked. Commit third-party files only when their terms
-permit redistribution; otherwise keep only provenance and print notes here.
+permit redistribution.
+
+When a 3MF required manual work, preserve the reusable result according to its
+license:
+
+1. If redistribution is permitted, commit the configured 3MF under `models/`
+   with its provenance and modification record.
+2. If redistribution is prohibited or unclear, keep the configured 3MF under
+   the ignored `.local/models/` tree and commit a settings-only preset or
+   reconstruction recipe under `models/`. The recipe must identify the exact
+   authorized upstream download and include enough preflight evidence to
+   reproduce and verify the project.
 
 There is currently no repository-wide license. Third-party materials retain
 their upstream terms, and an individual original artifact may receive its own

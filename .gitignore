@@ -9,3 +9,6 @@
 *.log
 *.tmp
 *.bak
+
+# Licensed or private local artifacts that must not be published
+.local/

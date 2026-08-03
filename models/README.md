@@ -1,12 +1,14 @@
 # Models
 
 This directory is for original or third-party model artifacts whose licenses
-permit redistribution. Availability for download does not by itself grant
-permission to republish a file here.
+permit redistribution, and for settings-only reconstruction recipes when they
+do not. Availability for download does not by itself grant permission to
+republish a file here.
 
 If redistribution is not permitted or the license is unclear, store only the
-upstream URL, profile ID, configuration, and outcome in the relevant print log
-or memory case.
+upstream URL, profile ID, configuration, and outcome here. A locally configured
+3MF may be retained under the ignored `.local/models/` tree, but its geometry
+must not enter Git.
 
 ## Required provenance
 
@@ -29,6 +31,7 @@ models/<model-slug>/
   source/       # only when redistribution is permitted
   modified/     # editable local variants
   exports/      # redistributable print-ready outputs
+  presets/      # settings-only reconstruction files
 ```
 
 ## Safety and storage
