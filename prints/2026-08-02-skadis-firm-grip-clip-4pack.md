@@ -1,8 +1,8 @@
 # 2026-08-02 — SKÅDIS Firm-Grip Clip four-pack
 
-- Status: in progress
+- Status: failed
 - Started: 2026-08-02 23:14 PDT
-- Completed: pending
+- Completed: 2026-08-03 08:49 PDT (canceled)
 - Related issue: none
 
 ## Goal
@@ -62,21 +62,43 @@ complete clips with cleanly removable supports and functional spring action.
 
 ## Outcome
 
-- Actual result: job accepted by the printer; 0%, layer 0/65, `Homing toolhead` observed on the Device page
-- Dimensions/fit: pending
-- Surface or structural defects: pending
-- Photos: live camera showed the empty textured PEI plate during homing
-- Print history or app evidence checked: Bambu Studio Device page showed `Printing Progress`, Pause/Stop controls, 2h18m56s remaining, and estimated finish time 01:32 PDT on 2026-08-03
+- Actual result: failed; the user reported a stringy/spaghetti result and
+  canceled the job. No usable four-pack was produced.
+- Dimensions/fit: not evaluated
+- Surface or structural defects: stringy/spaghetti extrusion; the failed
+  pieces have not yet been photographed closely enough to identify which
+  object or support feature detached first
+- Photos: no failure photo recorded yet; the live camera showed an empty
+  textured PEI plate after cleanup at approximately 08:57 PDT
+- Print history or app evidence checked: Bambu Studio recorded `Canceled`,
+  plate 2, Textured PEI Plate, 2026-08-02 23:14 through 2026-08-03 08:49,
+  47.13 g PETG through the left nozzle, and 0.62 g `Sup.PLA` through the right
+  external feed. The 47.75 g total matches the preflight material estimate.
 
 ## Diagnosis and next change
 
 An initial tree-support slice reported conflicting first-layer paths. Restoring
 the profile's normal/manual supports and automatic first-layer support
 expansion produced a clean slice while retaining the dedicated zero-gap
-support interface. No next change is planned until the completed parts can be
-inspected.
+support interface.
+
+The dedicated material routing did operate: print history recorded material
+through both the PETG main nozzle and the external support-material auxiliary
+nozzle. The full estimated material was consumed despite the stringy result,
+which is more consistent with a part or support losing adhesion while the
+printer continued extruding than with a simple mapping failure. The 9.6-hour
+history duration is much longer than the 2h19m slice estimate and may include
+time spent faulted or awaiting cancellation; it is not evidence that normal
+toolpaths ran for 9.6 hours.
+
+Do not rerun this profile unchanged or publish its MakerWorld draft. Inspect a
+close photo of the failed pieces first to distinguish object-to-plate,
+support-to-plate, and support-interface failure before choosing the next
+adhesion or support change.
 
 ## Durable lesson
 
-Pending print outcome. The current setup follows the existing X2D support-
-interface routing guidance in `memory/x2d-setup.md`.
+Correct nozzle and filament routing is necessary but does not establish that a
+support-heavy PETG plate is mechanically reliable. For a new profile, verify an
+early layer and prefer a smaller validation print before committing to a
+four-pack; record exactly which object or support feature detached if it fails.
