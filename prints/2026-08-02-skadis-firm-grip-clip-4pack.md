@@ -62,18 +62,21 @@ complete clips with cleanly removable supports and functional spring action.
 
 ## Outcome
 
-- Actual result: failed; the user reported a stringy/spaghetti result and
-  canceled the job. No usable four-pack was produced.
+- Actual result: the printer's AI detection stopped the job at 88% progress;
+  the user then canceled it. Every object remained attached to the plate and
+  looked generally good below the stopped layer, but no complete four-pack was
+  produced.
 - Dimensions/fit: not evaluated
-- Surface or structural defects: stringy/spaghetti extrusion; the failed
-  pieces have not yet been photographed closely enough to identify which
-  object or support feature detached first
+- Surface or structural defects: strands projected from the top of nearly all
+  pieces at the same Z height. There was no object-to-plate or support-to-plate
+  detachment.
 - Photos: no failure photo recorded yet; the live camera showed an empty
   textured PEI plate after cleanup at approximately 08:57 PDT
 - Print history or app evidence checked: Bambu Studio recorded `Canceled`,
   plate 2, Textured PEI Plate, 2026-08-02 23:14 through 2026-08-03 08:49,
   47.13 g PETG through the left nozzle, and 0.62 g `Sup.PLA` through the right
-  external feed. The 47.75 g total matches the preflight material estimate.
+  external feed. Those displayed amounts match the slice estimate and must not
+  be treated as metered consumption from a job stopped at 88%.
 
 ## Diagnosis and next change
 
@@ -82,23 +85,37 @@ the profile's normal/manual supports and automatic first-layer support
 expansion produced a clean slice while retaining the dedicated zero-gap
 support interface.
 
-The dedicated material routing did operate: print history recorded material
-through both the PETG main nozzle and the external support-material auxiliary
-nozzle. The full estimated material was consumed despite the stringy result,
-which is more consistent with a part or support losing adhesion while the
-printer continued extruding than with a simple mapping failure. The 9.6-hour
-history duration is much longer than the 2h19m slice estimate and may include
-time spent faulted or awaiting cancellation; it is not evidence that normal
-toolpaths ran for 9.6 hours.
+The dedicated material routing did operate: print history recorded PETG on the
+main nozzle and support material on the external auxiliary nozzle. Reslicing
+the retained project and inspecting its G-code mapped 88% progress to
+Z=10.8-11.0 mm, layers 54-55 of 65. At this transition every repeated copy is
+performing top-surface or internal-solid work. Top surfaces are configured at
+200 mm/s and internal solid infill at 250 mm/s; the generated top-surface path
+runs at approximately 199 mm/s. The support-interface toolpaths ended much
+earlier, at Z=4.2 mm, so dedicated support material was not active at the
+failure layer.
 
-Do not rerun this profile unchanged or publish its MakerWorld draft. Inspect a
-close photo of the failed pieces first to distinguish object-to-plate,
-support-to-plate, and support-interface failure before choosing the next
-adhesion or support change.
+The upstream H2D profile was authored for Bambu PETG HF with a 25 mm^3/s
+maximum volumetric speed. This attempt substituted Bambu PETG Basic, whose
+embedded X2D profile uses 15 mm^3/s, while retaining the fast process speeds.
+The repeated same-height strands, intact adhesion, and otherwise clean lower
+layers therefore point to an overly aggressive high-flow solid/top transition
+for PETG Basic, potentially compounded by travel ooze, rather than an adhesion
+or support-interface failure.
+
+The 9.6-hour history duration is much longer than the 2h19m slice estimate
+because the AI-stopped job remained pending until morning cancellation; it is
+not evidence that normal toolpaths ran for 9.6 hours.
+
+Do not rerun this profile unchanged or publish its MakerWorld draft. The next
+controlled validation should use one set rather than the four-pack, retain the
+working support routing, reduce top-surface and internal-solid speeds, and
+inspect the Z=10.8-11.0 mm preview before another physical print. Keep AI
+detection enabled.
 
 ## Durable lesson
 
-Correct nozzle and filament routing is necessary but does not establish that a
-support-heavy PETG plate is mechanically reliable. For a new profile, verify an
-early layer and prefer a smaller validation print before committing to a
-four-pack; record exactly which object or support feature detached if it fails.
+When substituting PETG Basic for a profile authored around PETG HF, verify
+high-flow top and solid layers as well as material mapping. A good first layer
+and correct support routing do not validate later process transitions; test one
+copy before committing to a repeated plate.

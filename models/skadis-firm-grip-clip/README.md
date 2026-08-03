@@ -4,6 +4,12 @@ This directory preserves the settings-only portion of the X2D PETG four-pack
 prepared on 2026-08-02. It deliberately does not contain the upstream or
 modified model geometry.
 
+> [!WARNING]
+> Physical validation failed on 2026-08-03. With Bambu PETG Basic, this exact
+> preset triggered AI detection at 88% after strands formed at the same height
+> across nearly all repeated parts. Do not reuse or publish it unchanged. See
+> the [print record](../../prints/2026-08-02-skadis-firm-grip-clip-4pack.md).
+
 ## Provenance and license
 
 - Model: `SKÅDIS Firm-Grip Clip`
@@ -44,14 +50,16 @@ Its SHA-256 is
    - Main nozzle: PETG from AMS A4.
    - Auxiliary/right nozzle: Support for PLA/PETG from the external feed.
 
-The verified 2026-08-02 slice had no path-conflict warning and estimated
-2h19m / 47.75 g. Treat those values as comparison evidence, since slicer and
-filament-profile updates may change them.
+The 2026-08-02 preflight slice had no path-conflict warning and estimated
+2h19m / 47.75 g, but the physical print failed at 88%. Treat those values as
+comparison evidence only; they do not validate the process preset, and slicer
+or filament-profile updates may change them.
 
 ## MakerWorld publication path
 
-The geometry is unchanged, so this is not a model remix. After the physical
-print has completed successfully, the appropriate MakerWorld contribution is a
-new X2D print profile attached to Henryk's existing model. Include the actual
-print result and explain that PETG prints the objects and support bodies while
-the external auxiliary feed is used only for the support interface.
+The geometry is unchanged, so this is not a model remix. The current
+MakerWorld contribution must remain an unpublished draft. After a revised
+profile completes successfully, the appropriate contribution is a new X2D
+print profile attached to Henryk's existing model. Include the actual print
+result and explain that PETG prints the objects and support bodies while the
+external auxiliary feed is used only for the support interface.
