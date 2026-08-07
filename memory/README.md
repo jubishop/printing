@@ -22,6 +22,9 @@ possible.
   inspection and plate selection.
 - [IKEA SKADIS tool-holder preflight](cases/2026-07-31-skadis-tool-holder.md) —
   cross-printer Handy conversion and comparison of two support-free profiles.
+- [SKÅDIS Firm-Grip Clip PETG validation](cases/2026-08-07-skadis-firm-grip-clip.md) —
+  same-height four-pack failure followed by a successful slower single-clip
+  validation.
 
 ## Scope
 

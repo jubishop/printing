@@ -113,6 +113,10 @@ working support routing, reduce top-surface and internal-solid speeds, and
 inspect the Z=10.8-11.0 mm preview before another physical print. Keep AI
 detection enabled.
 
+That follow-up completed successfully on 2026-08-07 with one clip, 80 mm/s top
+surfaces, and 120 mm/s internal solid infill. See the
+[successful validation record](2026-08-07-skadis-firm-grip-clip-single-validation.md).
+
 ## Durable lesson
 
 When substituting PETG Basic for a profile authored around PETG HF, verify
