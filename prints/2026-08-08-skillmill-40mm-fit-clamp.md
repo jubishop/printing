@@ -1,8 +1,8 @@
 # 2026-08-08 — Skillmill 40 mm rail fit clamp
 
-- Status: in progress
+- Status: failed (dimensional fit; print quality successful)
 - Started: 2026-08-08 22:43 PDT
-- Completed: pending
+- Completed: by 2026-08-09 (exact time not recorded)
 - Related issue: none
 
 ## Goal
@@ -75,10 +75,13 @@ cleanly, and the empty clamp resists gentle rotation without damaging the rail.
 
 ## Outcome
 
-- Actual result: in progress; Bambu Studio reported 0%, layer 0/241, and
-  `Homing toolhead` after the printer accepted the job
-- Dimensions/fit: pending
-- Surface or structural defects: pending
+- Actual result: completed cleanly; the user reported that it “printed great
+  and looks great,” but the assembled clamp was loose enough to spin freely
+  around the rail
+- Dimensions/fit: failed the grip requirement; the nominal 40 mm input plus
+  0.8 mm radial liner allowance and 0.25 mm radial fit clearance produced a
+  42.1 mm bore
+- Surface or structural defects: none reported
 - Photos: pending
 - Print history or app evidence checked: final send dialog mapped PETG from AMS
   A4 to the main nozzle and Support for PLA/PETG from the external feed to the
@@ -86,12 +89,23 @@ cleanly, and the empty clamp resists gentle rotation without damaging the rail.
 
 ## Diagnosis and next change
 
-Pending the completed print and stationary rail fit test. Before printing the
-full catch-all upper, check the screw in the lower saddle off-machine, install
-approximately 0.8 mm soft liner, and record the remaining latch gap and any
-rotation under gentle hand load.
+The print-quality result validates the geometry and PETG/support process, while
+the free rotation shows that the first bore was too large for the way it was
+tested. The nominal 40 mm rail measurement still agrees with the measured
+125 mm circumference; the excess comes from the modeled liner and fit
+allowances. A 36 mm rail input with those allowances would create a 38.1 mm
+bore and is likely to be undersized for the measured rail.
+
+Before reprinting, distinguish between two intended interfaces:
+
+- For a lined clamp, test the 40 mm print with the intended approximately
+  0.8 mm soft liner and a tightened screw.
+- For a bare-plastic fit test, keep the 40 mm rail diameter but set liner
+  thickness to 0 and reduce radial fit clearance to approximately 0.15 mm,
+  producing a 40.3 mm bore.
 
 ## Durable lesson
 
-No reusable conclusion yet; this is the first physical validation of the
-40 mm clamp and printed hardware.
+Keep physical rail diameter separate from liner and printing clearance. The
+first test demonstrates that adding the full liner allowance without installing
+the liner leaves a nominal 40 mm clamp approximately 2.1 mm oversized.

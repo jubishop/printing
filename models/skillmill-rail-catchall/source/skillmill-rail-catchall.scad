@@ -2,9 +2,10 @@
 // Original parametric design. Dimensions are millimetres.
 
 // Select one export at a time:
-// "assembly-right", "assembly-left", "upper-right", "upper-left",
+// "assembly-right", "assembly-left", "fit-assembly-right",
+// "upper-right", "upper-left",
 // "lower-right", "lower-left", "fit-upper-right", "fit-upper-left",
-// "clamp-screw", or "hinge-pin"
+// "tray-pla", or "hardware-fit-gauge"
 part = "assembly-right";
 
 // Choose either input mode. Circumference is easiest with a fabric tape;
@@ -29,7 +30,7 @@ radial_fit_clearance = 0.25;
 
 clamp_width = 32;
 clamp_wall = 6;
-split_gap = 1.6; // closing travel available at the threaded latch
+split_gap = 1.6; // closing travel available at the bolted latch
 
 tray_length = 155;
 tray_depth = 85;
@@ -38,34 +39,103 @@ tray_floor = 3.2;
 tray_wall = 2.8;
 tray_corner_radius = 9;
 
-hinge_pin_shaft_diameter = 5.0;
-hinge_hole_diameter = 5.5;
-hinge_pin_head_diameter = 9.0;
-hinge_pin_head_height = 2.4;
-hinge_pin_barb_diameter = 6.1;
-hinge_pin_barb_length = 3.2;
-hinge_pin_split_width = 1.2;
+tray_mount_width = 72;
+tray_mount_height = 24;
+tray_mount_pad_thickness = 6;
+tray_mount_plate_thickness = 6;
+tray_mount_shelf_depth = 32;
+tray_mount_shelf_thickness = 5;
+tray_mount_hole_x = 24;
+tray_mount_hole_z_offsets = [9, 18];
+tray_fastener_diameter = 4.0;
+tray_fastener_clearance_diameter = 4.6;
+tray_fastener_length = 10;
+tray_fastener_head_diameter = 7.6;
+tray_fastener_head_height = 2.2;
+tray_fastener_counterbore_diameter = 8.4;
+tray_fastener_counterbore_depth = 2.4;
+tray_nut_across_flats = 7.0;
+tray_nut_pocket_across_flats = 7.5;
+tray_nut_thickness = 3.2;
+tray_nut_pocket_depth = 3.6;
 
-latch_thread_major_diameter = 12.0;
-latch_thread_pitch = 3.0;
-latch_thread_depth = 1.2;
-latch_thread_radial_clearance = 0.40;
-latch_screw_diameter_scale = 0.94;
+hinge_hole_diameter = 5.5;
+hinge_bolt_diameter = 5.0;
+hinge_bolt_length = 45;
+hinge_bolt_head_across_flats = 8.0;
+hinge_bolt_head_height = 3.5;
+hinge_washer_outer_diameter = 10;
+hinge_washer_thickness = 1.0;
+hinge_nut_across_flats = 8.0;
+hinge_nut_thickness = 5.0;
+
+latch_bolt_diameter = 8.0; // M8 or 5/16 inch manufactured bolt
+latch_bolt_clearance_diameter = 9.2;
+latch_nut_across_flats = 13.0; // M8 is 13.0; 5/16 inch is 12.7
+latch_nut_pocket_across_flats = 13.6;
+latch_nut_thickness = 6.75; // accommodates common M8 and 5/16 inch nuts
+latch_nut_pocket_depth = 7.2;
+latch_bolt_length = 30; // M8 x 30 mm; 5/16 x 1.25 inch also fits
+latch_bolt_head_across_flats = 13.0;
+latch_bolt_head_height = 5.5;
+latch_washer_outer_diameter = 18;
+latch_washer_thickness = 1.5;
 latch_upper_height = 10;
 latch_lower_height = 13;
 latch_lug_width = 24;
 latch_lug_length = 28;
-latch_screw_knob_diameter = 24;
-latch_screw_knob_height = 8;
-latch_screw_thread_length = 28;
-latch_screw_tip_length = 2;
 
-female_thread_start_z = -split_gap / 2 + 1;
-screw_thread_start_z = split_gap / 2 + latch_upper_height;
-thread_phase_turns =
-    (screw_thread_start_z - female_thread_start_z) / latch_thread_pitch;
-latch_screw_assembly_rotation =
-    360 * (1 - (thread_phase_turns - floor(thread_phase_turns)));
+assert(
+    latch_bolt_clearance_diameter > latch_bolt_diameter,
+    "The latch bolt clearance hole must be larger than the bolt."
+);
+assert(
+    latch_nut_pocket_across_flats > latch_nut_across_flats,
+    "The captive-nut pocket must be larger than the nut."
+);
+assert(
+    latch_nut_pocket_depth > latch_nut_thickness,
+    "The captive-nut pocket must be deeper than the nut."
+);
+assert(
+    latch_lug_width
+        - latch_nut_pocket_across_flats / cos(30) >= 6,
+    "The captive-nut pocket must leave at least 3 mm per side."
+);
+assert(
+    latch_lower_height - latch_nut_pocket_depth >= 4,
+    "The captive-nut pocket must leave at least a 4 mm roof."
+);
+assert(
+    latch_bolt_length >= latch_upper_height + split_gap
+        + latch_lower_height + latch_washer_thickness + 2,
+    "The bolt must protrude at least 2 mm below the lower lug."
+);
+assert(
+    hinge_bolt_length >= clamp_width + 2 * hinge_washer_thickness
+        + hinge_nut_thickness + 2,
+    "The hinge bolt must pass both washers and the nut."
+);
+assert(
+    tray_mount_pad_thickness - tray_fastener_counterbore_depth >= 3,
+    "The PLA tray must retain at least 3 mm behind each screw head."
+);
+assert(
+    tray_mount_plate_thickness - tray_nut_pocket_depth >= 2,
+    "The PETG backplate must retain at least 2 mm ahead of each nut."
+);
+assert(
+    tray_fastener_length
+        >= tray_mount_pad_thickness - tray_fastener_counterbore_depth
+            + tray_mount_plate_thickness - tray_nut_pocket_depth
+            + tray_nut_thickness + 0.5,
+    "The tray screws must fully engage the captive nuts."
+);
+assert(
+    tray_mount_width / 2 - tray_mount_hole_x
+        >= tray_fastener_counterbore_diameter / 2 + 3,
+    "The tray screw heads must retain at least a 3 mm side margin."
+);
 
 $fn = 96;
 
@@ -80,7 +150,7 @@ hinge_knuckle_gap = 0.7;
 hinge_outer_knuckle =
     (clamp_width - hinge_center_knuckle - 2 * hinge_knuckle_gap) / 2;
 
-latch_screw_y = -clamp_outer_radius - 14;
+latch_bolt_y = -clamp_outer_radius - 14;
 
 tray_near_y = clamp_outer_radius - 1.5;
 tray_bottom_z = clamp_outer_radius + 6;
@@ -191,32 +261,13 @@ module lower_hinge() {
     );
 }
 
-module coarse_external_thread(
-    major_diameter,
-    pitch,
-    length,
-    thread_depth,
-    flank_fraction = 0.32
-) {
-    core_radius = major_diameter / 2 - thread_depth;
-    slices_per_turn = 32;
-
-    union() {
-        cylinder(h = length, r = core_radius);
-
-        linear_extrude(
-            height = length,
-            twist = -360 * length / pitch,
-            slices = ceil(length / pitch * slices_per_turn),
-            convexity = 16
-        )
-            translate([core_radius - 0.02, 0])
-                polygon(points = [
-                    [0, -pitch * flank_fraction],
-                    [thread_depth + 0.04, 0],
-                    [0, pitch * flank_fraction]
-                ]);
-    }
+module hex_prism(across_flats, height) {
+    rotate([0, 0, 30])
+        cylinder(
+            h = height,
+            d = across_flats / cos(30),
+            $fn = 6
+        );
 }
 
 module upper_latch() {
@@ -228,10 +279,10 @@ module upper_latch() {
         ])
             cube([latch_lug_width, latch_lug_length, latch_upper_height]);
 
-        translate([0, latch_screw_y, split_gap / 2 - 1])
+        translate([0, latch_bolt_y, split_gap / 2 - 1])
             cylinder(
                 h = latch_upper_height + 2,
-                d = latch_thread_major_diameter + 1.0
+                d = latch_bolt_clearance_diameter
             );
     }
 }
@@ -245,34 +296,51 @@ module lower_latch() {
         ])
             cube([latch_lug_width, latch_lug_length, latch_lower_height]);
 
-        // Female thread follows the installed, downward-facing screw.
+        // Smooth through-hole for an M8 or 5/16 inch manufactured bolt.
         translate([
             0,
-            latch_screw_y,
-            -split_gap / 2 + 1
-        ])
-            rotate([180, 0, 0])
-                coarse_external_thread(
-                    latch_thread_major_diameter
-                        + 2 * latch_thread_radial_clearance,
-                    latch_thread_pitch,
-                    latch_lower_height + 2,
-                    latch_thread_depth,
-                    0.36
-                );
-
-        // Lead-in chamfer helps the printed screw find the first thread.
-        translate([
-            0,
-            latch_screw_y,
-            -split_gap / 2 - 1.4
+            latch_bolt_y,
+            -latch_lower_height - split_gap / 2 - 1
         ])
             cylinder(
-                h = 1.5,
-                d1 = latch_thread_major_diameter
-                    - 2 * latch_thread_depth
-                    + 2 * latch_thread_radial_clearance,
-                d2 = latch_thread_major_diameter + 1.4
+                h = latch_lower_height + 2,
+                d = latch_bolt_clearance_diameter
+            );
+
+        // Bottom-opening hex pocket captures the nut so only the bolt head
+        // needs a wrench during installation and tightening.
+        translate([
+            0,
+            latch_bolt_y,
+            -latch_lower_height - split_gap / 2 - 0.1
+        ])
+            hex_prism(
+                latch_nut_pocket_across_flats,
+                latch_nut_pocket_depth + 0.1
+            );
+    }
+}
+
+module hardware_fit_gauge() {
+    gauge_size = 20;
+    gauge_height = latch_lower_height;
+
+    difference() {
+        translate([-gauge_size / 2, -gauge_size / 2, 0])
+            cube([gauge_size, gauge_size, gauge_height]);
+
+        translate([0, 0, -1])
+            cylinder(
+                h = gauge_height + 2,
+                d = latch_bolt_clearance_diameter
+            );
+
+        // Opens upward so the gauge prints without support and the nut can be
+        // checked before committing to another clamp print.
+        translate([0, 0, gauge_height - latch_nut_pocket_depth])
+            hex_prism(
+                latch_nut_pocket_across_flats,
+                latch_nut_pocket_depth + 0.1
             );
     }
 }
@@ -302,8 +370,114 @@ module tray_shell() {
     }
 }
 
-module clamp_to_tray_bridge() {
-    // Broad saddle plus two ribs resist the tray's twisting load.
+module tray_mount_pad() {
+    translate([
+        -tray_mount_width / 2,
+        tray_near_y,
+        tray_bottom_z
+    ])
+        cube([
+            tray_mount_width,
+            tray_mount_pad_thickness,
+            tray_mount_height
+        ]);
+}
+
+module tray_mount_holes() {
+    tray_inner_face_y = tray_near_y + tray_mount_pad_thickness;
+
+    for (
+        x = [-tray_mount_hole_x, tray_mount_hole_x],
+        z_offset = tray_mount_hole_z_offsets
+    ) {
+        z = tray_bottom_z + z_offset;
+
+        // M4 clearance hole through the reinforced PLA wall.
+        translate([x, tray_inner_face_y + 1, z])
+            rotate([90, 0, 0])
+                cylinder(
+                    h = tray_mount_pad_thickness + 2,
+                    d = tray_fastener_clearance_diameter
+                );
+
+        // Flat-bottomed recess keeps the button head below the tray wall.
+        translate([x, tray_inner_face_y + 0.1, z])
+            rotate([90, 0, 0])
+                cylinder(
+                    h = tray_fastener_counterbore_depth + 0.1,
+                    d = tray_fastener_counterbore_diameter
+                );
+    }
+}
+
+module pla_tray() {
+    difference() {
+        union() {
+            tray_shell();
+            tray_mount_pad();
+        }
+        tray_mount_holes();
+    }
+}
+
+module tray_mount_bracket() {
+    backplate_y = tray_near_y - tray_mount_plate_thickness;
+
+    difference() {
+        union() {
+            // The shelf carries the tray's vertical load and keeps that load
+            // out of the M4 fasteners and PLA wall.
+            translate([
+                -tray_mount_width / 2,
+                tray_near_y - 0.2,
+                tray_bottom_z - tray_mount_shelf_thickness
+            ])
+                cube([
+                    tray_mount_width,
+                    tray_mount_shelf_depth + 0.2,
+                    tray_mount_shelf_thickness
+                ]);
+
+            // Broad rear plate resists pull-off and twisting.
+            translate([
+                -tray_mount_width / 2,
+                backplate_y,
+                tray_bottom_z - tray_mount_shelf_thickness
+            ])
+                cube([
+                    tray_mount_width,
+                    tray_mount_plate_thickness + 0.2,
+                    tray_mount_height + tray_mount_shelf_thickness
+                ]);
+        }
+
+        for (
+            x = [-tray_mount_hole_x, tray_mount_hole_x],
+            z_offset = tray_mount_hole_z_offsets
+        ) {
+            z = tray_bottom_z + z_offset;
+
+            // M4 clearance hole through the PETG backplate.
+            translate([x, tray_near_y + 1, z])
+                rotate([90, 0, 0])
+                    cylinder(
+                        h = tray_mount_plate_thickness + 2,
+                        d = tray_fastener_clearance_diameter
+                    );
+
+            // Rear-opening captive pocket for a standard M4 hex nut.
+            translate([x, backplate_y - 0.1, z])
+                rotate([-90, 0, 0])
+                    hex_prism(
+                        tray_nut_pocket_across_flats,
+                        tray_nut_pocket_depth + 0.1
+                    );
+        }
+    }
+}
+
+module clamp_to_mount_bridge() {
+    // Broad saddle plus two ribs transfer tray torque into the clamp.
     hull() {
         translate([
             -clamp_width / 2,
@@ -315,9 +489,9 @@ module clamp_to_tray_bridge() {
         translate([
             -clamp_width / 2,
             tray_near_y + 5,
-            tray_bottom_z
+            tray_bottom_z - tray_mount_shelf_thickness
         ])
-            cube([clamp_width, 18, tray_floor]);
+            cube([clamp_width, 18, tray_mount_shelf_thickness]);
     }
 
     for (x = [-clamp_width / 2, clamp_width / 2 - 4]) {
@@ -325,18 +499,19 @@ module clamp_to_tray_bridge() {
             translate([x, 4, clamp_outer_radius - 1])
                 cube([4, 6, 4]);
             translate([x, tray_near_y + 28, tray_bottom_z])
-                cube([4, 6, tray_floor]);
+                translate([0, 0, -tray_mount_shelf_thickness])
+                    cube([4, 6, tray_mount_shelf_thickness]);
         }
     }
 }
 
-module upper_catchall() {
+module upper_mount() {
     union() {
         upper_saddle();
         upper_hinge();
         upper_latch();
-        clamp_to_tray_bridge();
-        tray_shell();
+        clamp_to_mount_bridge();
+        tray_mount_bracket();
     }
 }
 
@@ -357,7 +532,7 @@ module lower_clamp() {
 }
 
 module left_handed_upper() {
-    mirror([0, 1, 0]) upper_catchall();
+    mirror([0, 1, 0]) upper_mount();
 }
 
 module left_handed_lower() {
@@ -368,96 +543,128 @@ module left_handed_fit_test() {
     mirror([0, 1, 0]) upper_fit_test();
 }
 
-module clamp_screw() {
-    screw_major_diameter =
-        latch_thread_major_diameter * latch_screw_diameter_scale;
-    core_diameter = screw_major_diameter - 2 * latch_thread_depth;
+module installed_latch_hardware() {
+    upper_top_z = split_gap / 2 + latch_upper_height;
+    lower_bottom_z = -split_gap / 2 - latch_lower_height;
+    bolt_under_head_z = upper_top_z + latch_washer_thickness;
 
-    union() {
-        cylinder(
-            h = latch_screw_knob_height,
-            d = latch_screw_knob_diameter,
-            $fn = 12
-        );
+    // Bolt shaft.
+    translate([0, latch_bolt_y, bolt_under_head_z])
+        rotate([180, 0, 0])
+            cylinder(h = latch_bolt_length, d = latch_bolt_diameter);
 
-        translate([0, 0, latch_screw_knob_height - 0.6])
-            cylinder(h = 1.2, d = latch_thread_major_diameter + 4);
-
-        translate([0, 0, latch_screw_knob_height])
-            coarse_external_thread(
-                screw_major_diameter,
-                latch_thread_pitch,
-                latch_screw_thread_length,
-                latch_thread_depth
-            );
-
-        translate([
-            0,
-            0,
-            latch_screw_knob_height + latch_screw_thread_length
-        ])
+    // Top washer.
+    translate([0, latch_bolt_y, upper_top_z])
+        difference() {
             cylinder(
-                h = latch_screw_tip_length,
-                d1 = core_diameter,
-                d2 = core_diameter * 0.65
+                h = latch_washer_thickness,
+                d = latch_washer_outer_diameter
             );
-    }
-}
-
-module hinge_pin() {
-    shaft_length = clamp_width + 1.0;
-
-    difference() {
-        union() {
-            cylinder(
-                h = hinge_pin_head_height,
-                d = hinge_pin_head_diameter
-            );
-
-            translate([0, 0, hinge_pin_head_height - 0.1])
+            translate([0, 0, -0.1])
                 cylinder(
-                    h = shaft_length + 0.2,
-                    d = hinge_pin_shaft_diameter
-                );
-
-            translate([0, 0, hinge_pin_head_height + shaft_length])
-                cylinder(
-                    h = hinge_pin_barb_length,
-                    d1 = hinge_pin_barb_diameter,
-                    d2 = hinge_pin_shaft_diameter * 0.75
+                    h = latch_washer_thickness + 0.2,
+                    d = latch_bolt_clearance_diameter
                 );
         }
 
-        translate([
-            -hinge_pin_split_width / 2,
-            -hinge_pin_barb_diameter,
-            hinge_pin_head_height + shaft_length - 5
-        ])
-            cube([
-                hinge_pin_split_width,
-                2 * hinge_pin_barb_diameter,
-                hinge_pin_barb_length + 6
-            ]);
+    // Hex bolt head.
+    translate([0, latch_bolt_y, bolt_under_head_z])
+        hex_prism(
+            latch_bolt_head_across_flats,
+            latch_bolt_head_height
+        );
+
+    // Captive hex nut seated in the bottom pocket.
+    translate([0, latch_bolt_y, lower_bottom_z])
+        hex_prism(latch_nut_across_flats, latch_nut_thickness);
+}
+
+module installed_hinge_hardware() {
+    hinge_left_x = -clamp_width / 2;
+    hinge_right_x = clamp_width / 2;
+    bolt_under_head_x = hinge_left_x - hinge_washer_thickness;
+
+    // Bolt shaft.
+    translate([bolt_under_head_x, hinge_y, 0])
+        rotate([0, 90, 0])
+            cylinder(h = hinge_bolt_length, d = hinge_bolt_diameter);
+
+    // Washer under the bolt head.
+    translate([hinge_left_x - hinge_washer_thickness, hinge_y, 0])
+        rotate([0, 90, 0])
+            difference() {
+                cylinder(
+                    h = hinge_washer_thickness,
+                    d = hinge_washer_outer_diameter
+                );
+                translate([0, 0, -0.1])
+                    cylinder(
+                        h = hinge_washer_thickness + 0.2,
+                        d = hinge_hole_diameter
+                    );
+            }
+
+    // Hex bolt head.
+    translate([bolt_under_head_x, hinge_y, 0])
+        rotate([0, -90, 0])
+            hex_prism(
+                hinge_bolt_head_across_flats,
+                hinge_bolt_head_height
+            );
+
+    // Washer and nylon-insert nut on the removable end.
+    translate([hinge_right_x, hinge_y, 0])
+        rotate([0, 90, 0])
+            difference() {
+                cylinder(
+                    h = hinge_washer_thickness,
+                    d = hinge_washer_outer_diameter
+                );
+                translate([0, 0, -0.1])
+                    cylinder(
+                        h = hinge_washer_thickness + 0.2,
+                        d = hinge_hole_diameter
+                    );
+            }
+
+    translate([hinge_right_x + hinge_washer_thickness, hinge_y, 0])
+        rotate([0, 90, 0])
+            hex_prism(hinge_nut_across_flats, hinge_nut_thickness);
+}
+
+module installed_tray_hardware() {
+    tray_inner_face_y = tray_near_y + tray_mount_pad_thickness;
+    bolt_under_head_y =
+        tray_inner_face_y - tray_fastener_counterbore_depth;
+    backplate_y = tray_near_y - tray_mount_plate_thickness;
+
+    for (
+        x = [-tray_mount_hole_x, tray_mount_hole_x],
+        z_offset = tray_mount_hole_z_offsets
+    ) {
+        z = tray_bottom_z + z_offset;
+
+        // M4 screw shaft points from inside the PLA tray into the PETG mount.
+        translate([x, bolt_under_head_y, z])
+            rotate([90, 0, 0])
+                cylinder(
+                    h = tray_fastener_length,
+                    d = tray_fastener_diameter
+                );
+
+        // Recessed button head.
+        translate([x, tray_inner_face_y, z])
+            rotate([90, 0, 0])
+                cylinder(
+                    h = tray_fastener_head_height,
+                    d = tray_fastener_head_diameter
+                );
+
+        // Captive M4 nut loaded from the rear of the PETG backplate.
+        translate([x, backplate_y, z])
+            rotate([-90, 0, 0])
+                hex_prism(tray_nut_across_flats, tray_nut_thickness);
     }
-}
-
-module installed_screw() {
-    translate([
-        0,
-        latch_screw_y,
-        split_gap / 2 + latch_upper_height + latch_screw_knob_height
-    ])
-        rotate([180, 0, 0])
-            rotate([0, 0, latch_screw_assembly_rotation]) clamp_screw();
-}
-
-module installed_hinge_pin() {
-    translate([
-        -clamp_width / 2 - hinge_pin_head_height - 0.2,
-        hinge_y,
-        0
-    ])
-        rotate([0, 90, 0]) hinge_pin();
 }
 
 module reference_rail() {
@@ -471,18 +678,28 @@ module reference_rail() {
 
 if (part == "assembly" || part == "assembly-right") {
     %color([0.12, 0.12, 0.12, 0.55]) reference_rail();
-    color("#E7B64A") upper_catchall();
+    color("#E7B64A") upper_mount();
     color("#4E6A78") lower_clamp();
-    color("#D8D8D8") installed_screw();
-    color("#8AA3B0") installed_hinge_pin();
+    color("#30343B") pla_tray();
+    color("#D8D8D8") installed_latch_hardware();
+    color("#8AA3B0") installed_hinge_hardware();
+    color("#D8D8D8") installed_tray_hardware();
 } else if (part == "assembly-left") {
     %color([0.12, 0.12, 0.12, 0.55]) reference_rail();
     color("#E7B64A") left_handed_upper();
     color("#4E6A78") left_handed_lower();
-    color("#D8D8D8") mirror([0, 1, 0]) installed_screw();
-    color("#8AA3B0") mirror([0, 1, 0]) installed_hinge_pin();
+    color("#30343B") mirror([0, 1, 0]) pla_tray();
+    color("#D8D8D8") mirror([0, 1, 0]) installed_latch_hardware();
+    color("#8AA3B0") mirror([0, 1, 0]) installed_hinge_hardware();
+    color("#D8D8D8") mirror([0, 1, 0]) installed_tray_hardware();
+} else if (part == "fit-assembly-right") {
+    %color([0.12, 0.12, 0.12, 0.35]) reference_rail();
+    color("#E7B64A") upper_fit_test();
+    color("#4E6A78") lower_clamp();
+    color("#D8D8D8") installed_latch_hardware();
+    color("#8AA3B0") installed_hinge_hardware();
 } else if (part == "upper-right") {
-    upper_catchall();
+    upper_mount();
 } else if (part == "upper-left") {
     left_handed_upper();
 } else if (part == "lower" || part == "lower-right") {
@@ -493,23 +710,10 @@ if (part == "assembly" || part == "assembly-right") {
     upper_fit_test();
 } else if (part == "fit-upper-left") {
     left_handed_fit_test();
-} else if (part == "clamp-screw") {
-    clamp_screw();
-} else if (part == "hinge-pin") {
-    hinge_pin();
-} else if (part == "diagnostic-screw-lower") {
-    intersection() {
-        lower_clamp();
-        installed_screw();
-    }
-} else if (part == "diagnostic-pin-clamp") {
-    intersection() {
-        union() {
-            upper_catchall();
-            lower_clamp();
-        }
-        installed_hinge_pin();
-    }
+} else if (part == "tray-pla") {
+    pla_tray();
+} else if (part == "hardware-fit-gauge") {
+    hardware_fit_gauge();
 } else {
     assert(false, str("Unknown part: ", part));
 }
