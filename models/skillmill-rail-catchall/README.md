@@ -5,18 +5,19 @@ Skillmill. The 155 x 85 x 28 mm tray is intended for light objects such as a TV
 remote, AirPods case, or keys. The rail mount and clamp print in PETG, while the
 separate tray prints in PLA.
 
-The clamp uses printed structural parts with manufactured latch hardware:
+The clamp uses printed structural parts with common Ace-style metric hardware:
 
 - A two-piece PETG circular saddle surrounds the rail.
-- A removable M5 bolt, two washers, and a nylon-insert lock nut form the hinge.
-- A manufactured M8 or 5/16 inch bolt passes through smooth clearance holes.
-- A matching standard hex nut sits in a bottom-loading captive pocket in the
-  lower lug, so the nut cannot rotate while the bolt is tightened.
+- A removable M6 x 50 mm bolt, two washers, and a nylon-insert locknut form the
+  hinge.
+- An M6 x 30 mm bolt passes through smooth clearance holes into a captive M6
+  nylon-insert locknut in the lower latch lug.
 - A 1.6 mm split gap provides actual tightening travel.
 - The PETG upper mount ends in a 72 x 32 x 5 mm shelf and broad backplate that
   carry the PLA tray.
-- Four recessed M4 button-head screws and captive M4 nuts fasten the tray to the
-  mount while the shelf carries its vertical load.
+- Four recessed M4 x 12 mm Phillips pan-head machine screws and captive M4
+  nylon-insert locknuts fasten the tray to the mount while the shelf carries its
+  vertical load.
 
 This replaces the first prototype's printed screw and integral female thread,
 which were physically tested and found to have inadequate engagement.
@@ -85,77 +86,72 @@ bond to one another during printing.
 
 ## Hardware specification
 
-### Complete purchase list for one final catch-all
+### Standard hardware strategy
+
+The final prototype uses only M4-0.7 and M6-1.0 coarse metric threads. These are
+ordinary hardware-drawer sizes rather than design-specific printed threads.
+Ace's catalog includes the selected [M4 x 12 mm Phillips pan-head machine
+screw](https://www.acehardware.com/departments/hardware/screws-and-anchors/machine-screws/5306410),
+[M6 x 30 mm hex-head bolt](https://www.acehardware.com/departments/hardware/nuts-and-bolts/hex-bolts/5167499),
+and [M6 x 50 mm hex-head bolt](https://www.acehardware.com/departments/hardware/nuts-and-bolts/hex-bolts/5167531).
+Those pages establish that the sizes are standard catalog items, not that a
+particular local store has them in stock.
+
+The M8 latch from the preceding one-kit iteration was deliberately reduced to
+M6. M6 already supplies far more clamp force than the PETG lugs need, while the
+smaller clearance hole and locknut pocket leave appreciably more plastic around
+the latch. Using M6 for both hinge and latch also removes a wrench size and an
+entire nut/washer family from the shopping list.
+
+### Complete hardware used by one final catch-all
 
 | Quantity | Hardware | What it does |
 | ---: | --- | --- |
-| 1 | M8 x 30 mm hex-head bolt | Tightens the clamp's latch around the lined rail. |
-| 1 | Standard M8 hex nut, about 13 mm across flats and 6.5 mm thick | Sits captive in the lower latch lug so it cannot turn. |
-| 1 | M8 flat washer, 16-18 mm outside diameter | Spreads the latch-bolt-head load across the PETG upper lug. |
-| 1 | M5 x 45 mm hex-head bolt | Replaces the trapped printed pin and serves as the removable hinge axle. |
-| 2 | M5 flat washers, about 10 mm outside diameter | Protect the PETG hinge ends under the bolt head and lock nut. |
-| 1 | M5 nylon-insert lock nut | Holds the hinge bolt securely without requiring the hinge to be clamped solid. |
-| 4 | M4 x 10 mm button-head socket screws | Fasten the PLA tray's reinforced wall to the PETG backplate. |
-| 4 | Standard M4 hex nuts, about 7 mm across flats and 3.2 mm thick | Load into captive pockets in the PETG backplate for the tray screws. |
+| 1 | M6 x 30 mm hex-head bolt | Tightens the clamp's latch around the lined rail. |
+| 1 | M6 nylon-insert locknut, about 10 mm across flats and 6 mm thick | Sits captive in the lower latch lug so it cannot turn. |
+| 1 | M6 flat washer, about 12 mm outside diameter | Spreads the latch-bolt-head load across the PETG upper lug. |
+| 1 | M6 x 50 mm hex-head bolt | Replaces the trapped printed pin and serves as the removable hinge axle. |
+| 2 | M6 flat washers, about 12 mm outside diameter | Protect the PETG hinge ends under the bolt head and locknut. |
+| 1 | M6 nylon-insert locknut | Holds the hinge bolt securely without requiring the hinge to be clamped solid. |
+| 4 | M4 x 12 mm Phillips pan-head machine screws | Fasten the PLA tray's reinforced wall to the PETG backplate. |
+| 4 | M4 nylon-insert locknuts, about 7 mm across flats and 5 mm thick | Load into captive pockets in the PETG backplate for the tray screws. |
 | 1 | Soft rubber liner, already ordered | Fills the modeled 0.8 mm radial allowance, adds grip, and stops the clamp rotating on the rail. |
 
-No M4 washers are needed: each button head sits in a flat-bottomed recess in the
-reinforced PLA wall, and the PETG pockets capture the nuts. The modeled M4
-button head is approximately 7.6 mm diameter x 2.2 mm high; ordinary ISO 7380-1
-button-head socket screws are the intended form.
+No M4 washers are used in the tray joint. Each M4 pan head sits in a 9.2 mm
+round counterbore and is driven with an ordinary Phillips screwdriver, while
+the PETG pockets capture the locknuts.
 
-You need only one latch hardware system. The preferred list above is metric.
-If buying M8 locally is inconvenient, replace all three M8 latch items with the
-matched 5/16-inch set described below; do not mix an M8 bolt with a 5/16-inch
-nut.
-
-Useful installation tools, if not already owned, are a 13 mm wrench or socket
-for the M8 latch, two 8 mm wrenches or sockets for the M5 hinge, and a 2.5 mm
-hex key for typical M4 button-head screws.
+Useful installation tools are two 10 mm wrenches or sockets for the M6 hardware
+and a Phillips #2 screwdriver for the recessed M4 tray screws.
 
 ### Latch hardware
 
-The same printed geometry supports either of these matched sets:
+- One M6 x 30 mm hex-head bolt
+- One M6 nylon-insert locknut, approximately 10 mm across flats and 6 mm thick
+- One M6 flat washer, approximately 12 mm outside diameter
 
-#### Preferred metric set
+The modeled latch dimensions are:
 
-- One M8 x 30 mm hex-head bolt
-- One standard M8 hex nut, approximately 13 mm across flats and 6.5 mm thick
-- One M8 flat washer, approximately 16-18 mm outside diameter
-
-#### U.S. hardware-store alternative
-
-- One 5/16-18 x 1-1/4 inch hex-head bolt
-- One standard 5/16-18 hex nut, 1/2 inch across flats
-- One 5/16 inch flat washer, approximately 11/16-3/4 inch outside diameter
-
-For the latch, use a regular full-height hex nut, not a wing nut, flange nut,
-coupling nut, or nylon-insert lock nut; those do not match the captive pocket.
-Zinc-plated or stainless steel is suitable. The modeled dimensions are:
-
-- Bolt clearance hole: 9.2 mm, including FDM hole allowance
-- Captive-nut pocket: 13.6 mm across flats x 7.2 mm deep
+- Bolt clearance hole: 7.0 mm, including FDM hole allowance
+- Captive-locknut pocket: 10.6 mm across flats x 6.6 mm deep
 - Modeled bolt length: 30 mm
 
 The small hardware-fit gauge tests the exact clearance hole and nut pocket. A
 nut should enter with light finger pressure, sit fully below the top surface,
 and resist turning without splitting the gauge.
 
-The already-printed threaded clamp can be tested temporarily with an external
-nut rather than the captive pocket, but it needs a longer M8 x 35 mm or
-5/16-18 x 1-1/2 inch bolt. That is only a rough clamp/liner test; the redesigned
-lower saddle is required for the final captive-nut configuration. The longer
-bolt is optional and is not used in the final assembly; the 30 mm bolt is the
-correct final M8 length.
+The already-printed threaded clamp remains a superseded prototype. The final M6
+latch geometry requires a newly printed lower saddle.
 
 ### Hinge hardware
 
-- One M5 x 45 mm hex-head bolt
-- Two M5 flat washers, approximately 10 mm outside diameter
-- One M5 nylon-insert lock nut
+- One M6 x 50 mm hex-head bolt
+- Two M6 flat washers, approximately 12 mm outside diameter
+- One M6 nylon-insert locknut
 
-The printed hinge bore is 5.5 mm. Put one washer under the bolt head and one
-under the lock nut. Tighten the lock nut only enough to remove side-to-side play;
+The printed hinge bore is 6.6 mm and the reinforced barrel is 13 mm outside
+diameter. Put one washer under the bolt head and one under the locknut. Tighten
+the locknut only enough to remove side-to-side play;
 the hinge must still rotate freely. Unlike the latch nut, a nylon-insert nut is
 appropriate here because it can remain secure without clamping the hinge solid.
 
@@ -166,14 +162,15 @@ upper.
 
 ### PLA tray attachment hardware
 
-- Four M4 x 10 mm button-head socket screws
-- Four standard M4 hex nuts, approximately 7 mm across flats and 3.2 mm thick
+- Four M4 x 12 mm Phillips pan-head machine screws
+- Four M4 nylon-insert locknuts, approximately 7 mm across flats and 5 mm thick
 - No M4 washers
 
-The screw heads recess into the tray from the inside. The nuts load into
-rear-opening captive pockets in the PETG backplate. M4 x 10 mm provides full
-nut engagement with the modeled recesses without excessive protrusion; do not
-substitute longer screws unless their clearance behind the mount is checked.
+The screw heads recess into 9.2 mm counterbores from inside the tray. The
+locknuts load into rear-opening captive pockets in the 8 mm PETG backplate.
+M4 x 12 mm provides full locknut engagement and approximately 1.0 mm modeled
+protrusion behind the mount. Do not substitute longer screws unless their
+clearance behind the mount is checked.
 
 ## Files
 
@@ -183,7 +180,7 @@ Editable source:
 
 Low-material test parts:
 
-- `exports/skillmill-hardware-fit-gauge-m8-5-16.stl`
+- `exports/skillmill-hardware-fit-gauge-m4-m6.stl`
 - `exports/skillmill-fit-upper-right-40mm.stl`
 - `exports/skillmill-fit-upper-left-40mm.stl`
 
@@ -202,7 +199,7 @@ Preview:
 
 Use matching left or right PETG upper/lower parts. The PLA tray is the same for
 either handed mount. The fit-test upper mates with the same lower saddle and
-manufactured latch/hinge hardware used by the full mount. The removable M5
+manufactured latch/hinge hardware used by the full mount. The removable M6
 hinge bolt allows the fit-test upper to be replaced by the full mount without
 sacrificing the lower saddle.
 
@@ -215,16 +212,19 @@ its models and reslicing.
 
 ### Step 1 - PETG hardware-fit gauge
 
-Print `skillmill-hardware-fit-gauge-m8-5-16.stl` before another clamp:
+Print `skillmill-hardware-fit-gauge-m4-m6.stl` after buying the hardware and
+before another clamp:
 
 - PETG, 0.20 mm layer height, 4 walls, 30% infill.
-- Print with the hex pocket facing upward.
+- Print with both hex pockets facing upward.
 - No supports are required.
-- Test the exact nut and bolt bought for the project.
+- The left station tests the M6 latch bolt and captive locknut pocket.
+- The center station tests the M6 hinge-bolt clearance.
+- The right station tests the M4 tray screw and captive locknut pocket.
 
-If the nut will not seat, increase `latch_nut_pocket_across_flats` by 0.2 mm.
-If it spins freely, reduce that parameter by 0.2 mm. Do not scale the entire
-gauge or clamp.
+If a locknut will not seat, increase its corresponding pocket-across-flats
+parameter by 0.2 mm. If it spins freely, reduce that parameter by 0.2 mm. Do
+not scale the entire gauge or clamp.
 
 ### Step 2 - PETG fit clamp
 
@@ -232,8 +232,8 @@ For the next fit test:
 
 - One `skillmill-fit-upper-right-40mm.stl`.
 - One `skillmill-catchall-lower-right-40mm.stl`.
-- The validated manufactured latch bolt, washer, and captive nut.
-- The M5 hinge bolt, two washers, and nylon-insert lock nut.
+- The validated M6 latch bolt, washer, and captive locknut.
+- The M6 hinge bolt, two washers, and nylon-insert locknut.
 
 Recommended starting settings:
 
@@ -253,27 +253,28 @@ After the gauge and fit clamp pass:
 - The PETG mount requires support around the clamp and bridge. Use PETG for the
   support base and Bambu Support for PLA/PETG only at the support interface
   after verifying the two-nozzle mapping in Bambu Studio.
-- Keep support out of the 9.2 mm latch holes, latch nut pocket, 5.5 mm hinge
-  bore, four M4 clearance holes, and four M4 nut pockets when possible. Clean
-  and test every hardware opening before assembly.
+- Keep support out of the 7.0 mm latch holes, latch locknut pocket, 6.6 mm hinge
+  bore, four M4 clearance holes, four M4 head counterbores, and four M4
+  locknut pockets when possible. Clean and test every hardware opening before
+  assembly.
 
 No separate PLA screw plate is needed.
 
 ## Hardware installation and fit test
 
-1. Confirm the latch nut fits the printed gauge.
-2. Press the latch nut into the bottom-opening hex pocket in the lower saddle.
-3. Join the clamp halves with the M5 hinge bolt and one washer on each side.
-   Tighten the nylon-insert nut only until side play is removed and verify that
-   the hinge still pivots freely.
-4. Press the four standard M4 nuts into the rear-facing pockets in the PETG
-   mount. Rest the PLA tray on the PETG shelf, align the four holes, and install
-   the four M4 x 10 mm button-head screws from inside the tray. Tighten only
-   until the tray is seated firmly against the backplate.
+1. Confirm the M6 and M4 locknuts and both bolt diameters fit the gauge.
+2. Press the M6 locknut into the bottom-opening hex pocket in the lower saddle.
+3. Join the clamp halves with the M6 x 50 mm hinge bolt and one washer on each
+   side. Tighten the nylon-insert nut only until side play is removed and verify
+   that the hinge still pivots freely.
+4. Press the four M4 locknuts into the rear-facing pockets in the PETG mount.
+   Rest the PLA tray on the PETG shelf, align the four holes, and install the
+   four M4 x 12 mm pan-head screws from inside the tray using a Phillips #2
+   screwdriver.
+   Tighten only until the tray is seated firmly against the backplate.
 5. Install the liner around the stopped, unoccupied Skillmill.
-6. Place the latch washer under the M8 or 5/16 inch bolt head and pass the bolt
-   downward through both
-   lugs into the captive nut.
+6. Place the M6 washer under the latch-bolt head and pass the bolt downward
+   through both lugs into the captive locknut.
 7. Tighten only until the clamp cannot rotate under a gentle hand load. The
    latch gap must not bottom out.
 8. Test stationary, then empty at walking speed, then with one light object.
@@ -285,22 +286,25 @@ machine joint.
 
 ## Geometry verification
 
-OpenSCAD 2021.01 rendered all eight current STLs with `--hardwarnings`, without
-a CGAL error, and reported each as a simple 3D object:
+OpenSCAD 2021.01 regenerated all eight current STLs with `--hardwarnings` and
+reported each as a simple 3D object. A separate triangle-edge audit found no
+open or non-manifold edges. Current post-redesign bounding boxes are:
 
-- Each PETG mount upper: 72.0 x 112.6 x 62.55 mm.
-- Each lower: 32.0 x 92.6 x 32.55 mm.
-- Each fit upper: 32.0 x 92.6 x 32.55 mm.
+- Each PETG mount upper: 72.0 x 112.6 x 66.55 mm.
+- Each lower: 32.0 x 94.6 x 33.55 mm.
+- Each fit upper: 32.0 x 94.6 x 33.55 mm.
 - PLA tray: 155.0 x 85.0 x 28.0 mm.
-- Hardware-fit gauge: 20.0 x 20.0 x 13.0 mm.
+- Hardware-fit gauge: 60.0 x 20.0 x 13.0 mm.
 
-The source asserts clearance and retained-wall requirements for the M8 latch
-and M4 tray hardware, plus sufficient modeled screw length for full M4 nut
-engagement. The assembly render uses a 30 mm M8 reference latch bolt with its
-washer and captive nut, a 45 mm M5 reference hinge bolt with two washers and a
-nut, and four 10 mm M4 reference tray screws with captive nuts. Physical
-hardware fit, rail grip, support-removal quality, and payload capacity still
-require testing.
+The source asserts clearance, bolt-length, and retained-wall requirements for
+both hardware sizes. The M6 hinge retains 3.2 mm of PETG around its bore; the
+M4 head counterbores retain at least 3 mm of PLA on every side; the M4 locknut
+pockets leave 2.4 mm of PETG ahead of them; and the M6 latch locknut pocket
+leaves 6.4 mm of PETG above it. The assembly render uses a 30 mm M6 reference
+latch bolt with its washer and captive locknut, a 50 mm M6 reference hinge bolt
+with two washers and a locknut, and four 12 mm M4 reference tray screws with
+captive locknuts. Physical hardware fit, rail grip, support-removal quality,
+and payload capacity still require testing.
 
 ## Safety limits for the prototype
 
@@ -316,7 +320,9 @@ require testing.
 
 - Model and source: original work created for this repository on 2026-08-08,
   revised for manufactured latch hardware on 2026-08-09, and split into a PETG
-  structural mount with a mechanically fastened PLA tray on 2026-08-10.
+  structural mount with a mechanically fastened PLA tray on 2026-08-10. The
+  hardware was first standardized around one M4/M6/M8 assortment, then refined
+  to common M4/M6 Ace-style hardware later that day.
 - Upstream geometry: none.
 - License: all rights reserved; no permission to redistribute is granted yet.
 - Reference checked 2026-08-08: [Technogym Skillmill assembly manual](https://fitnesssuperstore.info/pdfs/Technogym%20Skillmill%20-%20The%20Curved%20Treadmill%20Assembly%20Manual.pdf).

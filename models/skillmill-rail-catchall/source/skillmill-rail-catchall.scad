@@ -40,46 +40,46 @@ tray_wall = 2.8;
 tray_corner_radius = 9;
 
 tray_mount_width = 72;
-tray_mount_height = 24;
-tray_mount_pad_thickness = 6;
-tray_mount_plate_thickness = 6;
+tray_mount_height = 27;
+tray_mount_pad_thickness = 6.5;
+tray_mount_plate_thickness = 8;
 tray_mount_shelf_depth = 32;
 tray_mount_shelf_thickness = 5;
 tray_mount_hole_x = 24;
 tray_mount_hole_z_offsets = [9, 18];
 tray_fastener_diameter = 4.0;
 tray_fastener_clearance_diameter = 4.6;
-tray_fastener_length = 10;
-tray_fastener_head_diameter = 7.6;
-tray_fastener_head_height = 2.2;
-tray_fastener_counterbore_diameter = 8.4;
-tray_fastener_counterbore_depth = 2.4;
+tray_fastener_length = 12;
+tray_fastener_head_diameter = 8.0;
+tray_fastener_head_height = 3.1;
+tray_fastener_head_access_diameter = 9.2;
+tray_fastener_head_recess_depth = 3.4;
 tray_nut_across_flats = 7.0;
-tray_nut_pocket_across_flats = 7.5;
-tray_nut_thickness = 3.2;
-tray_nut_pocket_depth = 3.6;
+tray_nut_pocket_across_flats = 7.6;
+tray_nut_thickness = 5.0;
+tray_nut_pocket_depth = 5.6;
 
-hinge_hole_diameter = 5.5;
-hinge_bolt_diameter = 5.0;
-hinge_bolt_length = 45;
-hinge_bolt_head_across_flats = 8.0;
-hinge_bolt_head_height = 3.5;
-hinge_washer_outer_diameter = 10;
-hinge_washer_thickness = 1.0;
-hinge_nut_across_flats = 8.0;
-hinge_nut_thickness = 5.0;
+hinge_hole_diameter = 6.6;
+hinge_bolt_diameter = 6.0;
+hinge_bolt_length = 50;
+hinge_bolt_head_across_flats = 10.0;
+hinge_bolt_head_height = 4.0;
+hinge_washer_outer_diameter = 12;
+hinge_washer_thickness = 1.6;
+hinge_nut_across_flats = 10.0;
+hinge_nut_thickness = 6.0;
 
-latch_bolt_diameter = 8.0; // M8 or 5/16 inch manufactured bolt
-latch_bolt_clearance_diameter = 9.2;
-latch_nut_across_flats = 13.0; // M8 is 13.0; 5/16 inch is 12.7
-latch_nut_pocket_across_flats = 13.6;
-latch_nut_thickness = 6.75; // accommodates common M8 and 5/16 inch nuts
-latch_nut_pocket_depth = 7.2;
-latch_bolt_length = 30; // M8 x 30 mm; 5/16 x 1.25 inch also fits
-latch_bolt_head_across_flats = 13.0;
-latch_bolt_head_height = 5.5;
-latch_washer_outer_diameter = 18;
-latch_washer_thickness = 1.5;
+latch_bolt_diameter = 6.0;
+latch_bolt_clearance_diameter = 7.0;
+latch_nut_across_flats = 10.0;
+latch_nut_pocket_across_flats = 10.6;
+latch_nut_thickness = 6.0;
+latch_nut_pocket_depth = 6.6;
+latch_bolt_length = 30;
+latch_bolt_head_across_flats = 10.0;
+latch_bolt_head_height = 4.0;
+latch_washer_outer_diameter = 12;
+latch_washer_thickness = 1.6;
 latch_upper_height = 10;
 latch_lower_height = 13;
 latch_lug_width = 24;
@@ -117,8 +117,17 @@ assert(
     "The hinge bolt must pass both washers and the nut."
 );
 assert(
-    tray_mount_pad_thickness - tray_fastener_counterbore_depth >= 3,
+    tray_mount_pad_thickness - tray_fastener_head_recess_depth >= 3,
     "The PLA tray must retain at least 3 mm behind each screw head."
+);
+assert(
+    tray_fastener_head_access_diameter
+        >= tray_fastener_head_diameter + 0.8,
+    "The M4 pan-head counterbore must provide at least 0.4 mm radial clearance."
+);
+assert(
+    tray_fastener_head_recess_depth >= tray_fastener_head_height + 0.2,
+    "The M4 pan head must sit at least 0.2 mm below the tray surface."
 );
 assert(
     tray_mount_plate_thickness - tray_nut_pocket_depth >= 2,
@@ -126,15 +135,22 @@ assert(
 );
 assert(
     tray_fastener_length
-        >= tray_mount_pad_thickness - tray_fastener_counterbore_depth
+        >= tray_mount_pad_thickness - tray_fastener_head_recess_depth
             + tray_mount_plate_thickness - tray_nut_pocket_depth
             + tray_nut_thickness + 0.5,
-    "The tray screws must fully engage the captive nuts."
+    "The tray screws must fully engage the captive locknuts."
 );
 assert(
     tray_mount_width / 2 - tray_mount_hole_x
-        >= tray_fastener_counterbore_diameter / 2 + 3,
-    "The tray screw heads must retain at least a 3 mm side margin."
+        >= tray_fastener_head_access_diameter / 2 + 3,
+    "The tray screw-head counterbores must retain at least a 3 mm side margin."
+);
+assert(
+    min(tray_mount_hole_z_offsets)
+            >= tray_fastener_head_access_diameter / 2 + 3
+        && tray_mount_height - max(tray_mount_hole_z_offsets)
+            >= tray_fastener_head_access_diameter / 2 + 3,
+    "The tray screw-head counterbores must retain 3 mm top and bottom margins."
 );
 
 $fn = 96;
@@ -143,12 +159,17 @@ clamp_inner_radius =
     effective_rail_diameter / 2 + liner_thickness + radial_fit_clearance;
 clamp_outer_radius = clamp_inner_radius + clamp_wall;
 
-hinge_barrel_radius = 5.5;
+hinge_barrel_radius = 6.5;
 hinge_y = clamp_outer_radius + hinge_barrel_radius + 1.5;
 hinge_center_knuckle = 12;
 hinge_knuckle_gap = 0.7;
 hinge_outer_knuckle =
     (clamp_width - hinge_center_knuckle - 2 * hinge_knuckle_gap) / 2;
+
+assert(
+    hinge_barrel_radius - hinge_hole_diameter / 2 >= 3,
+    "The hinge barrel must retain at least 3 mm around the M6 bore."
+);
 
 latch_bolt_y = -clamp_outer_radius - 14;
 
@@ -270,6 +291,19 @@ module hex_prism(across_flats, height) {
         );
 }
 
+// Visual reference for the standard M4 Phillips pan-head machine screws.
+// The printable tray uses only the matching round clearance and head recess.
+module pan_head(diameter, height) {
+    difference() {
+        cylinder(h = height, d1 = diameter, d2 = diameter * 0.72);
+
+        translate([-diameter / 2, -0.35, height - 0.65])
+            cube([diameter, 0.7, 0.75]);
+        translate([-0.35, -diameter / 2, height - 0.65])
+            cube([0.7, diameter, 0.75]);
+    }
+}
+
 module upper_latch() {
     difference() {
         translate([
@@ -296,7 +330,7 @@ module lower_latch() {
         ])
             cube([latch_lug_width, latch_lug_length, latch_lower_height]);
 
-        // Smooth through-hole for an M8 or 5/16 inch manufactured bolt.
+        // Smooth through-hole for the M6 manufactured latch bolt.
         translate([
             0,
             latch_bolt_y,
@@ -307,8 +341,8 @@ module lower_latch() {
                 d = latch_bolt_clearance_diameter
             );
 
-        // Bottom-opening hex pocket captures the nut so only the bolt head
-        // needs a wrench during installation and tightening.
+        // Bottom-opening hex pocket captures the M6 nylon-insert locknut so
+        // only the bolt head needs a wrench during installation and tightening.
         translate([
             0,
             latch_bolt_y,
@@ -322,25 +356,46 @@ module lower_latch() {
 }
 
 module hardware_fit_gauge() {
-    gauge_size = 20;
+    gauge_length = 60;
+    gauge_depth = 20;
     gauge_height = latch_lower_height;
 
     difference() {
-        translate([-gauge_size / 2, -gauge_size / 2, 0])
-            cube([gauge_size, gauge_size, gauge_height]);
+        translate([-gauge_length / 2, -gauge_depth / 2, 0])
+            cube([gauge_length, gauge_depth, gauge_height]);
 
-        translate([0, 0, -1])
+        // Left station: M6 latch-bolt clearance and captive locknut pocket.
+        translate([-20, 0, -1])
             cylinder(
                 h = gauge_height + 2,
                 d = latch_bolt_clearance_diameter
             );
 
-        // Opens upward so the gauge prints without support and the nut can be
-        // checked before committing to another clamp print.
-        translate([0, 0, gauge_height - latch_nut_pocket_depth])
+        translate([
+            -20,
+            0,
+            gauge_height - latch_nut_pocket_depth
+        ])
             hex_prism(
                 latch_nut_pocket_across_flats,
                 latch_nut_pocket_depth + 0.1
+            );
+
+        // Center station: M6 hinge-bolt clearance.
+        translate([0, 0, -1])
+            cylinder(h = gauge_height + 2, d = hinge_hole_diameter);
+
+        // Right station: M4 tray-screw clearance and captive locknut pocket.
+        translate([20, 0, -1])
+            cylinder(
+                h = gauge_height + 2,
+                d = tray_fastener_clearance_diameter
+            );
+
+        translate([20, 0, gauge_height - tray_nut_pocket_depth])
+            hex_prism(
+                tray_nut_pocket_across_flats,
+                tray_nut_pocket_depth + 0.1
             );
     }
 }
@@ -400,12 +455,13 @@ module tray_mount_holes() {
                     d = tray_fastener_clearance_diameter
                 );
 
-        // Flat-bottomed recess keeps the button head below the tray wall.
+        // Round counterbore recesses a standard M4 Phillips pan head so only a
+        // screwdriver, rather than a thin-wall socket, is needed in the tray.
         translate([x, tray_inner_face_y + 0.1, z])
             rotate([90, 0, 0])
                 cylinder(
-                    h = tray_fastener_counterbore_depth + 0.1,
-                    d = tray_fastener_counterbore_diameter
+                    h = tray_fastener_head_recess_depth + 0.1,
+                    d = tray_fastener_head_access_diameter
                 );
     }
 }
@@ -465,7 +521,7 @@ module tray_mount_bracket() {
                         d = tray_fastener_clearance_diameter
                     );
 
-            // Rear-opening captive pocket for a standard M4 hex nut.
+            // Rear-opening captive pocket for the supplied M4 locknut.
             translate([x, backplate_y - 0.1, z])
                 rotate([-90, 0, 0])
                     hex_prism(
@@ -574,7 +630,7 @@ module installed_latch_hardware() {
             latch_bolt_head_height
         );
 
-    // Captive hex nut seated in the bottom pocket.
+    // Captive M6 nylon-insert locknut seated in the bottom pocket.
     translate([0, latch_bolt_y, lower_bottom_z])
         hex_prism(latch_nut_across_flats, latch_nut_thickness);
 }
@@ -635,7 +691,7 @@ module installed_hinge_hardware() {
 module installed_tray_hardware() {
     tray_inner_face_y = tray_near_y + tray_mount_pad_thickness;
     bolt_under_head_y =
-        tray_inner_face_y - tray_fastener_counterbore_depth;
+        tray_inner_face_y - tray_fastener_head_recess_depth;
     backplate_y = tray_near_y - tray_mount_plate_thickness;
 
     for (
@@ -652,15 +708,15 @@ module installed_tray_hardware() {
                     d = tray_fastener_diameter
                 );
 
-        // Recessed button head.
-        translate([x, tray_inner_face_y, z])
-            rotate([90, 0, 0])
-                cylinder(
-                    h = tray_fastener_head_height,
-                    d = tray_fastener_head_diameter
+        // Recessed Phillips pan head, accessible from inside the tray.
+        translate([x, bolt_under_head_y, z])
+            rotate([-90, 0, 0])
+                pan_head(
+                    tray_fastener_head_diameter,
+                    tray_fastener_head_height
                 );
 
-        // Captive M4 nut loaded from the rear of the PETG backplate.
+        // Captive M4 nylon-insert locknut loaded from the rear.
         translate([x, backplate_y, z])
             rotate([-90, 0, 0])
                 hex_prism(tray_nut_across_flats, tray_nut_thickness);
