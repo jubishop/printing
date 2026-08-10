@@ -192,6 +192,25 @@ Full tray parts:
 - `exports/skillmill-catchall-lower-left-40mm.stl`
 - `exports/skillmill-pla-tray.stl`
 
+Bambu Studio X2D projects:
+
+- `exports/skillmill-hardware-fit-gauge-m4-m6.3mf` contains the one-part PETG
+  hardware-fit gauge plate.
+- `exports/skillmill-catchall-lower-right-40mm.3mf` contains the corrected
+  right-hand fit upper and matching lower saddle, with the PETG/support
+  interface assignments used for the 2026-08-10 retry.
+
+Both projects were saved by Bambu Studio 2.7.1.62 on 2026-08-10. They contain
+slice settings and model-render thumbnails but no generated G-code. The
+embedded Bambu account designer identifier was removed before publication;
+printer serials, session data, and local filesystem paths are not present.
+
+The fit-upper and lower STLs are print-oriented: each stands on a flat clamp-end
+face with the rail channel and M6 hinge bore vertical. Do not rotate them back
+to the installed orientation shown in the assembly renders. The source retains
+explicit `*-assembly` selectors for geometry inspection, while the ordinary
+single-part selectors produce the print-oriented exports.
+
 Preview:
 
 - `renders/skillmill-catchall-assembly-40mm.png`
@@ -242,6 +261,20 @@ Recommended starting settings:
 - 0.20 mm layer height.
 - 5 walls and 5 top/bottom shells.
 - 30% gyroid or cross-hatch infill.
+- 8 mm outer brim on both parts.
+- Enable build-plate-only support beneath the suspended latch and hinge
+  geometry. Use PETG for the support base and Bambu Support for PLA/PETG only
+  at the interface.
+- Paint or constrain support to those underside surfaces. Keep it out of the
+  vertical rail channel and hinge bore, and block it inside the 7.0 mm latch
+  hole and captive locknut pocket when possible. The horizontal latch hole can
+  bridge its short span; clean and test it with the M6 hardware before assembly.
+
+The 2026-08-10 retry failed because the earlier STLs retained assembly
+orientation. Their minimum-Z features were curved and provided no coplanar bed
+area, even though the first-layer camera view initially looked acceptable. The
+current print-oriented exports replace those files and must be resliced from
+scratch; do not reuse the failed job or its plate data.
 
 ### Step 3 - final PETG mount and PLA tray
 
@@ -291,10 +324,15 @@ reported each as a simple 3D object. A separate triangle-edge audit found no
 open or non-manifold edges. Current post-redesign bounding boxes are:
 
 - Each PETG mount upper: 72.0 x 112.6 x 66.55 mm.
-- Each lower: 32.0 x 94.6 x 33.55 mm.
-- Each fit upper: 32.0 x 94.6 x 33.55 mm.
+- Each print-oriented lower: 33.55 x 94.6 x 32.0 mm.
+- Each print-oriented fit upper: 33.55 x 94.6 x 32.0 mm.
 - PLA tray: 155.0 x 85.0 x 28.0 mm.
 - Hardware-fit gauge: 60.0 x 20.0 x 13.0 mm.
+
+The rigid print-orientation transform preserves triangle count and modeled
+volume. Each fit upper now has 443.4 mm² of coplanar first-layer area and each
+lower has 564.1 mm², compared with zero for both failed assembly-oriented
+exports.
 
 The source asserts clearance, bolt-length, and retained-wall requirements for
 both hardware sizes. The M6 hinge retains 3.2 mm of PETG around its bore; the
@@ -322,7 +360,11 @@ and payload capacity still require testing.
   revised for manufactured latch hardware on 2026-08-09, and split into a PETG
   structural mount with a mechanically fastened PLA tray on 2026-08-10. The
   hardware was first standardized around one M4/M6/M8 assortment, then refined
-  to common M4/M6 Ace-style hardware later that day.
+  to common M4/M6 Ace-style hardware later that day. After a layer-37 adhesion
+  failure on 2026-08-10, the fit-upper and lower exports were rotated from
+  assembly orientation onto verified planar clamp-end footprints.
+- Tool versions: OpenSCAD 2021.01 generated and verified the STL exports;
+  Bambu Studio 2.7.1.62 saved the two documented X2D project archives.
 - Upstream geometry: none.
 - License: all rights reserved; no permission to redistribute is granted yet.
 - Reference checked 2026-08-08: [Technogym Skillmill assembly manual](https://fitnesssuperstore.info/pdfs/Technogym%20Skillmill%20-%20The%20Curved%20Treadmill%20Assembly%20Manual.pdf).

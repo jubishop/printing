@@ -1,10 +1,14 @@
 // Skillmill rail catch-all tray
 // Original parametric design. Dimensions are millimetres.
 
-// Select one export at a time:
+// Select one export at a time. Single fit-upper and lower exports are rotated
+// onto a flat clamp-end face for printing; assembly selectors retain the
+// installed orientation used by the preview renders.
 // "assembly-right", "assembly-left", "fit-assembly-right",
 // "upper-right", "upper-left",
 // "lower-right", "lower-left", "fit-upper-right", "fit-upper-left",
+// "lower-right-assembly", "lower-left-assembly",
+// "fit-upper-right-assembly", "fit-upper-left-assembly",
 // "tray-pla", or "hardware-fit-gauge"
 part = "assembly-right";
 
@@ -587,6 +591,17 @@ module lower_clamp() {
     }
 }
 
+// The installed clamp axis is X. Standing a single clamp part on its +X end
+// converts the annular end face into a broad, coplanar bed footprint while
+// leaving the rail channel and M6 hinge bore vertical. The previous exports
+// retained assembly orientation and touched the plate only at curved tangent
+// surfaces, which caused the 2026-08-10 fit print to detach at layer 37.
+module orient_clamp_end_on_bed() {
+    translate([0, 0, clamp_width / 2])
+        rotate([0, 90, 0])
+            children();
+}
+
 module left_handed_upper() {
     mirror([0, 1, 0]) upper_mount();
 }
@@ -759,12 +774,20 @@ if (part == "assembly" || part == "assembly-right") {
 } else if (part == "upper-left") {
     left_handed_upper();
 } else if (part == "lower" || part == "lower-right") {
-    lower_clamp();
+    orient_clamp_end_on_bed() lower_clamp();
 } else if (part == "lower-left") {
-    left_handed_lower();
+    orient_clamp_end_on_bed() left_handed_lower();
 } else if (part == "fit-upper-right") {
-    upper_fit_test();
+    orient_clamp_end_on_bed() upper_fit_test();
 } else if (part == "fit-upper-left") {
+    orient_clamp_end_on_bed() left_handed_fit_test();
+} else if (part == "lower-right-assembly") {
+    lower_clamp();
+} else if (part == "lower-left-assembly") {
+    left_handed_lower();
+} else if (part == "fit-upper-right-assembly") {
+    upper_fit_test();
+} else if (part == "fit-upper-left-assembly") {
     left_handed_fit_test();
 } else if (part == "tray-pla") {
     pla_tray();

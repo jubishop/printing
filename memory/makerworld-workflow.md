@@ -71,7 +71,10 @@ Compare those choices when there is a meaningful quality-versus-speed decision.
 6. Verify object materials from active project assignments rather than embedded
    profile provenance.
 7. In Studio, slice and inspect material use, support, plate placement, abrupt
-   speed/flow changes, and obvious collision or adhesion risks.
+   speed/flow changes, and obvious collision or adhesion risks. For curved
+   functional parts, inspect the actual first several layer cross-sections and
+   confirm a broad coplanar footprint; a warning-free slice and an apparently
+   clean first-layer camera image do not prove stable bed contact.
 8. In Handy, confirm the profile remains available for the selected X2D and
    verify the final filament, nozzle, and plate mapping.
 9. Do not claim a configuration, slice, cloud conversion, or print mapping was

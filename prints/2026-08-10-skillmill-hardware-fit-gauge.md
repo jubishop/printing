@@ -1,8 +1,8 @@
 # 2026-08-10 — Skillmill M4/M6 hardware-fit gauge
 
-- Status: in progress
+- Status: completed (hardware fit passed)
 - Started: 2026-08-10 11:47 PDT
-- Completed: pending
+- Completed: by 2026-08-10 12:29 PDT
 - Related issue: none
 
 ## Goal
@@ -71,10 +71,12 @@ pass through their corresponding clearance holes.
 
 ## Outcome
 
-- Actual result: pending; X2D accepted the job and entered startup at 0%, layer
-  0/65
-- Dimensions/fit: pending hardware test
-- Surface or structural defects: pending
+- Actual result: completed; the user reported that all three hardware stations
+  seemed okay
+- Dimensions/fit: the M4 and M6 locknuts did not spin in their captive
+  pockets. Both had a small amount of wiggle, but remained rotationally
+  captured; the bolt-clearance tests also passed.
+- Surface or structural defects: none reported
 - Photos: pending
 - Print history or app evidence checked: final send dialog showed X2D,
   Textured PEI, PETG from AMS A4 on the main nozzle, and an empty auxiliary
@@ -82,11 +84,15 @@ pass through their corresponding clearance holes.
 
 ## Diagnosis and next change
 
-Pending the physical fit test. If a locknut will not seat, enlarge only its
-corresponding pocket-across-flats parameter by 0.2 mm. If it spins freely,
-reduce that parameter by 0.2 mm. Do not scale the entire gauge or clamp.
+Accept the current pocket dimensions without another gauge iteration. A small
+amount of lateral movement is preferable to a difficult press fit, and the
+functional requirement is that each locknut remain unable to rotate while its
+fastener is tightened. The current 0.6 mm across-flats allowance for both nut
+sizes provides 0.3 mm nominal clearance per flat side. Reduce a specific pocket
+by 0.2 mm only if its locknut rotates under actual assembly torque.
 
 ## Durable lesson
 
-Pending. Keep any one-off hardware tolerance result in this print log unless it
-establishes a reusable pocket-clearance rule.
+For captive FDM locknut pockets, slight lateral wiggle is acceptable when the
+nut remains rotationally captured. Avoid turning an adequate slip fit into a
+fragile press fit merely to eliminate unloaded movement.
