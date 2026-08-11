@@ -1,6 +1,6 @@
 # 2026-08-10 — Skillmill right-hand PETG fit clamp
 
-- Status: 0.8 mm tighter-bore retry in progress
+- Status: completed; bore fit passed and hinge support defect documented
 - Started: 2026-08-10 12:42 PDT
 - Failure detected: 2026-08-10 13:14 PDT
 - Related issue: none
@@ -145,7 +145,7 @@ sent while the plate awaited cleaning.
 
 ## 0.8 mm tighter-bore retry
 
-- Status: in progress
+- Status: completed
 - Started: 2026-08-10 17:25 PDT
 - Models: right-hand fit upper and matching lower, both regenerated with a
   41.3 mm modeled bore, 0.8 mm narrower than the tested 42.1 mm bore
@@ -175,10 +175,29 @@ sent while the plate awaited cleaning.
   nozzle-offset calibration
 - Send result: cloud transfer completed; the printer accepted the job and
   entered automatic bed leveling at layer 0/160
-- First-layer result: pending
+- First-layer result: not observed live in this record; the full print completed
 - Saved project: Bambu Studio 2.7.1.62 project updated with the current meshes
   and slice settings; no generated G-code; account designer identifier removed
   before publication
+
+### Tighter-bore outcome
+
+- Rail fit: passed. The user reported that the 41.3 mm modeled bore with the
+  installed liner fit the rail perfectly.
+- General print result: both clamp halves completed and could be handled and
+  assembled for inspection.
+- Surface defect: the first face of one suspended hinge knuckle printed as
+  loose concentric PETG rings with strings across the M6 bore.
+- Diagnosis: the end-on orientation leaves one knuckle on each half starting
+  above the build plate. Its first supported surface was an annulus, or thin
+  ring, around the open bore. The support interface did not carry those first
+  ring-shaped perimeters cleanly. This is a repeatable geometry/orientation
+  weakness, not evidence of an incorrect rail bore or ordinary wet-filament
+  stringing.
+- Correction: add a removable 0.4 mm, two-layer membrane across the M6 bore at
+  each suspended knuckle start. This makes the first supported face a solid
+  disk. The membrane is pushed out with the M6 bolt or a 6 mm drill bit turned
+  by hand after printing.
 
 ## Durable lesson
 

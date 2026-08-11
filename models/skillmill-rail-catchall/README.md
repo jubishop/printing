@@ -46,9 +46,10 @@ The first clamp used that provisional input, 0.8 mm of radial liner allowance,
 and 0.25 mm of radial fit clearance, producing a 42.1 mm bore. Physical testing
 found that it still slid slightly after the rubber liner was installed. The
 current revision applies a direct -0.8 mm bore-diameter calibration, producing a
-41.3 mm modeled bore. This is a relative fit adjustment based on the tested
-part; it does not establish the rail's exact diameter or the liner's exact
-compression. Adjust the source parameters rather than scaling an STL.
+41.3 mm modeled bore. The 2026-08-10 physical test found that this bore and the
+installed liner fit the rail perfectly. This validates the complete bore/liner
+combination, not an exact bare-rail diameter or exact liner compression. Adjust
+the source parameters rather than scaling an STL.
 
 ## Why the first printed screw failed
 
@@ -205,17 +206,29 @@ Bambu Studio X2D projects:
   bore right-hand fit upper and matching lower saddle, with the corrected
   orientation and PETG/support-interface assignments used for the 2026-08-10
   tighter-bore retry.
+- `exports/skillmill-catchall-petg-mount-right-40mm.3mf` contains the final
+  right-hand PETG upper mount and matching lower saddle, including the removable
+  hinge-bore support membranes and the support routing used for the first final
+  mount attempt.
 
-Both projects were saved by Bambu Studio 2.7.1.62 on 2026-08-10. They contain
+The projects were saved by Bambu Studio 2.7.1.62 on 2026-08-10. They contain
 slice settings and model-render thumbnails but no generated G-code. The
 embedded Bambu account designer identifier was removed before publication;
 printer serials, session data, and local filesystem paths are not present.
 
 The fit-upper and lower STLs are print-oriented: each stands on a flat clamp-end
-face with the rail channel and M6 hinge bore vertical. Do not rotate them back
-to the installed orientation shown in the assembly renders. The source retains
-explicit `*-assembly` selectors for geometry inspection, while the ordinary
-single-part selectors produce the print-oriented exports.
+face with the rail channel and M6 hinge bore vertical. The full PETG upper stands
+on the +X side of its 72 mm tray backplate, which also leaves the hinge bore
+vertical. Do not rotate these files back to the installed orientation shown in
+the assembly renders. The source retains explicit `*-assembly` selectors for
+geometry inspection, while the ordinary single-part selectors produce the
+print-oriented exports.
+
+Each suspended hinge knuckle contains a 0.4 mm removable membrane across the
+6.6 mm bore at its first two layers. This turns the support-contact face into a
+solid disk instead of an unsupported thin ring. After support removal, push the
+membrane out with the M6 bolt or turn a 6 mm drill bit through it by hand. Do
+not use a powered drill against the assembled clamp.
 
 Preview:
 
@@ -253,7 +266,8 @@ not scale the entire gauge or clamp.
 
 ### Step 2 - PETG fit clamp
 
-For the next fit test:
+The 2026-08-10 fit test passed with the 41.3 mm modeled bore and installed
+liner. For a replacement fit test:
 
 - One `skillmill-fit-upper-right-40mm.stl`.
 - One `skillmill-catchall-lower-right-40mm.stl`.
@@ -296,6 +310,9 @@ After the gauge and fit clamp pass:
   bore, four M4 clearance holes, four M4 head counterbores, and four M4
   locknut pockets when possible. Clean and test every hardware opening before
   assembly.
+- The print-oriented PETG upper has 421.4 mm2 of planar contact on the side of
+  its backplate. Use an 8 mm outer brim and build-plate-only tree support. Keep
+  the generated 0.4 mm hinge membranes; they are intentional and removable.
 
 No separate PLA screw plate is needed.
 
@@ -327,19 +344,20 @@ machine joint.
 
 OpenSCAD 2021.01 regenerated all eight current STLs with `--hardwarnings` and
 reported each as a simple 3D object. A separate triangle-edge audit found no
-open or non-manifold edges. Current post-redesign bounding boxes are:
+open or non-manifold edges. Current print-oriented bounding boxes are:
 
-- Each PETG mount upper: 72.0 x 111.8 x 66.15 mm.
+- Each PETG mount upper: 66.15 x 111.8 x 72.0 mm.
 - Each print-oriented lower: 33.15 x 93.8 x 32.0 mm.
 - Each print-oriented fit upper: 33.15 x 93.8 x 32.0 mm.
 - PLA tray: 155.0 x 85.0 x 38.0 mm, with 34.8 mm of usable wall height
   above the 3.2 mm floor.
 - Hardware-fit gauge: 60.0 x 20.0 x 13.0 mm.
 
-The rigid print-orientation transform preserves triangle count and modeled
-volume. Each fit upper now has 435.9 mm² of coplanar first-layer area and each
-lower has 556.6 mm², compared with zero for both failed assembly-oriented
-exports.
+The rigid print-orientation transform preserves the structural geometry. Each
+fit upper has 435.9 mm2 of coplanar first-layer area, each lower has 556.6 mm2,
+and each full upper has 421.4 mm2. The print-only hinge membranes add 0.4 mm
+closures that are removed after printing. The failed assembly-oriented fit
+exports had zero coplanar first-layer area.
 
 The source asserts clearance, bolt-length, and retained-wall requirements for
 both hardware sizes. The M6 hinge retains 3.2 mm of PETG around its bore; the
@@ -348,8 +366,9 @@ pockets leave 2.4 mm of PETG ahead of them; and the M6 latch locknut pocket
 leaves 6.4 mm of PETG above it. The assembly render uses a 30 mm M6 reference
 latch bolt with its washer and captive locknut, a 50 mm M6 reference hinge bolt
 with two washers and a locknut, and four 12 mm M4 reference tray screws with
-captive locknuts. Physical hardware fit, rail grip, support-removal quality,
-and payload capacity still require testing.
+captive locknuts. Physical hardware fit and the 41.3 mm bore/liner rail grip are
+validated. Support-removal quality for the new membranes and payload capacity
+still require testing.
 
 ## Safety limits for the prototype
 
@@ -369,9 +388,12 @@ and payload capacity still require testing.
   hardware was first standardized around one M4/M6/M8 assortment, then refined
   to common M4/M6 Ace-style hardware later that day. After a layer-37 adhesion
   failure on 2026-08-10, the fit-upper and lower exports were rotated from
-  assembly orientation onto verified planar clamp-end footprints.
+  assembly orientation onto verified planar clamp-end footprints. After a
+  supported hinge face printed as loose rings, suspended hinge bores gained
+  removable 0.4 mm membranes and the full upper gained a verified planar
+  backplate-side print orientation.
 - Tool versions: OpenSCAD 2021.01 generated and verified the STL exports;
-  Bambu Studio 2.7.1.62 saved the two documented X2D project archives.
+  Bambu Studio 2.7.1.62 saved the documented X2D project archives.
 - Upstream geometry: none.
 - License: all rights reserved; no permission to redistribute is granted yet.
 - Reference checked 2026-08-08: [Technogym Skillmill assembly manual](https://fitnesssuperstore.info/pdfs/Technogym%20Skillmill%20-%20The%20Curved%20Treadmill%20Assembly%20Manual.pdf).
