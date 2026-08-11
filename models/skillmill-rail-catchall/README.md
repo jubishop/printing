@@ -207,14 +207,17 @@ Bambu Studio X2D projects:
   orientation and PETG/support-interface assignments used for the 2026-08-10
   tighter-bore retry.
 - `exports/skillmill-catchall-petg-mount-right-40mm.3mf` contains the final
-  right-hand PETG upper mount and matching lower saddle, including the removable
-  hinge-bore support membranes and the support routing used for the first final
-  mount attempt.
+  right-hand PETG upper mount and matching lower saddle. Its hinge bores are
+  fully open, and its support settings allow branches to start on model
+  surfaces so the vertically shadowed hinge knuckle receives a direct support
+  interface.
 
-The projects were saved by Bambu Studio 2.7.1.62 on 2026-08-10. They contain
-slice settings and model-render thumbnails but no generated G-code. The
-embedded Bambu account designer identifier was removed before publication;
-printer serials, session data, and local filesystem paths are not present.
+The projects were saved by Bambu Studio 2.7.1.62 on 2026-08-10; the final
+two-part mount project was updated on 2026-08-11 after the open-bore correction.
+They contain slice settings and model-render thumbnails but no generated
+G-code. The embedded Bambu account designer identifier was removed before
+publication; printer serials, session data, and local filesystem paths are not
+present.
 
 The fit-upper and lower STLs are print-oriented: each stands on a flat clamp-end
 face with the rail channel and M6 hinge bore vertical. The full PETG upper stands
@@ -224,11 +227,10 @@ the assembly renders. The source retains explicit `*-assembly` selectors for
 geometry inspection, while the ordinary single-part selectors produce the
 print-oriented exports.
 
-Each suspended hinge knuckle contains a 0.4 mm removable membrane across the
-6.6 mm bore at its first two layers. This turns the support-contact face into a
-solid disk instead of an unsupported thin ring. After support removal, push the
-membrane out with the M6 bolt or turn a 6 mm drill bit through it by hand. Do
-not use a powered drill against the assembled clamp.
+The 6.6 mm hinge bores are open in every current STL. Do not add a solid
+membrane across them. The tested 0.4 mm, two-layer membranes printed too firmly
+to remove by hand and left both final hinge bores unusable. The smaller lower
+part also retained a malformed suspended hinge face.
 
 Preview:
 
@@ -282,9 +284,11 @@ Recommended starting settings:
 - 5 walls and 5 top/bottom shells.
 - 30% gyroid or cross-hatch infill.
 - 8 mm outer brim on both parts.
-- Enable build-plate-only support beneath the suspended latch and hinge
-  geometry. Use PETG for the support base and Bambu Support for PLA/PETG only
-  at the interface.
+- Enable support beneath the suspended latch and hinge geometry, and allow
+  support to start on model surfaces. The lower part's bed-side hinge knuckle
+  sits directly below its suspended knuckle in this orientation; build-plate-
+  only support cannot grow from that clean intermediate surface. Use PETG for
+  the support base and Bambu Support for PLA/PETG only at the interface.
 - Paint or constrain support to those underside surfaces. Keep it out of the
   vertical rail channel and hinge bore, and block it inside the 7.0 mm latch
   hole and captive locknut pocket when possible. The horizontal latch hole can
@@ -311,8 +315,9 @@ After the gauge and fit clamp pass:
   locknut pockets when possible. Clean and test every hardware opening before
   assembly.
 - The print-oriented PETG upper has 421.4 mm2 of planar contact on the side of
-  its backplate. Use an 8 mm outer brim and build-plate-only tree support. Keep
-  the generated 0.4 mm hinge membranes; they are intentional and removable.
+  its backplate. Use an 8 mm outer brim and allow tree support to start on
+  model surfaces when the upper and lower print together. Inspect the sliced
+  hinge faces and confirm that each 6.6 mm bore remains open.
 
 No separate PLA screw plate is needed.
 
@@ -355,9 +360,9 @@ open or non-manifold edges. Current print-oriented bounding boxes are:
 
 The rigid print-orientation transform preserves the structural geometry. Each
 fit upper has 435.9 mm2 of coplanar first-layer area, each lower has 556.6 mm2,
-and each full upper has 421.4 mm2. The print-only hinge membranes add 0.4 mm
-closures that are removed after printing. The failed assembly-oriented fit
-exports had zero coplanar first-layer area.
+and each full upper has 421.4 mm2. The failed assembly-oriented fit exports had
+zero coplanar first-layer area. Current exports have no print-only bore
+closures.
 
 The source asserts clearance, bolt-length, and retained-wall requirements for
 both hardware sizes. The M6 hinge retains 3.2 mm of PETG around its bore; the
@@ -367,8 +372,9 @@ leaves 6.4 mm of PETG above it. The assembly render uses a 30 mm M6 reference
 latch bolt with its washer and captive locknut, a 50 mm M6 reference hinge bolt
 with two washers and a locknut, and four 12 mm M4 reference tray screws with
 captive locknuts. Physical hardware fit and the 41.3 mm bore/liner rail grip are
-validated. Support-removal quality for the new membranes and payload capacity
-still require testing.
+validated. The 2026-08-11 open-bore, support-on-model reprint completed and the
+user reported that both clamp parts looked good. M6 pass-through, final
+assembly, and payload capacity still require physical validation.
 
 ## Safety limits for the prototype
 
@@ -389,9 +395,12 @@ still require testing.
   to common M4/M6 Ace-style hardware later that day. After a layer-37 adhesion
   failure on 2026-08-10, the fit-upper and lower exports were rotated from
   assembly orientation onto verified planar clamp-end footprints. After a
-  supported hinge face printed as loose rings, suspended hinge bores gained
-  removable 0.4 mm membranes and the full upper gained a verified planar
-  backplate-side print orientation.
+  supported hinge face printed as loose rings, the full upper gained a verified
+  planar backplate-side print orientation. The first final attempt added 0.4 mm
+  hinge-bore membranes, but physical inspection on 2026-08-11 showed that both
+  bores were sealed and the lower suspended knuckle was still malformed. The
+  membranes were removed, and the corrected project allows support to start on
+  model surfaces beneath the shadowed knuckle.
 - Tool versions: OpenSCAD 2021.01 generated and verified the STL exports;
   Bambu Studio 2.7.1.62 saved the documented X2D project archives.
 - Upstream geometry: none.

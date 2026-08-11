@@ -194,10 +194,12 @@ sent while the plate awaited cleaning.
   ring-shaped perimeters cleanly. This is a repeatable geometry/orientation
   weakness, not evidence of an incorrect rail bore or ordinary wet-filament
   stringing.
-- Correction: add a removable 0.4 mm, two-layer membrane across the M6 bore at
-  each suspended knuckle start. This makes the first supported face a solid
-  disk. The membrane is pushed out with the M6 bolt or a 6 mm drill bit turned
-  by hand after printing.
+- Superseded correction: a removable 0.4 mm, two-layer membrane was proposed
+  across each suspended M6 bore. The 2026-08-11 full-mount inspection disproved
+  this approach. Both PETG membranes sealed their bores too firmly to remove by
+  hand, and the lower suspended hinge face still printed malformed. Current
+  exports omit the membranes and instead allow support to start on model
+  surfaces beneath the vertically shadowed knuckle.
 
 ## Durable lesson
 

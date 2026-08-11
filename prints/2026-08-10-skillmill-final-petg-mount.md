@@ -1,7 +1,8 @@
 # 2026-08-10 — Skillmill final right-hand PETG mount
 
-- Status: in progress
+- Status: failed
 - Started: 2026-08-10 21:26 PDT
+- Completed: 2026-08-11 (time not recorded)
 - Related issue: none
 
 ## Goal
@@ -9,9 +10,9 @@
 Print the final right-hand PETG upper mount and a replacement lower saddle. The
 upper includes the structural bridge, tray shelf, and backplate. The lower is
 reprinted because the fit-test lower had a malformed supported hinge face.
-Success requires both parts to remain seated, the removable hinge membranes to
-produce clean supported knuckles, and all M4/M6 hardware openings to remain
-usable. The separate PLA tray is not part of this job.
+Success requires both parts to remain seated, every supported knuckle to print
+cleanly, and all M4/M6 hardware openings to remain usable. The separate PLA
+tray is not part of this job.
 
 ## Source and provenance
 
@@ -72,22 +73,37 @@ usable. The separate PLA tray is not part of this job.
 
 ## Outcome
 
-- Actual result: pending; printer accepted the job and entered startup
-- Dimensions/fit: the same 41.3 mm bore/liner combination already passed the physical rail-fit test
-- Surface or structural defects: pending
-- Photos: none committed
-- Print history or app evidence checked: Bambu Studio Device view showed the named job at 0%, layer 0/360, with a 4h23m estimate
+- Actual result: failed. Both PETG parts completed, but neither hinge bore was
+  usable.
+- Dimensions/fit: the same 41.3 mm bore/liner combination already passed the
+  physical rail-fit test.
+- Surface or structural defects: the upper mount's suspended hinge face looked
+  clean, but its modeled membrane sealed the bore. The lower saddle's membrane
+  also sealed the bore, and the surrounding suspended hinge face printed as a
+  dense malformed mass. The user could make only a pin-prick in the lower
+  membrane and could not safely clear either hole by hand.
+- Photos: user-supplied inspection photos were reviewed but are not stored in
+  this public repository.
+- Print history or app evidence checked: Bambu Studio showed the job completed
+  at 360/360 layers in 4h22m59s using 111.07 g.
 
 ## Diagnosis and next change
 
-The prior malformed hinge face was caused by an annular supported surface that
-started in midair. This revision closes the bore for two 0.20 mm layers at each
-suspended knuckle start. The resulting membrane is sacrificial: remove it after
-support cleanup, then confirm that the M6 bolt passes through all knuckles.
+The 0.4 mm, two-layer membrane was not practically sacrificial in PETG and must
+not be retained. It sealed both holes too firmly to remove by hand. It also did
+not fix the lower face because that suspended outer knuckle is vertically
+shadowed by the clean bed-side knuckle. With build-plate-only support enabled,
+the slicer could not begin a support branch on the intermediate knuckle surface.
+
+The next attempt removes every membrane and allows Tree Hybrid support to start
+on model surfaces. This lets the lower support rise directly from the clean
+knuckle beneath the failed face while the dedicated auxiliary-filament
+interface supports the open annulus.
 
 ## Durable lesson
 
 See `memory/skillmill-rail-measurement.md` for the validated bore/liner result.
-Keep the removable hinge membranes in print-oriented exports unless a later
-physical test proves that another support strategy produces equally clean
-knuckles.
+Do not model a solid closure across a functional bore unless removal has first
+been validated in a small test coupon. For vertically stacked features, inspect
+whether build-plate-only support prevents the slicer from using a clean model
+surface beneath the overhang.

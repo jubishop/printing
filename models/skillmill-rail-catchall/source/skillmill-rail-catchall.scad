@@ -77,11 +77,6 @@ tray_nut_thickness = 5.0;
 tray_nut_pocket_depth = 5.6;
 
 hinge_hole_diameter = 6.6;
-// A suspended hinge knuckle starts above the build plate in the end-on print
-// orientation. Close its bore for two 0.20 mm layers so the first circular
-// face is supported as a solid disk. The membrane is removed after printing.
-hinge_bore_membrane_thickness = 0.4;
-hinge_bore_membrane_overlap = 0.1;
 hinge_bolt_diameter = 6.0;
 hinge_bolt_length = 50;
 hinge_bolt_head_across_flats = 10.0;
@@ -193,12 +188,6 @@ assert(
     hinge_barrel_radius - hinge_hole_diameter / 2 >= 3,
     "The hinge barrel must retain at least 3 mm around the M6 bore."
 );
-assert(
-    hinge_bore_membrane_thickness > 0
-        && hinge_bore_membrane_thickness <= 0.4,
-    "The removable hinge-bore membrane must be 0.4 mm thick or less."
-);
-
 latch_bolt_y = -clamp_outer_radius - 14;
 
 tray_near_y = clamp_outer_radius - 1.5;
@@ -307,32 +296,6 @@ module lower_hinge() {
     lower_hinge_knuckle(
         hinge_center_knuckle / 2 + hinge_knuckle_gap,
         hinge_outer_knuckle
-    );
-}
-
-// Print-only bore closures for the hinge faces that start above the plate when
-// orient_clamp_end_on_bed() places the +X clamp end on the bed. Each closure
-// overlaps the bore wall by 0.1 mm. Push it out with the M6 bolt or turn a 6 mm
-// drill bit by hand after support removal. Assembly geometry omits these parts.
-module hinge_bore_membrane(x_start) {
-    translate([x_start, hinge_y, 0])
-        rotate([0, 90, 0])
-            cylinder(
-                h = hinge_bore_membrane_thickness,
-                d = hinge_hole_diameter + 2 * hinge_bore_membrane_overlap
-            );
-}
-
-module upper_hinge_print_membrane() {
-    hinge_bore_membrane(
-        hinge_center_knuckle / 2 - hinge_bore_membrane_thickness
-    );
-}
-
-module lower_hinge_print_membrane() {
-    hinge_bore_membrane(
-        -hinge_center_knuckle / 2 - hinge_knuckle_gap
-            - hinge_bore_membrane_thickness
     );
 }
 
@@ -641,27 +604,6 @@ module lower_clamp() {
     }
 }
 
-module upper_fit_test_for_print() {
-    union() {
-        upper_fit_test();
-        upper_hinge_print_membrane();
-    }
-}
-
-module upper_mount_for_print() {
-    union() {
-        upper_mount();
-        upper_hinge_print_membrane();
-    }
-}
-
-module lower_clamp_for_print() {
-    union() {
-        lower_clamp();
-        lower_hinge_print_membrane();
-    }
-}
-
 // The installed clamp axis is X. Standing a single clamp part on its +X end
 // converts the annular end face into a broad, coplanar bed footprint while
 // leaving the rail channel and M6 hinge bore vertical. The previous exports
@@ -851,24 +793,24 @@ if (part == "assembly" || part == "assembly-right") {
     color("#D8D8D8") installed_latch_hardware();
     color("#8AA3B0") installed_hinge_hardware();
 } else if (part == "upper-right") {
-    orient_mount_side_on_bed() upper_mount_for_print();
+    orient_mount_side_on_bed() upper_mount();
 } else if (part == "upper-left") {
     orient_mount_side_on_bed()
-        mirror([0, 1, 0]) upper_mount_for_print();
+        mirror([0, 1, 0]) upper_mount();
 } else if (part == "upper-right-assembly") {
     upper_mount();
 } else if (part == "upper-left-assembly") {
     left_handed_upper();
 } else if (part == "lower" || part == "lower-right") {
-    orient_clamp_end_on_bed() lower_clamp_for_print();
+    orient_clamp_end_on_bed() lower_clamp();
 } else if (part == "lower-left") {
     orient_clamp_end_on_bed()
-        mirror([0, 1, 0]) lower_clamp_for_print();
+        mirror([0, 1, 0]) lower_clamp();
 } else if (part == "fit-upper-right") {
-    orient_clamp_end_on_bed() upper_fit_test_for_print();
+    orient_clamp_end_on_bed() upper_fit_test();
 } else if (part == "fit-upper-left") {
     orient_clamp_end_on_bed()
-        mirror([0, 1, 0]) upper_fit_test_for_print();
+        mirror([0, 1, 0]) upper_fit_test();
 } else if (part == "lower-right-assembly") {
     lower_clamp();
 } else if (part == "lower-left-assembly") {
