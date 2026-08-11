@@ -178,6 +178,14 @@ M4 x 12 mm provides full locknut engagement and approximately 1.0 mm modeled
 protrusion behind the mount. Do not substitute longer screws unless their
 clearance behind the mount is checked.
 
+The first physical backplate printed with each hex pocket's point aimed toward
+its vertical neighbor. At the 9 mm screw-center spacing, the two 7.6 mm
+across-flats pockets then had only about 0.22 mm between their nearest points.
+That prototype is acceptable if all four locknuts seat without forcing or
+overlap. The source now rotates the pockets by 30 degrees without moving the
+screw centers. This leaves a 1.4 mm PETG bridge between each vertical pair for
+future prints and MakerWorld publication.
+
 ## Files
 
 Editable source:
@@ -210,7 +218,12 @@ Bambu Studio X2D projects:
   right-hand PETG upper mount and matching lower saddle. Its hinge bores are
   fully open, and its support settings allow branches to start on model
   surfaces so the vertically shadowed hinge knuckle receives a direct support
-  interface.
+  interface. It records the physically printed prototype and therefore retains
+  that prototype's closely spaced M4 pocket orientation. Replace its upper STL
+  with the current export and reslice before a future PETG print or MakerWorld
+  release.
+- `exports/skillmill-pla-tray-x2d.3mf` contains the support-free PLA tray on the
+  Textured PEI plate with four walls, five bottom layers, and 20% grid infill.
 
 The projects were saved by Bambu Studio 2.7.1.62 on 2026-08-10; the final
 two-part mount project was updated on 2026-08-11 after the open-bore correction.
@@ -400,7 +413,10 @@ assembly, and payload capacity still require physical validation.
   hinge-bore membranes, but physical inspection on 2026-08-11 showed that both
   bores were sealed and the lower suspended knuckle was still malformed. The
   membranes were removed, and the corrected project allows support to start on
-  model surfaces beneath the shadowed knuckle.
+  model surfaces beneath the shadowed knuckle. After the PETG parts passed
+  visual inspection, the paired M4 nut pockets were rotated for an additional
+  1.18 mm of modeled separation without changing the already printed tray's
+  screw centers.
 - Tool versions: OpenSCAD 2021.01 generated and verified the STL exports;
   Bambu Studio 2.7.1.62 saved the documented X2D project archives.
 - Upstream geometry: none.

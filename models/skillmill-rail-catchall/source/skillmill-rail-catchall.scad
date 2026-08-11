@@ -73,6 +73,7 @@ tray_fastener_head_access_diameter = 9.2;
 tray_fastener_head_recess_depth = 3.4;
 tray_nut_across_flats = 7.0;
 tray_nut_pocket_across_flats = 7.6;
+tray_nut_pocket_rotation = 0;
 tray_nut_thickness = 5.0;
 tray_nut_pocket_depth = 5.6;
 
@@ -168,6 +169,11 @@ assert(
         && tray_mount_height - max(tray_mount_hole_z_offsets)
             >= tray_fastener_head_access_diameter / 2 + 3,
     "The tray screw-head counterbores must retain 3 mm top and bottom margins."
+);
+assert(
+    tray_mount_hole_z_offsets[1] - tray_mount_hole_z_offsets[0]
+            - tray_nut_pocket_across_flats >= 1,
+    "The rotated M4 locknut pockets must retain at least 1 mm between them."
 );
 
 $fn = 96;
@@ -299,8 +305,8 @@ module lower_hinge() {
     );
 }
 
-module hex_prism(across_flats, height) {
-    rotate([0, 0, 30])
+module hex_prism(across_flats, height, rotation = 30) {
+    rotate([0, 0, rotation])
         cylinder(
             h = height,
             d = across_flats / cos(30),
@@ -412,7 +418,8 @@ module hardware_fit_gauge() {
         translate([20, 0, gauge_height - tray_nut_pocket_depth])
             hex_prism(
                 tray_nut_pocket_across_flats,
-                tray_nut_pocket_depth + 0.1
+                tray_nut_pocket_depth + 0.1,
+                tray_nut_pocket_rotation
             );
     }
 }
@@ -543,7 +550,8 @@ module tray_mount_bracket() {
                 rotate([-90, 0, 0])
                     hex_prism(
                         tray_nut_pocket_across_flats,
-                        tray_nut_pocket_depth + 0.1
+                        tray_nut_pocket_depth + 0.1,
+                        tray_nut_pocket_rotation
                     );
         }
     }
@@ -757,7 +765,11 @@ module installed_tray_hardware() {
         // Captive M4 nylon-insert locknut loaded from the rear.
         translate([x, backplate_y, z])
             rotate([-90, 0, 0])
-                hex_prism(tray_nut_across_flats, tray_nut_thickness);
+                hex_prism(
+                    tray_nut_across_flats,
+                    tray_nut_thickness,
+                    tray_nut_pocket_rotation
+                );
     }
 }
 

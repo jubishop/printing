@@ -83,9 +83,11 @@ unchanged. The separate PLA tray is not part of this job.
   good after removal from the plate.
 - Dimensions/fit: the same 41.3 mm bore/liner combination already passed the
   physical rail-fit test
-- Surface or structural defects: none reported in the completed open-bore
-  reprint. M6 bolt pass-through and assembled hinge movement have not yet been
-  reported separately.
+- Surface or structural defects: no hinge defect was reported in the completed
+  open-bore reprint. The user observed that each vertical pair of rear-facing
+  M4 locknut pockets was close together but accepted the printed backplate for
+  the prototype. M6 bolt pass-through and assembled hinge movement have not yet
+  been reported separately.
 - Photos: none committed
 - Print history or app evidence checked: Bambu Studio Device view showed the
   named job at 0%, layer 0/360, with a 4h26m33s remaining estimate and a 13:47
@@ -103,6 +105,11 @@ This attempt removes the membranes and permits support on model surfaces. The
 dedicated support interface can now contact the open annular hinge faces from a
 short, directly supported path. Inspect both parts before assembly. Do not use
 the M6 bolt to force through fused PETG.
+
+The physical backplate also showed that the original 30-degree hex orientation
+left only about 0.22 mm between neighboring M4 pocket points. The accepted
+prototype keeps its 9 mm screw spacing. The source now rotates only the pockets,
+raising their modeled separation to 1.4 mm for a future PETG print.
 
 ## Durable lesson
 
