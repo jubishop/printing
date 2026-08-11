@@ -1,7 +1,7 @@
 # Skillmill rail catch-all tray
 
 An original, parametric catch-all tray for the round upper rail on a Technogym
-Skillmill. The 155 x 85 x 28 mm tray is intended for light objects such as a TV
+Skillmill. The 155 x 85 x 38 mm tray is intended for light objects such as a TV
 remote, AirPods case, or keys. The rail mount and clamp print in PETG, while the
 separate tray prints in PLA.
 
@@ -25,8 +25,10 @@ which were physically tested and found to have inadequate engagement.
 ## Rail measurement and current size
 
 On 2026-08-08 the rail circumference was measured with a fabric tape at about
-125 mm. That calculates to 39.79 mm diameter and strongly indicates a nominal
-40 mm tube. The current exports therefore use **40.0 mm diameter**.
+125 mm. That calculates to 39.79 mm diameter, but the fabric-tape measurement
+was approximate. The rail was never directly measured at 40 mm. The current
+exports retain **40.0 mm as a provisional modeling input**, not a verified rail
+dimension, so successive fit tests have a consistent calibration baseline.
 
 The OpenSCAD source accepts either measurement:
 
@@ -40,10 +42,13 @@ Only the value selected by `rail_measurement_mode` is used. Circumference is the
 easier field measurement; diameter is useful for a known nominal tube size or
 caliper measurement.
 
-The clamp bore adds 0.8 mm radial liner allowance plus 0.25 mm radial fit
-clearance. Adjust those parameters independently rather than scaling the STL.
-The first 40 mm clamp has a 42.1 mm bore and was loose when tested without the
-liner; test it again with the ordered liner before changing the rail diameter.
+The first clamp used that provisional input, 0.8 mm of radial liner allowance,
+and 0.25 mm of radial fit clearance, producing a 42.1 mm bore. Physical testing
+found that it still slid slightly after the rubber liner was installed. The
+current revision applies a direct -0.8 mm bore-diameter calibration, producing a
+41.3 mm modeled bore. This is a relative fit adjustment based on the tested
+part; it does not establish the rail's exact diameter or the liner's exact
+compression. Adjust the source parameters rather than scaling an STL.
 
 ## Why the first printed screw failed
 
@@ -115,7 +120,7 @@ entire nut/washer family from the shopping list.
 | 1 | M6 nylon-insert locknut | Holds the hinge bolt securely without requiring the hinge to be clamped solid. |
 | 4 | M4 x 12 mm Phillips pan-head machine screws | Fasten the PLA tray's reinforced wall to the PETG backplate. |
 | 4 | M4 nylon-insert locknuts, about 7 mm across flats and 5 mm thick | Load into captive pockets in the PETG backplate for the tray screws. |
-| 1 | Soft rubber liner, already ordered | Fills the modeled 0.8 mm radial allowance, adds grip, and stops the clamp rotating on the rail. |
+| 1 | Soft rubber liner | Fills the modeled 0.8 mm radial allowance and supplies grip when compressed by the clamp. |
 
 No M4 washers are used in the tray joint. Each M4 pan head sits in a 9.2 mm
 round counterbore and is driven with an ordinary Phillips screwdriver, while
@@ -196,9 +201,10 @@ Bambu Studio X2D projects:
 
 - `exports/skillmill-hardware-fit-gauge-m4-m6.3mf` contains the one-part PETG
   hardware-fit gauge plate.
-- `exports/skillmill-catchall-lower-right-40mm.3mf` contains the corrected
-  right-hand fit upper and matching lower saddle, with the PETG/support
-  interface assignments used for the 2026-08-10 retry.
+- `exports/skillmill-catchall-lower-right-40mm.3mf` contains the current 41.3 mm
+  bore right-hand fit upper and matching lower saddle, with the corrected
+  orientation and PETG/support-interface assignments used for the 2026-08-10
+  tighter-bore retry.
 
 Both projects were saved by Bambu Studio 2.7.1.62 on 2026-08-10. They contain
 slice settings and model-render thumbnails but no generated G-code. The
@@ -323,15 +329,16 @@ OpenSCAD 2021.01 regenerated all eight current STLs with `--hardwarnings` and
 reported each as a simple 3D object. A separate triangle-edge audit found no
 open or non-manifold edges. Current post-redesign bounding boxes are:
 
-- Each PETG mount upper: 72.0 x 112.6 x 66.55 mm.
-- Each print-oriented lower: 33.55 x 94.6 x 32.0 mm.
-- Each print-oriented fit upper: 33.55 x 94.6 x 32.0 mm.
-- PLA tray: 155.0 x 85.0 x 28.0 mm.
+- Each PETG mount upper: 72.0 x 111.8 x 66.15 mm.
+- Each print-oriented lower: 33.15 x 93.8 x 32.0 mm.
+- Each print-oriented fit upper: 33.15 x 93.8 x 32.0 mm.
+- PLA tray: 155.0 x 85.0 x 38.0 mm, with 34.8 mm of usable wall height
+  above the 3.2 mm floor.
 - Hardware-fit gauge: 60.0 x 20.0 x 13.0 mm.
 
 The rigid print-orientation transform preserves triangle count and modeled
-volume. Each fit upper now has 443.4 mm² of coplanar first-layer area and each
-lower has 564.1 mm², compared with zero for both failed assembly-oriented
+volume. Each fit upper now has 435.9 mm² of coplanar first-layer area and each
+lower has 556.6 mm², compared with zero for both failed assembly-oriented
 exports.
 
 The source asserts clearance, bolt-length, and retained-wall requirements for

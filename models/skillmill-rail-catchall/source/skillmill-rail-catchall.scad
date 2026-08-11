@@ -16,7 +16,7 @@ part = "assembly-right";
 // diameter is useful for a known nominal tube size or when using calipers.
 rail_measurement_mode = "diameter"; // [circumference, diameter]
 rail_circumference = 125.0;
-rail_diameter = 40.0;
+rail_diameter = 40.0; // provisional baseline, not a direct measurement
 
 effective_rail_diameter = rail_measurement_mode == "circumference"
     ? rail_circumference / 3.141592653589793
@@ -29,8 +29,21 @@ assert(
 );
 
 // Space for a soft, non-marking liner between the printed clamp and rail.
+// The diameter adjustment is empirical: it tightens the next test relative to
+// the already-printed clamp without claiming the rail diameter is exact.
 liner_thickness = 0.8;
 radial_fit_clearance = 0.25;
+bore_diameter_adjustment = -0.8;
+
+assert(
+    radial_fit_clearance >= 0,
+    "radial_fit_clearance must not be negative."
+);
+assert(
+    effective_rail_diameter + 2 * liner_thickness
+            + 2 * radial_fit_clearance + bore_diameter_adjustment > 0,
+    "The adjusted clamp bore must have a positive diameter."
+);
 
 clamp_width = 32;
 clamp_wall = 6;
@@ -38,7 +51,7 @@ split_gap = 1.6; // closing travel available at the bolted latch
 
 tray_length = 155;
 tray_depth = 85;
-tray_height = 28;
+tray_height = 38;
 tray_floor = 3.2;
 tray_wall = 2.8;
 tray_corner_radius = 9;
@@ -160,7 +173,8 @@ assert(
 $fn = 96;
 
 clamp_inner_radius =
-    effective_rail_diameter / 2 + liner_thickness + radial_fit_clearance;
+    effective_rail_diameter / 2 + liner_thickness + radial_fit_clearance
+        + bore_diameter_adjustment / 2;
 clamp_outer_radius = clamp_inner_radius + clamp_wall;
 
 hinge_barrel_radius = 6.5;

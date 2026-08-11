@@ -1,6 +1,6 @@
 # 2026-08-10 — Skillmill right-hand PETG fit clamp
 
-- Status: first attempt failed; corrected retry in progress
+- Status: 0.8 mm tighter-bore retry in progress
 - Started: 2026-08-10 12:42 PDT
 - Failure detected: 2026-08-10 13:14 PDT
 - Related issue: none
@@ -8,10 +8,11 @@
 ## Goal
 
 Print the final-hardware right-hand upper fit piece and matching lower saddle so
-the 40 mm rail fit, liner compression, M6 hinge, and M6 latch can be tested
-before printing the full PETG mount and separate PLA tray. Success requires the
-assembled clamp to close around the lined Skillmill rail without spinning and
-for both M6 joints to fit and operate without damaging the printed pockets.
+the fit from the provisional 40 mm input, liner compression, M6 hinge, and M6
+latch can be tested before printing the full PETG mount and separate PLA tray.
+Success requires the assembled clamp to close around the lined Skillmill rail
+without spinning, while both M6 joints fit and operate without damaging the
+printed pockets.
 
 ## Source and provenance
 
@@ -22,6 +23,7 @@ for both M6 joints to fit and operate without damaging the printed pockets.
 - Local files committed:
   - `models/skillmill-rail-catchall/exports/skillmill-fit-upper-right-40mm.stl`
   - `models/skillmill-rail-catchall/exports/skillmill-catchall-lower-right-40mm.stl`
+  - `models/skillmill-rail-catchall/exports/skillmill-catchall-lower-right-40mm.3mf`
 - Modifications from upstream: not applicable
 
 ## Hardware
@@ -106,7 +108,7 @@ sent while the plate awaited cleaning.
 
 ## Corrected retry
 
-- Status: in progress
+- Status: completed successfully
 - Started: 2026-08-10 13:34 PDT
 - Models: regenerated right-hand fit upper and right-hand lower clamp STLs
 - Orientation: each part printed upright on its planar +X clamp-end face
@@ -128,6 +130,55 @@ sent while the plate awaited cleaning.
 - First-layer result: passed live visual inspection; both broad clamp-end
   footprints, their 8 mm brims, the support-base footprints, and the prime
   tower remained smooth and fully seated through the transition to layer 2/160
+
+## Corrected retry outcome
+
+- Print quality: the user reported that both parts turned out well.
+- Hardware fit: the M6 hinge and latch hardware assembled successfully.
+- Rail fit: with the intended rubber liner installed, the tightened clamp still
+  slides slightly on the rail and is not as snug as required.
+- Next revision: retain 40 mm only as the provisional input used for the first
+  test and apply a direct -0.8 mm bore-diameter adjustment. This changes the
+  modeled bore from 42.1 mm to 41.3 mm without claiming that the rail itself is
+  exactly 40 mm. The only field measurement remains the approximate 125 mm
+  fabric-tape circumference.
+
+## 0.8 mm tighter-bore retry
+
+- Status: in progress
+- Started: 2026-08-10 17:25 PDT
+- Models: right-hand fit upper and matching lower, both regenerated with a
+  41.3 mm modeled bore, 0.8 mm narrower than the tested 42.1 mm bore
+- Latch hardware: unchanged M6 x 30 mm bolt, washer, and captive M6 locknut
+- Plate preparation: the user reported that the installed build plate was ready
+- Printer: Panda Factory Bambu Lab X2D with 0.4 mm main and auxiliary nozzles
+- Build plate: Textured PEI
+- Layer height: 0.20 mm
+- Walls: 5
+- Top/bottom shells: 5 / 5
+- Infill: gyroid, 30%
+- Adhesion: outer brim only, 8 mm width, 0.1 mm object gap
+- Supports: tree(auto), Tree Hybrid style, 35 degree threshold, build-plate only
+- Support contact: 2 solid top interface layers, 0 mm top Z gap, 0 mm interface
+  spacing
+- Support base: Grey Bambu PETG Basic, project filament 1, main nozzle
+- Support interface: Bambu Support for PLA/PETG, project filament 2, auxiliary
+  nozzle
+- Prime tower: enabled
+- Slice result: 160 layers, 56.13 g, 2h13m final printer estimate
+- Preview inspection: both planar clamp-end footprints had continuous 8 mm
+  brims; support-base footprints and the prime tower were present; no toolpath
+  collision warning appeared
+- Final live mapping: main nozzle from AMS A4 (PETG); auxiliary nozzle from the
+  external feed (Support for PLA/PETG)
+- Calibration settings: automatic bed leveling, flow-dynamics calibration, and
+  nozzle-offset calibration
+- Send result: cloud transfer completed; the printer accepted the job and
+  entered automatic bed leveling at layer 0/160
+- First-layer result: pending
+- Saved project: Bambu Studio 2.7.1.62 project updated with the current meshes
+  and slice settings; no generated G-code; account designer identifier removed
+  before publication
 
 ## Durable lesson
 

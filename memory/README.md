@@ -12,6 +12,8 @@ possible.
 
 - [X2D setup](x2d-setup.md) — stable hardware capabilities and verification
   boundaries.
+- [Skillmill rail measurement](skillmill-rail-measurement.md) — the provisional
+  40 mm modeling input and physical-fit calibration rule.
 - [MakerWorld workflow](makerworld-workflow.md) — Handy-first routing and the
   complete profile preflight.
 - [Build-plate-holder PETG case](cases/2026-07-27-build-plate-holder.md) — warp,
