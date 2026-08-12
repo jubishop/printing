@@ -108,8 +108,10 @@ the M6 bolt to force through fused PETG.
 
 The physical backplate also showed that the original 30-degree hex orientation
 left only about 0.22 mm between neighboring M4 pocket points. The accepted
-prototype keeps its 9 mm screw spacing. The source now rotates only the pockets,
-raising their modeled separation to 1.4 mm for a future PETG print.
+prototype used 9 mm screw spacing. A later assembly attempt showed that its
+inward-facing screw direction was inaccessible, so the PETG upper must be
+reprinted anyway. The replacement uses rear-accessible screw heads, moves the
+locknuts into the PLA tray, and increases the vertical spacing to 11 mm.
 
 ## Durable lesson
 

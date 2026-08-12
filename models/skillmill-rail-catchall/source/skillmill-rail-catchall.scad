@@ -58,19 +58,19 @@ tray_corner_radius = 9;
 
 tray_mount_width = 72;
 tray_mount_height = 27;
-tray_mount_pad_thickness = 6.5;
+tray_mount_pad_thickness = 7.6;
 tray_mount_plate_thickness = 8;
 tray_mount_shelf_depth = 32;
 tray_mount_shelf_thickness = 5;
 tray_mount_hole_x = 24;
-tray_mount_hole_z_offsets = [9, 18];
+tray_mount_hole_z_offsets = [8, 19];
 tray_fastener_diameter = 4.0;
 tray_fastener_clearance_diameter = 4.6;
 tray_fastener_length = 12;
 tray_fastener_head_diameter = 8.0;
 tray_fastener_head_height = 3.1;
 tray_fastener_head_access_diameter = 9.2;
-tray_fastener_head_recess_depth = 3.4;
+tray_fastener_head_recess_depth = 4.0;
 tray_nut_across_flats = 7.0;
 tray_nut_pocket_across_flats = 7.6;
 tray_nut_pocket_rotation = 0;
@@ -135,8 +135,8 @@ assert(
     "The hinge bolt must pass both washers and the nut."
 );
 assert(
-    tray_mount_pad_thickness - tray_fastener_head_recess_depth >= 3,
-    "The PLA tray must retain at least 3 mm behind each screw head."
+    tray_mount_plate_thickness - tray_fastener_head_recess_depth >= 4,
+    "The PETG backplate must retain at least 4 mm behind each screw head."
 );
 assert(
     tray_fastener_head_access_diameter
@@ -148,13 +148,13 @@ assert(
     "The M4 pan head must sit at least 0.2 mm below the tray surface."
 );
 assert(
-    tray_mount_plate_thickness - tray_nut_pocket_depth >= 2,
-    "The PETG backplate must retain at least 2 mm ahead of each nut."
+    tray_mount_pad_thickness - tray_nut_pocket_depth >= 2,
+    "The PLA tray must retain at least 2 mm behind each captive locknut."
 );
 assert(
     tray_fastener_length
-        >= tray_mount_pad_thickness - tray_fastener_head_recess_depth
-            + tray_mount_plate_thickness - tray_nut_pocket_depth
+        >= tray_mount_plate_thickness - tray_fastener_head_recess_depth
+            + tray_mount_pad_thickness - tray_nut_pocket_depth
             + tray_nut_thickness + 0.5,
     "The tray screws must fully engage the captive locknuts."
 );
@@ -479,13 +479,14 @@ module tray_mount_holes() {
                     d = tray_fastener_clearance_diameter
                 );
 
-        // Round counterbore recesses a standard M4 Phillips pan head so only a
-        // screwdriver, rather than a thin-wall socket, is needed in the tray.
+        // The captive M4 locknut loads from inside the tray. Its nylon collar
+        // faces the tray interior, so the screw enters the metal side first.
         translate([x, tray_inner_face_y + 0.1, z])
             rotate([90, 0, 0])
-                cylinder(
-                    h = tray_fastener_head_recess_depth + 0.1,
-                    d = tray_fastener_head_access_diameter
+                hex_prism(
+                    tray_nut_pocket_across_flats,
+                    tray_nut_pocket_depth + 0.1,
+                    tray_nut_pocket_rotation
                 );
     }
 }
@@ -545,13 +546,13 @@ module tray_mount_bracket() {
                         d = tray_fastener_clearance_diameter
                     );
 
-            // Rear-opening captive pocket for the supplied M4 locknut.
+            // Rear-opening counterbore leaves the Phillips screw head exposed
+            // to a straight screwdriver approach outside the tray.
             translate([x, backplate_y - 0.1, z])
                 rotate([-90, 0, 0])
-                    hex_prism(
-                        tray_nut_pocket_across_flats,
-                        tray_nut_pocket_depth + 0.1,
-                        tray_nut_pocket_rotation
+                    cylinder(
+                        h = tray_fastener_head_recess_depth + 0.1,
+                        d = tray_fastener_head_access_diameter
                     );
         }
     }
@@ -736,9 +737,8 @@ module installed_hinge_hardware() {
 
 module installed_tray_hardware() {
     tray_inner_face_y = tray_near_y + tray_mount_pad_thickness;
-    bolt_under_head_y =
-        tray_inner_face_y - tray_fastener_head_recess_depth;
     backplate_y = tray_near_y - tray_mount_plate_thickness;
+    bolt_under_head_y = backplate_y + tray_fastener_head_recess_depth;
 
     for (
         x = [-tray_mount_hole_x, tray_mount_hole_x],
@@ -746,24 +746,29 @@ module installed_tray_hardware() {
     ) {
         z = tray_bottom_z + z_offset;
 
-        // M4 screw shaft points from inside the PLA tray into the PETG mount.
+        // M4 screw shaft points from the exposed rear of the PETG backplate
+        // into the captive locknut inside the PLA tray.
         translate([x, bolt_under_head_y, z])
-            rotate([90, 0, 0])
+            rotate([-90, 0, 0])
                 cylinder(
                     h = tray_fastener_length,
                     d = tray_fastener_diameter
                 );
 
-        // Recessed Phillips pan head, accessible from inside the tray.
+        // Recessed Phillips pan head, accessible behind the PETG backplate.
         translate([x, bolt_under_head_y, z])
-            rotate([-90, 0, 0])
+            rotate([90, 0, 0])
                 pan_head(
                     tray_fastener_head_diameter,
                     tray_fastener_head_height
                 );
 
-        // Captive M4 nylon-insert locknut loaded from the rear.
-        translate([x, backplate_y, z])
+        // Captive M4 nylon-insert locknut loaded from inside the tray.
+        translate([
+            x,
+            tray_inner_face_y - tray_nut_pocket_depth,
+            z
+        ])
             rotate([-90, 0, 0])
                 hex_prism(
                     tray_nut_across_flats,

@@ -1,8 +1,8 @@
 # 2026-08-11 — Skillmill light-blue PLA tray
 
-- Status: in progress
+- Status: completed
 - Started: 2026-08-11 15:19 PDT
-- Completed: pending
+- Completed: 2026-08-11 (time not recorded)
 - Related issue: none
 
 ## Goal
@@ -68,10 +68,13 @@ mounting holes that align with the current PETG backplate.
 
 ## Outcome
 
-- Actual result: pending; printer accepted the job and began its pre-print
-  sequence
-- Dimensions/fit: pending; nominal model size is 155 x 85 x 38 mm
-- Surface or structural defects: pending
+- Actual result: the tray printed, but the tray and PETG upper cannot be
+  assembled practically. The opposite tray wall blocks a straight screwdriver
+  approach to the four inward-facing Phillips screw heads.
+- Dimensions/fit: nominal model size is 155 x 85 x 38 mm; the physical screw
+  centers aligned closely enough to reveal the access failure during assembly
+- Surface or structural defects: none reported; this is a joint-orientation
+  design failure rather than a print-quality failure
 - Photos: none committed
 - Print history or app evidence checked: Bambu Studio Device view showed
   `skillmill-pla-tray-x2d` at 0%, layer 0/237, with 2h46m41s remaining and an
@@ -79,12 +82,13 @@ mounting holes that align with the current PETG backplate.
 
 ## Diagnosis and next change
 
-Inspect the four tray mounting holes before assembly. The current PETG
-backplate's paired M4 locknut pockets are close together but were accepted for
-this prototype. Rotating those hex pockets in the future PETG model does not
-change these screw centers or this tray.
+Reverse the joint. Put the captive M4 locknuts inside the PLA tray and the
+recessed Phillips heads on the exposed rear of the PETG backplate. Because both
+joint halves must be reprinted, increase the paired screw spacing from 9 mm to
+11 mm at the same time. Reuse the existing lower clamp and M4 x 12 mm hardware.
 
 ## Durable lesson
 
-Wait for the completed tray and assembled M4 fit test before promoting a
-reusable print rule to repository memory.
+For a deep open bin, do not place driven fastener heads on an inner wall unless
+a real screwdriver has a verified straight approach. Validate tool access, not
+only fastener clearance and thread engagement.

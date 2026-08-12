@@ -120,12 +120,12 @@ entire nut/washer family from the shopping list.
 | 2 | M6 flat washers, about 12 mm outside diameter | Protect the PETG hinge ends under the bolt head and locknut. |
 | 1 | M6 nylon-insert locknut | Holds the hinge bolt securely without requiring the hinge to be clamped solid. |
 | 4 | M4 x 12 mm Phillips pan-head machine screws | Fasten the PLA tray's reinforced wall to the PETG backplate. |
-| 4 | M4 nylon-insert locknuts, about 7 mm across flats and 5 mm thick | Load into captive pockets in the PETG backplate for the tray screws. |
+| 4 | M4 nylon-insert locknuts, about 7 mm across flats and 5 mm thick | Load into captive pockets inside the PLA tray for the tray screws. |
 | 1 | Soft rubber liner | Fills the modeled 0.8 mm radial allowance and supplies grip when compressed by the clamp. |
 
 No M4 washers are used in the tray joint. Each M4 pan head sits in a 9.2 mm
-round counterbore and is driven with an ordinary Phillips screwdriver, while
-the PETG pockets capture the locknuts.
+round counterbore on the exposed rear of the PETG backplate and is driven with
+an ordinary Phillips screwdriver. The PLA tray pockets capture the locknuts.
 
 Useful installation tools are two 10 mm wrenches or sockets for the M6 hardware
 and a Phillips #2 screwdriver for the recessed M4 tray screws.
@@ -172,19 +172,21 @@ upper.
 - Four M4 nylon-insert locknuts, approximately 7 mm across flats and 5 mm thick
 - No M4 washers
 
-The screw heads recess into 9.2 mm counterbores from inside the tray. The
-locknuts load into rear-opening captive pockets in the 8 mm PETG backplate.
-M4 x 12 mm provides full locknut engagement and approximately 1.0 mm modeled
-protrusion behind the mount. Do not substitute longer screws unless their
-clearance behind the mount is checked.
+The screw heads recess 4.0 mm into 9.2 mm counterbores on the exposed rear of
+the 8 mm PETG backplate. The locknuts load from inside the tray, nylon collar
+facing the tray interior, into 5.6 mm-deep captive pockets in its reinforced
+7.6 mm PLA wall. This leaves 4.0 mm of PETG behind each screw head and 2.0 mm
+of PLA behind each locknut. M4 x 12 mm fully engages the 5 mm locknut and
+protrudes about 1.0 mm beyond it.
 
-The first physical backplate printed with each hex pocket's point aimed toward
-its vertical neighbor. At the 9 mm screw-center spacing, the two 7.6 mm
-across-flats pockets then had only about 0.22 mm between their nearest points.
-That prototype is acceptable if all four locknuts seat without forcing or
-overlap. The source now rotates the pockets by 30 degrees without moving the
-screw centers. This leaves a 1.4 mm PETG bridge between each vertical pair for
-future prints and MakerWorld publication.
+This direction is intentional. The first prototype put the screw heads inside
+the tray, where the opposite tray wall blocked a straight screwdriver approach.
+It also used 9 mm vertical screw spacing, leaving only about 0.22 mm between
+neighboring hex-pocket points. The current revision moves the vertical centers
+to 11 mm spacing and rotates the tray-side pockets. It retains a 3.4 mm PLA
+bridge between each vertical pair and a 1.8 mm gap between the PETG head
+counterbores. Both the PETG upper and PLA tray must use this revision; neither
+new part is compatible with one old joint half.
 
 ## Files
 
@@ -219,18 +221,25 @@ Bambu Studio X2D projects:
   fully open, and its support settings allow branches to start on model
   surfaces so the vertically shadowed hinge knuckle receives a direct support
   interface. It records the physically printed prototype and therefore retains
-  that prototype's closely spaced M4 pocket orientation. Replace its upper STL
-  with the current export and reslice before a future PETG print or MakerWorld
+  that prototype's inaccessible tray-fastener direction. Replace its upper STL
+  with the current export and reslice before another PETG print or MakerWorld
   release.
+- `exports/skillmill-reversed-joint-petg-upper-right-40mm.3mf` contains only the
+  current right-hand PETG upper. It reverses the M4 joint so the Phillips heads
+  are accessible behind the backplate, retains the proven open-hinge Tree
+  Hybrid support setup, and routes its solid support interface to the external
+  auxiliary feed. The already validated lower clamp is intentionally absent.
 - `exports/skillmill-pla-tray-x2d.3mf` contains the support-free PLA tray on the
   Textured PEI plate with four walls, five bottom layers, and 20% grid infill.
+  It records the first, inaccessible screw-head direction; replace its STL and
+  reslice before another tray print.
 
-The projects were saved by Bambu Studio 2.7.1.62 on 2026-08-10; the final
-two-part mount project was updated on 2026-08-11 after the open-bore correction.
-They contain slice settings and model-render thumbnails but no generated
-G-code. The embedded Bambu account designer identifier was removed before
-publication; printer serials, session data, and local filesystem paths are not
-present.
+The projects were saved by Bambu Studio 2.7.1.62. The two-part mount project was
+updated on 2026-08-11 after the open-bore correction, and the reversed-joint
+upper-only project was saved later that day. They contain slice settings and
+model-render thumbnails but no generated G-code. The embedded Bambu account
+designer identifier was removed before publication; printer serials, session
+data, and local filesystem paths are not present.
 
 The fit-upper and lower STLs are print-oriented: each stands on a flat clamp-end
 face with the rail channel and M6 hinge bore vertical. The full PETG upper stands
@@ -341,9 +350,10 @@ No separate PLA screw plate is needed.
 3. Join the clamp halves with the M6 x 50 mm hinge bolt and one washer on each
    side. Tighten the nylon-insert nut only until side play is removed and verify
    that the hinge still pivots freely.
-4. Press the four M4 locknuts into the rear-facing pockets in the PETG mount.
-   Rest the PLA tray on the PETG shelf, align the four holes, and install the
-   four M4 x 12 mm pan-head screws from inside the tray using a Phillips #2
+4. Press the four M4 locknuts into the captive pockets inside the PLA tray,
+   with each nylon collar facing the tray interior. Rest the tray on the PETG
+   shelf and align the four holes. Install the four M4 x 12 mm pan-head screws
+   through the exposed rear of the PETG backplate using a Phillips #2
    screwdriver.
    Tighten only until the tray is seated firmly against the backplate.
 5. Install the liner around the stopped, unoccupied Skillmill.
@@ -379,9 +389,9 @@ closures.
 
 The source asserts clearance, bolt-length, and retained-wall requirements for
 both hardware sizes. The M6 hinge retains 3.2 mm of PETG around its bore; the
-M4 head counterbores retain at least 3 mm of PLA on every side; the M4 locknut
-pockets leave 2.4 mm of PETG ahead of them; and the M6 latch locknut pocket
-leaves 6.4 mm of PETG above it. The assembly render uses a 30 mm M6 reference
+M4 head counterbores retain 4.0 mm of PETG behind them; the M4 locknut pockets
+retain 2.0 mm of PLA behind them; and the M6 latch locknut pocket leaves 6.4 mm
+of PETG above it. The assembly render uses a 30 mm M6 reference
 latch bolt with its washer and captive locknut, a 50 mm M6 reference hinge bolt
 with two washers and a locknut, and four 12 mm M4 reference tray screws with
 captive locknuts. Physical hardware fit and the 41.3 mm bore/liner rail grip are
@@ -414,9 +424,11 @@ assembly, and payload capacity still require physical validation.
   bores were sealed and the lower suspended knuckle was still malformed. The
   membranes were removed, and the corrected project allows support to start on
   model surfaces beneath the shadowed knuckle. After the PETG parts passed
-  visual inspection, the paired M4 nut pockets were rotated for an additional
-  1.18 mm of modeled separation without changing the already printed tray's
-  screw centers.
+  visual inspection, assembly exposed that the tray walls blocked screwdriver
+  access to the inward-facing M4 screw heads. The joint was reversed so the
+  screw heads are accessible behind the PETG backplate and the captive nuts
+  load from inside the PLA tray. The vertical centers also moved from 9 mm to
+  11 mm spacing because both joint halves already required replacement.
 - Tool versions: OpenSCAD 2021.01 generated and verified the STL exports;
   Bambu Studio 2.7.1.62 saved the documented X2D project archives.
 - Upstream geometry: none.
