@@ -9,7 +9,7 @@
 // "lower-right", "lower-left", "fit-upper-right", "fit-upper-left",
 // "lower-right-assembly", "lower-left-assembly",
 // "fit-upper-right-assembly", "fit-upper-left-assembly",
-// "tray-pla", or "hardware-fit-gauge"
+// "clamp-preview-right", "tray-pla", or "hardware-fit-gauge"
 part = "assembly-right";
 
 // Choose either input mode. Circumference is easiest with a fabric tape;
@@ -49,15 +49,15 @@ clamp_width = 32;
 clamp_wall = 6;
 split_gap = 1.6; // closing travel available at the bolted latch
 
-tray_length = 155;
-tray_depth = 85;
-tray_height = 38;
+tray_length = 175;
+tray_depth = 100;
+tray_height = 27;
 tray_floor = 3.2;
 tray_wall = 2.8;
 tray_corner_radius = 9;
 
 tray_mount_width = 72;
-tray_mount_height = 27;
+tray_mount_height = tray_height;
 tray_mount_pad_thickness = 7.6;
 tray_mount_plate_thickness = 8;
 tray_mount_shelf_depth = 32;
@@ -102,6 +102,7 @@ latch_upper_height = 10;
 latch_lower_height = 13;
 latch_lug_width = 24;
 latch_lug_length = 28;
+latch_lug_edge_radius = 2;
 
 assert(
     latch_bolt_clearance_diameter > latch_bolt_diameter,
@@ -119,6 +120,12 @@ assert(
     latch_lug_width
         - latch_nut_pocket_across_flats / cos(30) >= 6,
     "The captive-nut pocket must leave at least 3 mm per side."
+);
+assert(
+    latch_lug_edge_radius > 0
+        && 2 * latch_lug_edge_radius < latch_upper_height
+        && 2 * latch_lug_edge_radius < latch_lower_height,
+    "The latch roundover must leave flat upper and lower bearing faces."
 );
 assert(
     latch_lower_height - latch_nut_pocket_depth >= 4,
@@ -175,6 +182,10 @@ assert(
             - tray_nut_pocket_across_flats >= 1,
     "The rotated M4 locknut pockets must retain at least 1 mm between them."
 );
+assert(
+    tray_height == tray_mount_height,
+    "The tray wall and reinforced mounting pad must finish at the same height."
+);
 
 $fn = 96;
 
@@ -194,7 +205,8 @@ assert(
     hinge_barrel_radius - hinge_hole_diameter / 2 >= 3,
     "The hinge barrel must retain at least 3 mm around the M6 bore."
 );
-latch_bolt_y = -clamp_outer_radius - 14;
+latch_bolt_y =
+    -clamp_outer_radius - latch_lug_length + latch_lug_width / 2 + 2;
 
 tray_near_y = clamp_outer_radius - 1.5;
 tray_bottom_z = clamp_outer_radius + 6;
@@ -327,14 +339,38 @@ module pan_head(diameter, height) {
     }
 }
 
+module latch_lug_outline_2d() {
+    latch_inner_y = -clamp_outer_radius + 2;
+
+    union() {
+        // The M6 tightening bolt sits at the center of the rounded free end.
+        translate([0, latch_bolt_y])
+            circle(d = latch_lug_width);
+
+        // Keep the clamp-side end broad and square where it joins the saddle.
+        translate([-latch_lug_width / 2, latch_bolt_y])
+            square([
+                latch_lug_width,
+                latch_inner_y - latch_bolt_y
+            ]);
+    }
+}
+
+module rounded_latch_lug(height, z_start) {
+    edge_radius = latch_lug_edge_radius;
+
+    translate([0, 0, z_start + edge_radius])
+        minkowski() {
+            linear_extrude(height = height - 2 * edge_radius)
+                offset(delta = -edge_radius)
+                    latch_lug_outline_2d();
+            sphere(r = edge_radius, $fn = 32);
+        }
+}
+
 module upper_latch() {
     difference() {
-        translate([
-            -latch_lug_width / 2,
-            -clamp_outer_radius - latch_lug_length + 2,
-            split_gap / 2
-        ])
-            cube([latch_lug_width, latch_lug_length, latch_upper_height]);
+        rounded_latch_lug(latch_upper_height, split_gap / 2);
 
         translate([0, latch_bolt_y, split_gap / 2 - 1])
             cylinder(
@@ -346,12 +382,10 @@ module upper_latch() {
 
 module lower_latch() {
     difference() {
-        translate([
-            -latch_lug_width / 2,
-            -clamp_outer_radius - latch_lug_length + 2,
+        rounded_latch_lug(
+            latch_lower_height,
             -latch_lower_height - split_gap / 2
-        ])
-            cube([latch_lug_width, latch_lug_length, latch_lower_height]);
+        );
 
         // Smooth through-hole for the M6 manufactured latch bolt.
         translate([
@@ -836,6 +870,11 @@ if (part == "assembly" || part == "assembly-right") {
     upper_fit_test();
 } else if (part == "fit-upper-left-assembly") {
     left_handed_fit_test();
+} else if (part == "clamp-preview-right") {
+    color("#E7B64A") upper_fit_test();
+    color("#4E6A78") lower_clamp();
+    color("#D8D8D8") installed_latch_hardware();
+    color("#8AA3B0") installed_hinge_hardware();
 } else if (part == "tray-pla") {
     pla_tray();
 } else if (part == "hardware-fit-gauge") {

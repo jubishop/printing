@@ -1,7 +1,7 @@
 # Skillmill rail catch-all tray
 
 An original, parametric catch-all tray for the round upper rail on a Technogym
-Skillmill. The 155 x 85 x 38 mm tray is intended for light objects such as a TV
+Skillmill. The 175 x 100 x 27 mm tray is intended for light objects such as a TV
 remote, AirPods case, or keys. The rail mount and clamp print in PETG, while the
 separate tray prints in PLA.
 
@@ -13,6 +13,9 @@ The clamp uses printed structural parts with common Ace-style metric hardware:
 - An M6 x 30 mm bolt passes through smooth clearance holes into a captive M6
   nylon-insert locknut in the lower latch lug.
 - A 1.6 mm split gap provides actual tightening travel.
+- Both M6 latch lugs have a semicircular free end and a 2 mm exterior edge
+  radius so an arm or elbow is less likely to meet a sharp printed corner. The
+  washer and locknut bearing faces remain flat.
 - The PETG upper mount ends in a 72 x 32 x 5 mm shelf and broad backplate that
   carry the PLA tray.
 - Four recessed M4 x 12 mm Phillips pan-head machine screws and captive M4
@@ -141,6 +144,14 @@ The modeled latch dimensions are:
 - Bolt clearance hole: 7.0 mm, including FDM hole allowance
 - Captive-locknut pocket: 10.6 mm across flats x 6.6 mm deep
 - Modeled bolt length: 30 mm
+- Lug free end: semicircle centered on the M6 bolt axis
+- Exterior lug-edge radius: 2.0 mm, with flat hardware bearing faces
+
+The rounded exterior is a contact-safety refinement only. It does not change
+the 41.3 mm rail bore, split gap, M6 hole, captive nut pocket, hinge, or tray
+joint. The last physical clamp fit was perfect before this exterior roundover;
+the rounded version is model- and slice-validated but has not been physically
+printed yet.
 
 The small hardware-fit gauge tests the exact clearance hole and nut pocket. A
 nut should enter with light finger pressure, sit fully below the top surface,
@@ -213,33 +224,36 @@ Bambu Studio X2D projects:
 - `exports/skillmill-hardware-fit-gauge-m4-m6.3mf` contains the one-part PETG
   hardware-fit gauge plate.
 - `exports/skillmill-catchall-lower-right-40mm.3mf` contains the current 41.3 mm
-  bore right-hand fit upper and matching lower saddle, with the corrected
-  orientation and PETG/support-interface assignments used for the 2026-08-10
-  tighter-bore retry.
+  bore right-hand fit upper and matching lower saddle. Both parts include the
+  rounded latch tabs and retain the corrected print orientation plus the proven
+  PETG/support-interface assignments.
 - `exports/skillmill-catchall-petg-mount-right-40mm.3mf` contains the final
-  right-hand PETG upper mount and matching lower saddle. Its hinge bores are
-  fully open, and its support settings allow branches to start on model
-  surfaces so the vertically shadowed hinge knuckle receives a direct support
-  interface. It records the physically printed prototype and therefore retains
-  that prototype's inaccessible tray-fastener direction. Replace its upper STL
-  with the current export and reslice before another PETG print or MakerWorld
-  release.
+  current right-hand PETG upper mount and matching lower saddle. This is the
+  primary reusable PETG project. It has the accessible rear screw-head
+  direction, 41.3 mm lined bore, rounded latch tabs, fully open hinge bores,
+  current meshes, and an auto-arranged clean slice. Its support settings allow
+  branches to start on model surfaces so each vertically shadowed hinge
+  knuckle receives a direct support interface.
 - `exports/skillmill-reversed-joint-petg-upper-right-40mm.3mf` contains only the
-  current right-hand PETG upper. It reverses the M4 joint so the Phillips heads
-  are accessible behind the backplate, retains the proven open-hinge Tree
+  current right-hand PETG upper. Use this optional project when the matching
+  lower clamp is already available. It has the accessible rear screw-head
+  direction and rounded upper latch tab, retains the proven open-hinge Tree
   Hybrid support setup, and routes its solid support interface to the external
-  auxiliary feed. The already validated lower clamp is intentionally absent.
+  auxiliary feed.
 - `exports/skillmill-pla-tray-x2d.3mf` contains the support-free PLA tray on the
-  Textured PEI plate with four walls, five bottom layers, and 20% grid infill.
-  It records the first, inaccessible screw-head direction; replace its STL and
-  reslice before another tray print.
+  Textured PEI plate with 0.16 mm layers, four walls, six top layers, five
+  bottom layers, and 20% grid infill. It contains the current 175 x 100 x 27 mm
+  tray with captive locknuts inside the tray and is assigned to light-blue PLA.
 
-The projects were saved by Bambu Studio 2.7.1.62. The two-part mount project was
-updated on 2026-08-11 after the open-bore correction, and the reversed-joint
-upper-only project was saved later that day. They contain slice settings and
-model-render thumbnails but no generated G-code. The embedded Bambu account
-designer identifier was removed before publication; printer serials, session
-data, and local filesystem paths are not present.
+The projects were saved by Bambu Studio 2.7.1.62. All three clamp PETG projects
+were rebuilt with the current rounded-latch meshes and slice-checked on
+2026-08-14. The two-part projects were auto-arranged with no toolpath-conflict
+warning. The upper-only project was checked as exactly one object. The revised
+PLA tray project was saved and slice-checked on 2026-08-12. These archives
+contain slice settings and model-render thumbnails but no generated G-code.
+Their plate names were cleared, and the embedded Bambu account designer
+identifier was removed. Printer serials, session data, and local filesystem
+paths are not present.
 
 The fit-upper and lower STLs are print-oriented: each stands on a flat clamp-end
 face with the rail channel and M6 hinge bore vertical. The full PETG upper stands
@@ -257,7 +271,8 @@ part also retained a malformed suspended hinge face.
 Preview:
 
 - `renders/skillmill-catchall-assembly-40mm.png`
-- `renders/skillmill-latch-hardware-detail.png`
+- `renders/skillmill-latch-hardware-detail.png` shows the confirmed rounded
+  latch-tab exterior and unchanged M6 hardware path.
 
 Use matching left or right PETG upper/lower parts. The PLA tray is the same for
 either handed mount. The fit-test upper mates with the same lower saddle and
@@ -370,15 +385,16 @@ machine joint.
 
 ## Geometry verification
 
-OpenSCAD 2021.01 regenerated all eight current STLs with `--hardwarnings` and
-reported each as a simple 3D object. A separate triangle-edge audit found no
-open or non-manifold edges. Current print-oriented bounding boxes are:
+OpenSCAD 2021.01 regenerated all eight current STLs on 2026-08-14 with
+`--hardwarnings` and reported each as a simple 3D object. A separate
+triangle-edge audit found no open or non-manifold edges. Current print-oriented
+bounding boxes are:
 
 - Each PETG mount upper: 66.15 x 111.8 x 72.0 mm.
 - Each print-oriented lower: 33.15 x 93.8 x 32.0 mm.
 - Each print-oriented fit upper: 33.15 x 93.8 x 32.0 mm.
-- PLA tray: 155.0 x 85.0 x 38.0 mm, with 34.8 mm of usable wall height
-  above the 3.2 mm floor.
+- PLA tray: 175.0 x 100.0 x 27.0 mm, with 23.8 mm of usable wall height
+  above the 3.2 mm floor. Its top is flush with the 27 mm reinforced bolt pad.
 - Hardware-fit gauge: 60.0 x 20.0 x 13.0 mm.
 
 The rigid print-orientation transform preserves the structural geometry. Each
@@ -398,6 +414,12 @@ captive locknuts. Physical hardware fit and the 41.3 mm bore/liner rail grip are
 validated. The 2026-08-11 open-bore, support-on-model reprint completed and the
 user reported that both clamp parts looked good. M6 pass-through, final
 assembly, and payload capacity still require physical validation.
+
+The last physical clamp established the bore and liner fit and was reported as
+otherwise perfect. That printed part predates only the rounded exterior latch
+edges documented here. The current PETG project archives were sliced cleanly,
+but the first rounded-tab print remains the final validation for that contact-
+safety change.
 
 ## Safety limits for the prototype
 
@@ -428,7 +450,11 @@ assembly, and payload capacity still require physical validation.
   access to the inward-facing M4 screw heads. The joint was reversed so the
   screw heads are accessible behind the PETG backplate and the captive nuts
   load from inside the PLA tray. The vertical centers also moved from 9 mm to
-  11 mm spacing because both joint halves already required replacement.
+  11 mm spacing because both joint halves already required replacement. On
+  2026-08-12 the tray grew to 175 x 100 mm and its wall height dropped to 27 mm,
+  flush with the reinforced bolt pad. On 2026-08-14 the latch tabs gained a
+  semicircular free end and 2 mm exterior roundover without changing any fit or
+  hardware geometry; all current STLs and reusable 3MF projects were refreshed.
 - Tool versions: OpenSCAD 2021.01 generated and verified the STL exports;
   Bambu Studio 2.7.1.62 saved the documented X2D project archives.
 - Upstream geometry: none.

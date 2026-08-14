@@ -86,6 +86,8 @@ Reverse the joint. Put the captive M4 locknuts inside the PLA tray and the
 recessed Phillips heads on the exposed rear of the PETG backplate. Because both
 joint halves must be reprinted, increase the paired screw spacing from 9 mm to
 11 mm at the same time. Reuse the existing lower clamp and M4 x 12 mm hardware.
+The revised, larger successor print is recorded in
+`prints/2026-08-12-skillmill-enlarged-pla-tray.md`.
 
 ## Durable lesson
 
