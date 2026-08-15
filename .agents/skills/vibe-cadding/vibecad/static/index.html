@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>vibe-cadding</title>
+    <link rel="stylesheet" href="/static/styles.css?v=5" />
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.166.1/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.166.1/examples/jsm/"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <main class="app">
+      <section class="viewer">
+        <canvas id="viewport"></canvas>
+        <div class="topbar">
+          <div id="status" class="status">Loading model...</div>
+          <button id="refreshButton" title="Rebuild from model.py">Refresh</button>
+          <div class="menu">
+            <button id="exportButton" title="Export model files" aria-haspopup="true" aria-expanded="false">Export</button>
+            <div id="exportMenu" class="menuList" role="menu">
+              <button id="exportStl" role="menuitem">STL</button>
+              <button id="exportStep" role="menuitem">STEP</button>
+            </div>
+          </div>
+        </div>
+        <button id="captureButton" class="sendToCodexButton" title="Annotate this camera view for Codex">Send screenshot</button>
+        <div id="legend" class="viewerLegend" aria-label="Part legend"></div>
+        <div id="cutawayOverlay" class="cutawayOverlay">
+          <button id="cutawayToggle" class="cutawayToggle" type="button" aria-pressed="false" aria-expanded="false">Cutaway</button>
+          <div id="cutawaySliderPanel" class="cutawaySliderPanel" hidden>
+            <input id="cutawayZ" type="range" min="0" max="1" step="0.01" value="0.5" />
+            <span id="cutawayValue">0.50</span>
+          </div>
+        </div>
+        <div id="rebuildBar" class="rebuildBar" hidden></div>
+        <div id="capturePanel" class="capturePanel">
+          <canvas id="annotator"></canvas>
+          <div class="captureControls">
+            <div class="captureTools" role="group" aria-label="Annotation tools">
+              <button id="drawTool" class="toolButton active" type="button" aria-pressed="true">Draw</button>
+              <button id="textTool" class="toolButton" type="button" aria-pressed="false">Text</button>
+            </div>
+            <button id="cancelCapture" type="button">Cancel</button>
+            <button id="saveCapture" class="primaryButton" type="button">Done</button>
+          </div>
+          <div id="snapshotDialog" class="snapshotDialog" role="dialog" aria-live="polite" hidden>
+            <div id="snapshotTitle" class="snapshotTitle">Done</div>
+            <input id="snapshotToken" class="snapshotToken" type="text" readonly aria-label="Snapshot identifier" />
+            <button id="copySnapshot" type="button">Copy to clipboard</button>
+          </div>
+        </div>
+      </section>
+      <aside class="sidebar">
+        <div class="panelTitle" style="padding: 12px 16px 0">Parameters</div>
+        <div id="params" class="paramList"></div>
+      </aside>
+    </main>
+    <script type="module" src="/static/viewer.js?v=3"></script>
+  </body>
+</html>

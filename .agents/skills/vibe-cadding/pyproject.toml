@@ -1,0 +1,29 @@
+[project]
+name = "vibe-cadding"
+version = "0.1.0"
+description = "A single-project prototype for vibe-cadding with CadQuery, persistent part caching, and a web viewer."
+readme = "README.md"
+requires-python = ">=3.11,<3.12"
+dependencies = [
+    "cadquery>=2.5.2",
+    "fastapi>=0.115.0",
+    "httpx>=0.27.0",
+    "playwright>=1.49.0",
+    "uvicorn[standard]>=0.30.0",
+    "pydantic>=2.8.0",
+]
+
+[project.scripts]
+vibecad = "vibecad.server:main"
+vibecad-view = "vibecad.capture_view:main"
+vibecad-screencap = "vibecad.screencap:main"
+
+[build-system]
+requires = ["setuptools>=75.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["vibecad*"]
+
+[tool.setuptools.package-data]
+vibecad = ["static/*"]

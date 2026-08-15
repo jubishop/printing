@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>vibe-cadding standard view</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.166.1/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.166.1/examples/jsm/"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <main class="standardGrid">
+      <section class="standardCell"><div class="standardLabel">Top</div><canvas data-view="top"></canvas></section>
+      <section class="standardCell"><div class="standardLabel">Front</div><canvas data-view="front"></canvas></section>
+      <section class="standardCell"><div class="standardLabel">Left</div><canvas data-view="left"></canvas></section>
+      <section class="standardCell"><div class="standardLabel">Ortho</div><canvas data-view="ortho"></canvas></section>
+    </main>
+    <script type="module" src="/static/standard.js"></script>
+  </body>
+</html>
