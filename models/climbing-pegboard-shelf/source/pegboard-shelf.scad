@@ -58,19 +58,22 @@ shelf_width = spacing_center_distance
     + locked_peg_diameter
     + 2 * shelf_side_overhang;
 shelf_depth = 100.0; // pegboard contact plane to front face
-shelf_deck_thickness = 6.0;
+shelf_deck_thickness = 8.0;
 shelf_lip_height = 12.0;
 shelf_lip_thickness = 3.2;
 shelf_lip_overlap = 0.2;
+shelf_front_corner_radius = 12.0;
+shelf_lower_side_radius = 3.0;
 shelf_backplate_thickness = spacing_base_thickness;
 
 // The board ends 17 mm below the lower edge of each hole. Align the shelf's
-// bottom face with that board edge. With a 6 mm deck and a 32 mm fitted peg,
-// the resulting peg axis is 27 mm above the shelf surface.
+// bottom face with that board edge. With an 8 mm deck and a 32 mm fitted peg,
+// the resulting peg axis is 25 mm above the shelf surface.
 hole_bottom_to_board_edge = 17.0;
 shelf_peg_center_height = -shelf_deck_thickness
     + hole_bottom_to_board_edge
     + locked_peg_diameter / 2;
+shelf_center_backwall_height = shelf_peg_center_height;
 
 // Non-printing reference board used only by the installed preview.
 preview_board_width = 280.0;
@@ -113,6 +116,14 @@ assert(shelf_lip_height > 0 && shelf_lip_thickness > 0,
 assert(shelf_lip_overlap > 0
         && shelf_lip_overlap < shelf_deck_thickness,
     "Shelf lip overlap must stay inside the deck.");
+assert(shelf_front_corner_radius > shelf_lip_thickness,
+    "Front corner radius must exceed the lip thickness.");
+assert(2 * shelf_front_corner_radius < shelf_width
+        && 2 * shelf_front_corner_radius < shelf_depth,
+    "Front corner radius is too large for the shelf.");
+assert(shelf_lower_side_radius > 0
+        && shelf_lower_side_radius < shelf_deck_thickness,
+    "Lower side radius must fit within the deck thickness.");
 assert(hole_bottom_to_board_edge > shelf_deck_thickness,
     "Hole must sit above the aligned shelf bottom.");
 assert(shelf_peg_center_height - flange_diameter / 2
@@ -121,6 +132,10 @@ assert(shelf_peg_center_height - flange_diameter / 2
 assert(shelf_peg_center_height - flange_diameter / 2
         > -shelf_deck_thickness,
     "Peg flange must stay above the aligned board edge.");
+assert(shelf_center_backwall_height > shelf_lip_height,
+    "Raised center backwall must extend above the retaining lip.");
+assert(shelf_center_backwall_height <= shelf_peg_center_height,
+    "Raised center backwall must not extend above the peg axes.");
 
 module chamfered_flange(thickness = flange_thickness) {
     union() {
@@ -207,24 +222,100 @@ module spacing_gauge() {
     }
 }
 
-module final_shelf() {
+module rounded_front_outline_2d(width, depth, radius) {
     union() {
-        // Full-depth platform. Its outside depth is measured from the
-        // pegboard contact plane to the front face.
+        translate([-width / 2, 0])
+            square([width, depth - radius]);
+
         translate([
-            -shelf_width / 2,
+            -width / 2 + radius,
+            depth - radius
+        ])
+            square([width - 2 * radius, radius]);
+
+        for (side = [-1, 1]) {
+            translate([
+                side * (width / 2 - radius),
+                depth - radius
+            ])
+                circle(r = radius);
+        }
+    }
+}
+
+module rounded_lower_side_profile_2d(width, height, radius) {
+    union() {
+        translate([-width / 2 + radius, 0])
+            square([width - 2 * radius, height]);
+
+        translate([-width / 2, radius])
+            square([width, height - radius]);
+
+        for (side = [-1, 1]) {
+            translate([side * (width / 2 - radius), radius])
+                circle(r = radius);
+        }
+    }
+}
+
+module rounded_lower_front_profile_2d(depth, height, radius) {
+    union() {
+        square([depth - radius, height]);
+
+        translate([0, radius])
+            square([depth, height - radius]);
+
+        translate([depth - radius, radius])
+            circle(r = radius);
+    }
+}
+
+module rounded_shelf_deck() {
+    intersection() {
+        translate([0, 0, -shelf_deck_thickness])
+            linear_extrude(height = shelf_deck_thickness)
+                rounded_front_outline_2d(
+                    shelf_width,
+                    shelf_depth,
+                    shelf_front_corner_radius
+                );
+
+        // Round the two long lower side edges. The generous center of the
+        // underside remains flat and level with the pegboard's bottom.
+        translate([
+            0,
+            shelf_depth + 0.01,
+            -shelf_deck_thickness
+        ])
+            rotate([90, 0, 0])
+                linear_extrude(height = shelf_depth + 0.02)
+                    rounded_lower_side_profile_2d(
+                        shelf_width,
+                        shelf_deck_thickness,
+                        shelf_lower_side_radius
+                    );
+
+        // Round the exposed lower front edge. The rear contact edge stays
+        // square and flat against the pegboard backing.
+        translate([
+            -shelf_width / 2 - 0.01,
             0,
             -shelf_deck_thickness
         ])
-            cube([
-                shelf_width,
-                shelf_depth,
-                shelf_deck_thickness
-            ]);
+            rotate([90, 0, 90])
+                linear_extrude(height = shelf_width + 0.02)
+                    rounded_lower_front_profile_2d(
+                        shelf_depth,
+                        shelf_deck_thickness,
+                        shelf_lower_side_radius
+                    );
+    }
+}
 
-        // This rear lip spans from the shelf bottom to 12 mm above its top.
-        // When installed, its lower edge aligns with the pegboard's lower edge
-        // and the wood below both holes becomes the load-bearing back support.
+module rounded_rear_backplate() {
+    backplate_height = shelf_deck_thickness + shelf_lip_height;
+
+    intersection() {
         translate([
             -shelf_width / 2,
             0,
@@ -233,36 +324,76 @@ module final_shelf() {
             cube([
                 shelf_width,
                 shelf_backplate_thickness,
-                shelf_deck_thickness + shelf_lip_height
+                backplate_height
             ]);
-
-        // Retaining lip on both sides and the front. A slight overlap
-        // with the deck avoids solids that meet only at a coplanar face.
-        for (side = [-1, 1]) {
-            translate([
-                side < 0
-                    ? -shelf_width / 2
-                    : shelf_width / 2 - shelf_lip_thickness,
-                0,
-                -shelf_lip_overlap
-            ])
-                cube([
-                    shelf_lip_thickness,
-                    shelf_depth,
-                    shelf_lip_height + shelf_lip_overlap
-                ]);
-        }
 
         translate([
-            -shelf_width / 2,
-            shelf_depth - shelf_lip_thickness,
-            -shelf_lip_overlap
+            0,
+            shelf_backplate_thickness + 0.01,
+            -shelf_deck_thickness
+        ])
+            rotate([90, 0, 0])
+                linear_extrude(
+                    height = shelf_backplate_thickness + 0.02
+                )
+                    rounded_lower_side_profile_2d(
+                        shelf_width,
+                        backplate_height,
+                        shelf_lower_side_radius
+                    );
+
+    }
+}
+
+module final_shelf() {
+    union() {
+        // Full-depth platform. Its outside depth is measured from the
+        // pegboard contact plane to the front face.
+        rounded_shelf_deck();
+
+        // This rear lip spans from the shelf bottom to 12 mm above its top.
+        // When installed, its lower edge aligns with the pegboard's lower edge
+        // and the wood below both holes becomes the load-bearing back support.
+        rounded_rear_backplate();
+
+        // Raise only the wall between the peg centerlines. Its 25 mm top is
+        // level with the peg axes, giving each circular flange 21 mm of
+        // vertical overlap. The rounded full-width backplate carries the load
+        // below the deck surface, so this added section starts at the deck.
+        translate([
+            -spacing_center_distance / 2,
+            0,
+            0
         ])
             cube([
-                shelf_width,
-                shelf_lip_thickness,
-                shelf_lip_height + shelf_lip_overlap
+                spacing_center_distance,
+                shelf_backplate_thickness,
+                shelf_center_backwall_height
             ]);
+
+        // The side and front rim follows the same rounded outline as the deck.
+        // The inner radius is offset by the lip thickness for a uniform wall.
+        translate([0, 0, -shelf_lip_overlap])
+            linear_extrude(
+                height = shelf_lip_height + shelf_lip_overlap
+            )
+                difference() {
+                    rounded_front_outline_2d(
+                        shelf_width,
+                        shelf_depth,
+                        shelf_front_corner_radius
+                    );
+
+                    translate([0, shelf_backplate_thickness])
+                        rounded_front_outline_2d(
+                            shelf_width - 2 * shelf_lip_thickness,
+                            shelf_depth
+                                - shelf_backplate_thickness
+                                - shelf_lip_thickness,
+                            shelf_front_corner_radius
+                                - shelf_lip_thickness
+                        );
+                }
 
         // Reuse the exact proven peg and flange geometry. Each circular flange
         // overlaps the rear lip, making a continuous vertical load path from

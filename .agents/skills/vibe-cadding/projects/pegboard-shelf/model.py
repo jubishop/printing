@@ -1,321 +1,355 @@
 from __future__ import annotations
 
-# Example model for a newly initialized vibe-cadding project.
-# Replace this file with the real project model once the initial viewer is running.
-
-import math
-
 import cadquery as cq
 
 from vibecad import cached_part, parameter
 
 
-PREVIEW_ONLY_PARAMS = {"theta"}
+SHELF_COLOR = (0.95, 0.66, 0.10)
+RIM_COLOR = (0.88, 0.45, 0.08)
+BACKWALL_COLOR = (0.82, 0.24, 0.08)
+PEG_COLOR = (0.12, 0.48, 0.82)
+BOARD_COLOR = (0.66, 0.47, 0.27)
 
-teeth = parameter(24, 12, 40, 1, "Teeth")
-module = parameter(2.4, 1.2, 4.0, 0.1, "Gear module")
-gear_thickness = parameter(7.0, 3.0, 14.0, 0.25, "Gear thickness")
-plate_thickness = parameter(4.0, 2.0, 8.0, 0.25, "Plate thickness")
-gear_clearance = parameter(0.45, 0.15, 1.2, 0.05, "Running clearance")
-shaft_radius = parameter(4.0, 2.0, 7.0, 0.1, "Shaft radius")
-cap_radius = parameter(6.4, 4.0, 10.0, 0.1, "Cap radius")
-cap_thickness = parameter(2.6, 1.0, 5.0, 0.1, "Cap thickness")
-theta = parameter(0.0, 0.0, 360.0, 5.0, "Theta")
+
+shelf_depth = parameter(100.0, 60.0, 160.0, 1.0, "Shelf depth (mm)")
+lip_height = parameter(12.0, 5.0, 30.0, 1.0, "Retaining lip height (mm)")
+side_overhang = parameter(5.0, 2.0, 20.0, 0.5, "Side overhang past pegs (mm)")
+deck_thickness = parameter(8.0, 6.0, 12.0, 0.5, "Deck thickness (mm)")
+lip_thickness = parameter(3.2, 2.0, 6.0, 0.2, "Front and side lip thickness (mm)")
+front_corner_radius = parameter(12.0, 4.0, 25.0, 1.0, "Front corner radius (mm)")
+lower_side_radius = parameter(3.0, 1.0, 4.0, 0.5, "Lower perimeter radius (mm)")
+center_backwall_height = parameter(25.0, 12.0, 48.0, 1.0, "Center backwall height (mm)")
 
 
 def build(
-    teeth: float,
-    module: float,
-    gear_thickness: float,
-    plate_thickness: float,
-    gear_clearance: float,
-    shaft_radius: float,
-    cap_radius: float,
-    cap_thickness: float,
-    theta: float,
+    shelf_depth: float,
+    lip_height: float,
+    side_overhang: float,
+    deck_thickness: float,
+    lip_thickness: float,
+    front_corner_radius: float,
+    lower_side_radius: float,
+    center_backwall_height: float,
 ) -> None:
-    layout = _layout(teeth, module, plate_thickness, gear_clearance, gear_thickness)
+    peg_diameter = 32.0
+    peg_length = 39.0
+    peg_wall = 2.4
+    peg_tip_chamfer = 1.0
+    flange_diameter = 42.0
+    flange_thickness = 8.0
+    flange_edge_chamfer = 0.8
+    peg_center_spacing = 178.5
+    hole_bottom_to_board_edge = 17.0
+    backwall_thickness = 8.0
+    board_width = 280.0
+    board_height = 110.0
+    board_hole_clearance = 0.4
 
-    plate(layout["plate_length"], layout["plate_width"], plate_thickness, shaft_radius, layout["left_x"], layout["right_x"])
-    shafts(plate_thickness, gear_thickness, gear_clearance, shaft_radius, layout["left_x"], layout["right_x"])
-    involute_gear(
-        "left",
-        layout["tooth_count"],
-        module,
-        gear_thickness,
-        shaft_radius + gear_clearance,
-        layout["left_x"],
-        layout["gear_z"],
-        0.0,
+    shelf_width = peg_center_spacing + peg_diameter + 2 * side_overhang
+    peg_center_height = -deck_thickness + hole_bottom_to_board_edge + peg_diameter / 2
+    bridge_height = min(center_backwall_height, peg_center_height)
+
+    deck(
+        shelf_width,
+        shelf_depth,
+        deck_thickness,
+        front_corner_radius,
+        lower_side_radius,
     )
-    involute_gear(
-        "right",
-        layout["tooth_count"],
-        module,
-        gear_thickness,
-        shaft_radius + gear_clearance,
-        layout["right_x"],
-        layout["gear_z"],
-        _mesh_phase_degrees(layout["tooth_count"]),
+    retaining_rim(
+        shelf_width,
+        shelf_depth,
+        deck_thickness,
+        lip_height,
+        lip_thickness,
+        backwall_thickness,
+        front_corner_radius,
+        lower_side_radius,
     )
-    retaining_caps(cap_radius, cap_thickness, shaft_radius, layout["left_x"], layout["right_x"], layout["cap_z"])
+    raised_center_backwall(
+        peg_center_spacing,
+        bridge_height,
+        backwall_thickness,
+    )
+    left_peg(
+        -peg_center_spacing / 2,
+        peg_center_height,
+        peg_diameter,
+        peg_length,
+        peg_wall,
+        peg_tip_chamfer,
+        flange_diameter,
+        flange_thickness,
+        flange_edge_chamfer,
+    )
+    right_peg(
+        peg_center_spacing / 2,
+        peg_center_height,
+        peg_diameter,
+        peg_length,
+        peg_wall,
+        peg_tip_chamfer,
+        flange_diameter,
+        flange_thickness,
+        flange_edge_chamfer,
+    )
+    reference_pegboard_not_printable(
+        board_width,
+        board_height,
+        peg_length,
+        deck_thickness,
+        peg_center_spacing,
+        peg_center_height,
+        peg_diameter + board_hole_clearance,
+    )
 
 
-def preview(
-    teeth: float,
-    module: float,
-    gear_thickness: float,
-    plate_thickness: float,
-    gear_clearance: float,
-    shaft_radius: float,
-    cap_radius: float,
-    cap_thickness: float,
-    theta: float,
-) -> dict[str, list[float]]:
-    layout = _layout(teeth, module, plate_thickness, gear_clearance, gear_thickness)
-    return {
-        "left red gear": _rotate_z_matrix(theta, layout["left_x"], 0),
-        "right blue gear": _rotate_z_matrix(-theta, layout["right_x"], 0),
-    }
-
-
-@cached_part("base plate", (0.18, 0.44, 0.54))
-def plate(
-    length: float,
+def _rounded_front_prism(
     width: float,
+    depth: float,
+    height: float,
+    z_min: float,
+    radius: float,
+    y_offset: float = 0.0,
+) -> cq.Workplane:
+    rear = (
+        cq.Workplane("XY")
+        .box(width, depth - radius, height)
+        .translate((0, y_offset + (depth - radius) / 2, z_min + height / 2))
+    )
+    front_center = (
+        cq.Workplane("XY")
+        .box(width - 2 * radius, radius, height)
+        .translate((0, y_offset + depth - radius / 2, z_min + height / 2))
+    )
+    corners = (
+        cq.Workplane("XY")
+        .pushPoints(
+            [
+                (-width / 2 + radius, y_offset + depth - radius),
+                (width / 2 - radius, y_offset + depth - radius),
+            ]
+        )
+        .circle(radius)
+        .extrude(height)
+        .translate((0, 0, z_min))
+    )
+    return rear.union(front_center).union(corners)
+
+
+@cached_part("rounded shelf deck", SHELF_COLOR)
+def deck(
+    width: float,
+    depth: float,
     thickness: float,
-    shaft_radius: float,
-    left_x: float,
-    right_x: float,
+    corner_radius: float,
+    lower_edge_radius: float,
 ) -> cq.Workplane:
-    corner_radius = min(5.0, width / 9)
-    base = (
-        cq.Workplane("XY")
-        .rect(length - corner_radius * 2, width)
-        .extrude(thickness)
-        .translate((0, 0, -thickness / 2))
+    deck_solid = _rounded_front_prism(
+        width,
+        depth,
+        thickness,
+        -thickness,
+        corner_radius,
     )
-    rounded_ends = (
-        cq.Workplane("XY")
-        .pushPoints([(-length / 2 + corner_radius, 0), (length / 2 - corner_radius, 0)])
-        .circle(width / 2)
-        .extrude(thickness)
-        .translate((0, 0, -thickness / 2))
+    exposed_bottom_edges = deck_solid.edges("<Z").filter(
+        lambda edge: edge.Center().y > 1e-6
     )
-    base = base.union(rounded_ends)
-    screw_holes = [(-length * 0.4, -width * 0.34), (-length * 0.4, width * 0.34), (length * 0.4, -width * 0.34), (length * 0.4, width * 0.34)]
-    base = base.faces(">Z").workplane().pushPoints(screw_holes).hole(3.2)
-    return base.faces(">Z").workplane().pushPoints([(left_x, 0), (right_x, 0)]).circle(shaft_radius * 1.25).extrude(1.0)
+    return exposed_bottom_edges.fillet(lower_edge_radius)
 
 
-@cached_part("fixed shafts", (0.42, 0.42, 0.40))
-def shafts(
-    plate_thickness: float,
-    gear_thickness: float,
-    gear_clearance: float,
-    shaft_radius: float,
-    left_x: float,
-    right_x: float,
+@cached_part("rounded 12 mm retaining rim", RIM_COLOR)
+def retaining_rim(
+    width: float,
+    depth: float,
+    deck_thickness: float,
+    height: float,
+    side_thickness: float,
+    rear_thickness: float,
+    corner_radius: float,
+    lower_edge_radius: float,
 ) -> cq.Workplane:
-    height = plate_thickness + gear_thickness + gear_clearance * 2
-    z = -plate_thickness / 2 + height / 2
+    outer = _rounded_front_prism(
+        width,
+        depth,
+        height,
+        0.0,
+        corner_radius,
+    )
+    inner = _rounded_front_prism(
+        width - 2 * side_thickness,
+        depth - rear_thickness - side_thickness,
+        height + 0.2,
+        -0.1,
+        corner_radius - side_thickness,
+        rear_thickness,
+    )
+    rounded_rim = outer.cut(inner)
+    lower_rear = (
+        cq.Workplane("XY")
+        .box(width, rear_thickness, deck_thickness)
+        .translate((0, rear_thickness / 2, -deck_thickness / 2))
+    )
+    rounded_lower_rear = lower_rear.edges("|Y and <Z").fillet(
+        lower_edge_radius
+    )
+    return rounded_rim.union(rounded_lower_rear)
+
+
+@cached_part("raised center backwall", BACKWALL_COLOR)
+def raised_center_backwall(
+    width: float,
+    height_above_deck: float,
+    thickness: float,
+) -> cq.Workplane:
     return (
         cq.Workplane("XY")
-        .pushPoints([(left_x, 0), (right_x, 0)])
-        .circle(shaft_radius)
-        .extrude(height)
-        .translate((0, 0, z - height / 2))
+        .box(width, thickness, height_above_deck)
+        .translate((0, thickness / 2, height_above_deck / 2))
     )
 
 
-@cached_part("left red gear", (0.84, 0.12, 0.13))
-def _left_gear(
-    teeth: int,
-    module: float,
-    thickness: float,
-    bore_radius: float,
+@cached_part("left fitted peg", PEG_COLOR)
+def left_peg(
     x: float,
     z: float,
-    rotation_deg: float,
+    diameter: float,
+    length: float,
+    wall: float,
+    tip_chamfer: float,
+    flange_diameter: float,
+    flange_thickness: float,
+    flange_edge_chamfer: float,
 ) -> cq.Workplane:
-    return _gear_body(teeth, module, thickness, bore_radius, x, z, rotation_deg)
+    return _fitted_peg(
+        x,
+        z,
+        diameter,
+        length,
+        wall,
+        tip_chamfer,
+        flange_diameter,
+        flange_thickness,
+        flange_edge_chamfer,
+    )
 
 
-@cached_part("right blue gear", (0.13, 0.30, 0.82))
-def _right_gear(
-    teeth: int,
-    module: float,
-    thickness: float,
-    bore_radius: float,
+@cached_part("right fitted peg", PEG_COLOR)
+def right_peg(
     x: float,
     z: float,
-    rotation_deg: float,
+    diameter: float,
+    length: float,
+    wall: float,
+    tip_chamfer: float,
+    flange_diameter: float,
+    flange_thickness: float,
+    flange_edge_chamfer: float,
 ) -> cq.Workplane:
-    return _gear_body(teeth, module, thickness, bore_radius, x, z, rotation_deg)
+    return _fitted_peg(
+        x,
+        z,
+        diameter,
+        length,
+        wall,
+        tip_chamfer,
+        flange_diameter,
+        flange_thickness,
+        flange_edge_chamfer,
+    )
 
 
-def involute_gear(
-    side: str,
-    teeth: int,
-    module: float,
-    thickness: float,
-    bore_radius: float,
+def _fitted_peg(
     x: float,
     z: float,
-    rotation_deg: float,
+    diameter: float,
+    length: float,
+    wall: float,
+    tip_chamfer: float,
+    flange_diameter: float,
+    flange_thickness: float,
+    flange_edge_chamfer: float,
 ) -> cq.Workplane:
-    if side == "left":
-        return _left_gear(teeth, module, thickness, bore_radius, x, z, rotation_deg)
-    return _right_gear(teeth, module, thickness, bore_radius, x, z, rotation_deg)
+    negative_y = cq.Vector(0, -1, 0)
+    positive_y = cq.Vector(0, 1, 0)
+    center = cq.Vector(x, 0, z)
+    outer_radius = diameter / 2
+    inner_radius = outer_radius - wall
+    tip_radius = outer_radius - tip_chamfer
+    body_overlap = 0.1
+
+    body = cq.Solid.makeCylinder(
+        outer_radius,
+        length - tip_chamfer + body_overlap,
+        cq.Vector(x, body_overlap, z),
+        negative_y,
+    )
+    tip = cq.Solid.makeCone(
+        outer_radius,
+        tip_radius,
+        tip_chamfer,
+        cq.Vector(x, -(length - tip_chamfer), z),
+        negative_y,
+    )
+    inner = cq.Solid.makeCylinder(
+        inner_radius,
+        length + 0.01,
+        center,
+        negative_y,
+    )
+    tube = body.fuse(tip).cut(inner)
+
+    flange_radius = flange_diameter / 2
+    chamfered_radius = flange_radius - flange_edge_chamfer
+    near_edge = cq.Solid.makeCone(
+        chamfered_radius,
+        flange_radius,
+        flange_edge_chamfer,
+        center,
+        positive_y,
+    )
+    flange_middle = cq.Solid.makeCylinder(
+        flange_radius,
+        flange_thickness - 2 * flange_edge_chamfer,
+        cq.Vector(x, flange_edge_chamfer, z),
+        positive_y,
+    )
+    far_edge = cq.Solid.makeCone(
+        flange_radius,
+        chamfered_radius,
+        flange_edge_chamfer,
+        cq.Vector(x, flange_thickness - flange_edge_chamfer, z),
+        positive_y,
+    )
+    flange = near_edge.fuse(flange_middle).fuse(far_edge)
+    return cq.Workplane("XY").newObject([flange.fuse(tube)])
 
 
-@cached_part("retaining caps", (0.90, 0.70, 0.20))
-def retaining_caps(
-    cap_radius: float,
-    cap_thickness: float,
-    shaft_radius: float,
-    left_x: float,
-    right_x: float,
-    z: float,
+@cached_part("reference pegboard - not printable", BOARD_COLOR)
+def reference_pegboard_not_printable(
+    width: float,
+    height: float,
+    depth: float,
+    shelf_bottom_z: float,
+    peg_center_spacing: float,
+    peg_center_z: float,
+    hole_diameter: float,
 ) -> cq.Workplane:
-    cap = (
+    board = (
         cq.Workplane("XY")
-        .pushPoints([(left_x, 0), (right_x, 0)])
-        .circle(cap_radius)
-        .extrude(cap_thickness)
-        .translate((0, 0, z))
+        .box(width, depth, height)
+        .translate((0, -depth / 2, -shelf_bottom_z + height / 2))
     )
-    return cap.faces(">Z").workplane().pushPoints([(left_x, 0), (right_x, 0)]).hole(shaft_radius * 0.55, depth=cap_thickness * 0.7)
-
-
-def _gear_body(
-    teeth: int,
-    module: float,
-    thickness: float,
-    bore_radius: float,
-    x: float,
-    z: float,
-    rotation_deg: float,
-) -> cq.Workplane:
-    points = _involute_points(teeth, module)
-    body = cq.Workplane("XY").polyline(points).close().extrude(thickness)
-    body = body.faces(">Z").workplane().circle(bore_radius).cutThruAll()
-    body = body.faces(">Z").workplane().circle(bore_radius * 1.55).cutBlind(-thickness * 0.18)
-    body = body.faces("<Z").workplane().circle(bore_radius * 1.55).cutBlind(-thickness * 0.18)
-    return body.rotate((0, 0, 0), (0, 0, 1), rotation_deg).translate((x, 0, z))
-
-
-def _layout(
-    teeth: float,
-    module: float,
-    plate_thickness: float,
-    gear_clearance: float,
-    gear_thickness: float,
-) -> dict[str, float]:
-    tooth_count = max(8, int(round(teeth)))
-    pitch_radius = module * tooth_count / 2
-    outer_radius = pitch_radius + module
-    center_distance = pitch_radius * 2 + gear_clearance * 1.8
-    return {
-        "tooth_count": tooth_count,
-        "left_x": -center_distance / 2,
-        "right_x": center_distance / 2,
-        "plate_length": center_distance + outer_radius * 2 + 20,
-        "plate_width": outer_radius * 2 + 18,
-        "gear_z": plate_thickness / 2 + gear_clearance,
-        "cap_z": plate_thickness / 2 + gear_clearance + gear_thickness + gear_clearance,
-    }
-
-
-def _mesh_phase_degrees(tooth_count: int) -> float:
-    tooth_pitch_degrees = 360.0 / tooth_count
-    if tooth_count % 2 == 0:
-        return tooth_pitch_degrees / 2
-    return 0.0
-
-
-def _rotate_z_matrix(angle_deg: float, origin_x: float, origin_y: float) -> list[float]:
-    angle = math.radians(angle_deg)
-    c = math.cos(angle)
-    s = math.sin(angle)
-    tx = origin_x - c * origin_x + s * origin_y
-    ty = origin_y - s * origin_x - c * origin_y
-    return [
-        c,
-        -s,
-        0,
-        tx,
-        s,
-        c,
-        0,
-        ty,
-        0,
-        0,
-        1,
-        0,
-        0,
-        0,
-        0,
-        1,
-    ]
-
-
-def _involute_points(teeth: int, module: float) -> list[tuple[float, float]]:
-    pressure_angle = math.radians(20.0)
-    pitch_radius = module * teeth / 2
-    outer_radius = pitch_radius + module
-    root_radius = max(pitch_radius - module * 1.25, module * 2.5)
-    base_radius = pitch_radius * math.cos(pressure_angle)
-    tooth_angle = 2 * math.pi / teeth
-    half_tooth_at_pitch = tooth_angle / 4
-    involute_at_pitch = math.tan(pressure_angle) - pressure_angle
-    flank_steps = 8
-    tip_steps = 3
-    root_steps = 4
-
-    def involute_angle(radius: float) -> float:
-        t = math.sqrt(max((radius / base_radius) ** 2 - 1, 0))
-        return t - math.atan(t)
-
-    def left_flank_angle(center: float, radius: float) -> float:
-        return center - half_tooth_at_pitch + (involute_angle(radius) - involute_at_pitch)
-
-    def right_flank_angle(center: float, radius: float) -> float:
-        return center + half_tooth_at_pitch - (involute_angle(radius) - involute_at_pitch)
-
-    points: list[tuple[float, float]] = []
-    for index in range(teeth):
-        center = index * tooth_angle
-        next_center = (index + 1) * tooth_angle
-        left_base_angle = left_flank_angle(center, base_radius)
-        right_base_angle = right_flank_angle(center, base_radius)
-        left_outer_angle = left_flank_angle(center, outer_radius)
-        right_outer_angle = right_flank_angle(center, outer_radius)
-        next_left_base_angle = left_flank_angle(next_center, base_radius)
-
-        points.append(_polar_point(root_radius, left_base_angle))
-        points.append(_polar_point(base_radius, left_base_angle))
-
-        for step in range(1, flank_steps + 1):
-            radius = base_radius + (outer_radius - base_radius) * step / flank_steps
-            points.append(_polar_point(radius, left_flank_angle(center, radius)))
-
-        for step in range(1, tip_steps + 1):
-            angle = left_outer_angle + (right_outer_angle - left_outer_angle) * step / tip_steps
-            points.append(_polar_point(outer_radius, angle))
-
-        for step in range(flank_steps - 1, -1, -1):
-            radius = base_radius + (outer_radius - base_radius) * step / flank_steps
-            points.append(_polar_point(radius, right_flank_angle(center, radius)))
-
-        points.append(_polar_point(root_radius, right_base_angle))
-
-        root_span = next_left_base_angle - right_base_angle
-        for step in range(1, root_steps):
-            angle = right_base_angle + root_span * step / root_steps
-            points.append(_polar_point(root_radius, angle))
-    return points
-
-
-def _polar_point(radius: float, angle: float) -> tuple[float, float]:
-    return (math.cos(angle) * radius, math.sin(angle) * radius)
+    holes = (
+        cq.Workplane("XZ", origin=(0, 0.1, 0))
+        .pushPoints(
+            [
+                (-peg_center_spacing / 2, peg_center_z),
+                (peg_center_spacing / 2, peg_center_z),
+            ]
+        )
+        .circle(hole_diameter / 2)
+        .extrude(depth + 0.2)
+    )
+    return board.cut(holes)

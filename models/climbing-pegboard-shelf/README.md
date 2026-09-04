@@ -3,7 +3,8 @@
 An original, parametric shelf system for temporary use in two holes of Jubi's
 wooden climbing pegboard. Five single-peg gauges established the individual
 fit, and the first two-peg gauge confirmed the spacing. The repository now also
-contains the first full-shelf CAD draft; it has not been printed or load-tested.
+contains the first full-shelf CAD design. Its first print is now in progress;
+it has not yet been fit-tested or load-tested.
 
 This is not climbing equipment. The eventual shelf is only for light,
 stationary objects while the climbing pegboard is unoccupied. Remove every
@@ -185,25 +186,38 @@ envelope:
 - Width: 220.5 mm. This is 5 mm beyond the outside of each 32 mm peg body and
   matches the total width of the successful spacing gauge's 42 mm flanges.
 - Depth: 100 mm from the pegboard contact plane to the front face.
-- Deck: 6 mm thick.
+- Deck: 8 mm thick. The added thickness grows upward so the underside remains
+  aligned with the pegboard's lower edge.
 - Retaining lip: 12 mm above the deck and 3.2 mm thick on both sides and the
   front.
+- Front corners: 12 mm plan radius through both the deck and retaining lip.
+  The wall-facing rear edge stays flat against the pegboard.
+- Exposed lower perimeter: a continuous 3 mm radius along the front and both
+  long sides, including their transition into the back panel. The broad center
+  of the underside remains flat. The rear edge stays straight between the two
+  small side radii, and the wall-contact plane remains flat against the
+  pegboard; it does not curve upward along the wall.
 - Rear lip: 8 mm thick, spanning from the shelf bottom to 12 mm above the deck.
+- Raised center backwall: 25 mm above the deck between the two peg centerlines.
+  It reaches the peg axes and overlaps the inner half of both circular flanges.
 - Pegs: the proven 32 mm outside diameter, 39 mm insertion length, 2.4 mm tube
   wall, 1 mm tip chamfer, and 178.5 mm center spacing.
 - Peg flanges: 42 mm diameter and 8 mm thick, integrated into the rear lip.
 
 The shelf bottom aligns with the pegboard's lower edge. Because the hole bottom
-is 17 mm above that edge, each peg axis sits 27 mm above the shelf surface:
-`-6 + 17 + 16 = 27 mm`. The rear lip bears on the wood below the holes and
-overlaps both circular peg flanges. This creates the short vertical load path
-that the earlier backplate and underside-gusset concept needed, without large
-braces hanging below the board. The side and front lips also stiffen the deck.
+is 17 mm above that edge, each peg axis sits 25 mm above the shelf surface:
+`-8 + 17 + 16 = 25 mm`. The rear lip bears on the wood below the holes and
+overlaps both circular peg flanges. The raised center section increases that
+vertical overlap from 8 mm to 21 mm at each flange. Together these surfaces
+create the short load path that the earlier backplate and underside-gusset
+concept needed, without large braces hanging below the board. The side and
+front lips also stiffen the deck.
 
 The printable shelf export is one connected, watertight mesh with consistent
-face orientation and 4,220 triangles. Its installed bounds are 220.5 mm wide,
+face orientation and 4,784 triangles. Its installed bounds are 220.5 mm wide,
 100 mm forward of the wall, 39 mm behind the wall for the pegs, and 54 mm tall.
-It remains an unprinted draft with a proposed maximum stationary load of 2 lb;
+Its first PLA print was sent on 2026-09-04 with dedicated support material on
+the auxiliary nozzle. It still has a proposed maximum stationary load of 2 lb;
 that limit must be confirmed by a cautious physical load test.
 
 To regenerate the printable shelf from the repository root:
@@ -250,6 +264,8 @@ render. Never export that preview scene as the printable shelf.
   `.local/models/climbing-pegboard-shelf/pegboard-fit-peg-32p0x39p0mm-pla.3mf`.
 - Spacing-gauge local slicer project:
   `.local/models/climbing-pegboard-shelf/pegboard-spacing-gauge-gap146p5-cc178p5mm-pla.3mf`.
+- Full-shelf local slicer project:
+  `.local/models/climbing-pegboard-shelf/pegboard-shelf-220p5x100-lip12mm-pla.3mf`.
 
 OpenSCAD generated and mesh-checked the STL. Bambu Studio 02.08.02.61 sliced
 the first fit gauge for the X2D with both nozzle diameters synchronized at
@@ -276,14 +292,22 @@ is 41 minutes 22 seconds, 12.33 g, and 4.14 m. Bambu Studio sent it at
 07:12 PDT on 2026-09-04 with PLA mapped to AMS A3 and all three calibration
 controls freshly verified as `Auto`.
 
-PLA is the selected material for the fit gauge and the planned shelf. Its
-stiffness and clean print quality suit this light, temporary indoor use. The
-draft now uses the board-edge-aligned rear lip and integrated peg flanges as
-its back support. It still needs slice review and a physical load test.
+The final shelf uses Bambu PLA Pure from AMS A3 on the main 0.4 mm nozzle. Its
+tree support bodies use the same PLA. Two dense contact-interface layers use
+Bambu Support For PLA/PETG from the external auxiliary feed and auxiliary
+0.4 mm nozzle. The full dual-nozzle slice uses 0.20 mm layers, 3 walls, 20%
+grid infill, Tree Hybrid supports, an auto brim, and a prime tower. Its estimate
+is 5 hours 27 minutes 14 seconds, 181.05 g, and 60.75 m.
+
+Bambu Studio sent the corrected shelf job at 12:21 PDT on 2026-09-04 after the
+main/auxiliary material mapping and all three calibration controls were freshly
+verified. Device-page readback confirmed the exact job active at 0/270 layers,
+with an initial estimated finish of 17:48 PDT. PLA stiffness and clean print
+quality suit this light, temporary indoor use, but the finished shelf still
+needs a physical fit and load test.
 
 ## Work remaining before use
 
-- Review and approve the shelf shape and dimensions.
-- Choose a print orientation and inspect the complete slice and supports.
-- Print the shelf in PLA, confirm that both pegs still fit, and perform a
-  cautious load test before placing ordinary objects on it.
+- Let the first shelf print finish and inspect both supported peg surfaces.
+- Confirm that both pegs still fit without force.
+- Perform a cautious load test before placing ordinary objects on the shelf.
