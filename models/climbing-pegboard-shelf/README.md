@@ -149,11 +149,13 @@ Print the bar and flanges flat on the plate, with both pegs upright. There are
 no support requirements. The prepared PLA slice retains the same process
 settings as the successful fifth peg: 0.20 mm layers, 2 walls, 15% grid,
 auto brim, and unchanged dimensional compensation. Its estimate is 1 hour
-12 minutes 25 seconds, 40.22 g, and 13.48 m. It has not been sent to the printer.
+12 minutes 25 seconds, 40.22 g, and 13.48 m.
 
-Before a later send, verify the prepared machine, final filament/nozzle mapping,
-and all three calibration controls set to `Auto`. The user explicitly asked
-not to print until the machine is prepared.
+The user confirmed the machine was ready on 2026-09-04. Studio sent the gauge
+at 08:45 PDT after a fresh live preflight, with PLA from AMS A3 assigned to the
+main 0.4 mm nozzle and all three calibration controls explicitly `Auto`.
+Device-page readback confirmed the exact job active at 0/235 layers, with an
+initial estimated finish of 09:57 PDT. Completion and physical fit are pending.
 
 First check the single peg in both holes separately. For the combined gauge,
 both pegs must enter together and the contact faces must sit against the board

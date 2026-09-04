@@ -1,7 +1,7 @@
 # 2026-09-04 — Climbing pegboard shelf spacing gauge
 
-- Status: planned; sliced and saved, not sent
-- Started: not started
+- Status: in progress; sent and accepted by printer
+- Started: 2026-09-04 at 08:45 PDT
 - Completed: not completed
 - Related issue: none
 
@@ -39,15 +39,18 @@ The user reported a perfect individual fit at 32.0 mm modeled diameter and
 ## Hardware
 
 - Printer configuration: Bambu Lab X2D
-- Nozzle configuration: main and auxiliary 0.4 mm hardened steel
+- Nozzle configuration: main and auxiliary 0.4 mm, freshly confirmed in the
+  final send dialog; hardened steel is the recorded hardware baseline and
+  saved project setting
 - Build plate selected: Textured PEI Plate
-- Plate preparation: pending; user explicitly asked not to start printing
+- Plate preparation: user confirmed the machine was ready; live camera showed
+  the installed textured plate clear of previous prints before sending
 
 ## Material routing
 
 | Role | Filament/profile | Source slot/feed | Nozzle |
 | --- | --- | --- | --- |
-| Object | Bambu PLA Pure | Final AMS mapping pending | Main |
+| Object | Bambu PLA Pure | AMS A3, white PLA | Main, 0.4 mm |
 | Support base | None | Not applicable | Not applicable |
 | Support interface | None | Not applicable | Not applicable |
 
@@ -77,24 +80,29 @@ The user reported a perfect individual fit at 32.0 mm modeled diameter and
 - [x] Full slice and contiguous first-layer contact inspected
 - [x] Saved private 3MF archive integrity verified
 - [x] Original model provenance recorded; no third-party model included
-- [ ] Physical printer, nozzles, prepared plate, and material freshly checked
-- [ ] Final AMS/nozzle mapping checked
-- [ ] Auto Bed Leveling explicitly `Auto` immediately before send
-- [ ] Flow Dynamics Calibration explicitly `Auto` immediately before send
-- [ ] Nozzle Offset Calibration explicitly `Auto` immediately before send
-- [ ] User authorizes sending after machine preparation
+- [x] Live X2D, both nozzle diameters, clear plate, and material freshly checked
+- [x] Final AMS/nozzle mapping checked: PLA A3 to main; auxiliary unused
+- [x] Auto Bed Leveling explicitly `Auto` immediately before send
+- [x] Flow Dynamics Calibration explicitly `Auto` immediately before send
+- [x] Nozzle Offset Calibration explicitly `Auto` immediately before send
+- [x] User authorizes sending after machine preparation
 
-Studio is left in the prepared project. No spacing-gauge job has been sent.
-The remaining live preflight must be completed before any later print.
+Nozzle Offset Calibration opened as `Off`; it was changed to `Auto` before
+sending. The final dialog and saved application settings both showed all three
+controls as `Auto`. Timelapse was `Off`.
+
+The job was sent at 08:45 PDT. Independent Device-page readback showed the
+exact spacing-gauge job, 0/235 layers, an active startup state, and a bed target
+of 55 C. Studio initially estimated completion at 09:57 PDT.
 
 ## Outcome
 
-- Actual result: not printed
+- Actual result: accepted and starting; physical completion not yet confirmed
 - Dimensions/fit: not tested
 - Surface or structural defects: not tested
 - Photos: none stored
-- Print history or app evidence checked: prepared project and sliced preview
-  only; no print-history entry for this gauge
+- Print history or app evidence checked: prepared project, full sliced preview,
+  final send mapping/calibrations, live camera, and active Device-page job
 
 ## Diagnosis and next change
 
