@@ -1,8 +1,9 @@
 # Climbing pegboard shelf
 
 An original, parametric shelf system for temporary use in two holes of Jubi's
-wooden climbing pegboard. The shelf itself has not been designed yet. The first
-artifacts are low-material gauges for calibrating peg fit and two-hole spacing.
+wooden climbing pegboard. Five single-peg gauges established the individual
+fit, and the first two-peg gauge confirmed the spacing. The repository now also
+contains the first full-shelf CAD draft; it has not been printed or load-tested.
 
 This is not climbing equipment. The eventual shelf is only for light,
 stationary objects while the climbing pegboard is unoccupied. Remove every
@@ -20,8 +21,8 @@ the pegboard.
 - Source URL and profile ID: not applicable.
 - License: all rights reserved pending Jubi's choice of a publication license.
 - Created: 2026-09-03.
-- Local modifications: five single-peg variants and one rigid two-peg spacing
-  gauge, based on measurements and the physical results of all five peg tests.
+- Local modifications: five single-peg variants, one rigid two-peg spacing
+  gauge, and one full-shelf draft based on the completed fit tests.
 - Latest model update: 2026-09-04, using OpenSCAD 2021.01.
 
 ## Supplied measurements
@@ -33,6 +34,9 @@ the pegboard.
   edge of the right hole, measured with calipers.
 - Physical center-to-center spacing has not been measured directly. The first
   spacing gauge uses a trial CAD center spacing of 178.5 mm.
+- The first connected gauge fit both holes on its first trial, confirming that
+  178.5 mm modeled center spacing for the final shelf.
+- The lower edge of each hole is 17 mm above the pegboard's lower edge.
 
 The plywood holes may be slightly oval or tapered, and the 31.2 mm measurement
 is approximate. Do not force a gauge that starts to bind.
@@ -155,14 +159,12 @@ The user confirmed the machine was ready on 2026-09-04. Studio sent the gauge
 at 08:45 PDT after a fresh live preflight, with PLA from AMS A3 assigned to the
 main 0.4 mm nozzle and all three calibration controls explicitly `Auto`.
 Device-page readback confirmed the exact job active at 0/235 layers, with an
-initial estimated finish of 09:57 PDT. Completion and physical fit are pending.
+initial estimated finish of 09:57 PDT. The user later reported that the gauge
+nailed the simultaneous fit on the first trial.
 
-First check the single peg in both holes separately. For the combined gauge,
-both pegs must enter together and the contact faces must sit against the board
-without forcing or bending the bar. Remove it by pulling evenly from both ends.
-If each peg fits alone but the combined gauge does not, adjust spacing only;
-also consider whether the hole axes are parallel. This gauge does not test the
-strength or load capacity of the eventual shelf.
+Both pegs entered together successfully, so no spacing adjustment is needed.
+This gauge confirmed fit and alignment only; it did not test the strength or
+load capacity of the eventual shelf.
 
 To regenerate the spacing gauge from the repository root:
 
@@ -174,6 +176,46 @@ openscad --hardwarnings -D 'part="spacing-gauge"' \
 
 The default source output remains the fifth single peg. Earlier variants are
 available through `fit_variant`, with `part="fit-peg"`.
+
+## Full shelf draft
+
+The first full-shelf model uses the completed fit data and the final requested
+envelope:
+
+- Width: 220.5 mm. This is 5 mm beyond the outside of each 32 mm peg body and
+  matches the total width of the successful spacing gauge's 42 mm flanges.
+- Depth: 100 mm from the pegboard contact plane to the front face.
+- Deck: 6 mm thick.
+- Retaining lip: 12 mm above the deck and 3.2 mm thick on both sides and the
+  front.
+- Rear lip: 8 mm thick, spanning from the shelf bottom to 12 mm above the deck.
+- Pegs: the proven 32 mm outside diameter, 39 mm insertion length, 2.4 mm tube
+  wall, 1 mm tip chamfer, and 178.5 mm center spacing.
+- Peg flanges: 42 mm diameter and 8 mm thick, integrated into the rear lip.
+
+The shelf bottom aligns with the pegboard's lower edge. Because the hole bottom
+is 17 mm above that edge, each peg axis sits 27 mm above the shelf surface:
+`-6 + 17 + 16 = 27 mm`. The rear lip bears on the wood below the holes and
+overlaps both circular peg flanges. This creates the short vertical load path
+that the earlier backplate and underside-gusset concept needed, without large
+braces hanging below the board. The side and front lips also stiffen the deck.
+
+The printable shelf export is one connected, watertight mesh with consistent
+face orientation and 4,220 triangles. Its installed bounds are 220.5 mm wide,
+100 mm forward of the wall, 39 mm behind the wall for the pegs, and 54 mm tall.
+It remains an unprinted draft with a proposed maximum stationary load of 2 lb;
+that limit must be confirmed by a cautious physical load test.
+
+To regenerate the printable shelf from the repository root:
+
+```sh
+openscad --hardwarnings -D 'part="shelf"' \
+  -o models/climbing-pegboard-shelf/exports/pegboard-shelf-220p5x100-lip12mm.stl \
+  models/climbing-pegboard-shelf/source/pegboard-shelf.scad
+```
+
+`part="installed-preview"` adds a non-printing reference board for the assembly
+render. Never export that preview scene as the printable shelf.
 
 ## Files
 
@@ -189,6 +231,11 @@ available through `fit_variant`, with `part="fit-peg"`.
 - Fifth fit render: `renders/pegboard-fit-peg-32p0x39p0mm.png`
 - Spacing-gauge export: `exports/pegboard-spacing-gauge-gap146p5-cc178p5mm.stl`
 - Spacing-gauge render: `renders/pegboard-spacing-gauge-gap146p5-cc178p5mm.png`
+- Full-shelf export: `exports/pegboard-shelf-220p5x100-lip12mm.stl`
+- Full-shelf open/rear render:
+  `renders/pegboard-shelf-220p5x100-lip12mm-front.png`
+- Full-shelf installed render:
+  `renders/pegboard-shelf-220p5x100-lip12mm-installed.png`
 - Local slicer project:
   `.local/models/climbing-pegboard-shelf/pegboard-fit-peg-30p8mm-pla.3mf`
   from the repository root. It remains ignored because it contains local
@@ -231,15 +278,12 @@ controls freshly verified as `Auto`.
 
 PLA is the selected material for the fit gauge and the planned shelf. Its
 stiffness and clean print quality suit this light, temporary indoor use. The
-finished shelf still needs a backplate, gussets, and a physical load test; the
-two printed pegs must not carry the full bending load by themselves.
+draft now uses the board-edge-aligned rear lip and integrated peg flanges as
+its back support. It still needs slice review and a physical load test.
 
-## Final shelf inputs still needed
+## Work remaining before use
 
-- Physical result of the two-peg spacing gauge.
-- Desired shelf width and front-to-back depth.
-- Clearance behind the pegboard.
-
-The shelf should use a backplate that bears against the pegboard below the two
-pegs. This changes the shelf's tipping force into compression against the board
-instead of making the printed pegs resist the full bending load alone.
+- Review and approve the shelf shape and dimensions.
+- Choose a print orientation and inspect the complete slice and supports.
+- Print the shelf in PLA, confirm that both pegs still fit, and perform a
+  cautious load test before placing ordinary objects on it.

@@ -1,9 +1,10 @@
 // Climbing pegboard shelf
 // Original parametric design. Dimensions are millimetres.
 //
-// The exports are low-material fit pegs. They are not climbing components.
+// The fit exports are low-material gauges. The shelf is a light-duty accessory.
+// None of these parts are climbing components.
 
-part = "fit-peg"; // [fit-peg, spacing-gauge]
+part = "fit-peg"; // [fit-peg, spacing-gauge, shelf, installed-preview]
 fit_variant = "fifth"; // [first, second, third, fourth, fifth]
 
 // Measurements supplied on 2026-09-03.
@@ -48,6 +49,35 @@ spacing_center_distance = spacing_inner_gap + locked_peg_diameter;
 spacing_bar_width = 24.0;
 spacing_base_thickness = 8.0;
 
+// Final shelf draft. Installed coordinates use X across the pegboard, Y out
+// from the wall, and Z up. The 5 mm overhang is measured past the outside of
+// each fitted 32 mm peg body, so the shelf width closely follows the proven
+// two-peg gauge rather than becoming unnecessarily wide.
+shelf_side_overhang = 5.0;
+shelf_width = spacing_center_distance
+    + locked_peg_diameter
+    + 2 * shelf_side_overhang;
+shelf_depth = 100.0; // pegboard contact plane to front face
+shelf_deck_thickness = 6.0;
+shelf_lip_height = 12.0;
+shelf_lip_thickness = 3.2;
+shelf_lip_overlap = 0.2;
+shelf_backplate_thickness = spacing_base_thickness;
+
+// The board ends 17 mm below the lower edge of each hole. Align the shelf's
+// bottom face with that board edge. With a 6 mm deck and a 32 mm fitted peg,
+// the resulting peg axis is 27 mm above the shelf surface.
+hole_bottom_to_board_edge = 17.0;
+shelf_peg_center_height = -shelf_deck_thickness
+    + hole_bottom_to_board_edge
+    + locked_peg_diameter / 2;
+
+// Non-printing reference board used only by the installed preview.
+preview_board_width = 280.0;
+preview_board_depth = locked_insertion_length;
+preview_board_height = 110.0;
+preview_hole_clearance = 0.4;
+
 $fn = 128;
 
 assert(measured_hole_diameter > 0, "Hole diameter must be positive.");
@@ -74,6 +104,23 @@ assert(spacing_bar_width > 0 && spacing_bar_width < flange_diameter,
     "Connecting bar must be narrower than the pull flanges.");
 assert(spacing_base_thickness >= flange_thickness,
     "Spacing gauge base must not be thinner than the single-peg flange.");
+assert(shelf_side_overhang > 0, "Shelf must extend past both fitted pegs.");
+assert(shelf_depth > shelf_backplate_thickness + shelf_lip_thickness,
+    "Shelf is too shallow for its backplate and front lip.");
+assert(shelf_deck_thickness > 0, "Shelf deck thickness must be positive.");
+assert(shelf_lip_height > 0 && shelf_lip_thickness > 0,
+    "Shelf lip dimensions must be positive.");
+assert(shelf_lip_overlap > 0
+        && shelf_lip_overlap < shelf_deck_thickness,
+    "Shelf lip overlap must stay inside the deck.");
+assert(hole_bottom_to_board_edge > shelf_deck_thickness,
+    "Hole must sit above the aligned shelf bottom.");
+assert(shelf_peg_center_height - flange_diameter / 2
+        < shelf_lip_height,
+    "Peg flange must overlap the rear lip.");
+assert(shelf_peg_center_height - flange_diameter / 2
+        > -shelf_deck_thickness,
+    "Peg flange must stay above the aligned board edge.");
 
 module chamfered_flange(thickness = flange_thickness) {
     union() {
@@ -160,10 +207,126 @@ module spacing_gauge() {
     }
 }
 
+module final_shelf() {
+    union() {
+        // Full-depth platform. Its outside depth is measured from the
+        // pegboard contact plane to the front face.
+        translate([
+            -shelf_width / 2,
+            0,
+            -shelf_deck_thickness
+        ])
+            cube([
+                shelf_width,
+                shelf_depth,
+                shelf_deck_thickness
+            ]);
+
+        // This rear lip spans from the shelf bottom to 12 mm above its top.
+        // When installed, its lower edge aligns with the pegboard's lower edge
+        // and the wood below both holes becomes the load-bearing back support.
+        translate([
+            -shelf_width / 2,
+            0,
+            -shelf_deck_thickness
+        ])
+            cube([
+                shelf_width,
+                shelf_backplate_thickness,
+                shelf_deck_thickness + shelf_lip_height
+            ]);
+
+        // Retaining lip on both sides and the front. A slight overlap
+        // with the deck avoids solids that meet only at a coplanar face.
+        for (side = [-1, 1]) {
+            translate([
+                side < 0
+                    ? -shelf_width / 2
+                    : shelf_width / 2 - shelf_lip_thickness,
+                0,
+                -shelf_lip_overlap
+            ])
+                cube([
+                    shelf_lip_thickness,
+                    shelf_depth,
+                    shelf_lip_height + shelf_lip_overlap
+                ]);
+        }
+
+        translate([
+            -shelf_width / 2,
+            shelf_depth - shelf_lip_thickness,
+            -shelf_lip_overlap
+        ])
+            cube([
+                shelf_width,
+                shelf_lip_thickness,
+                shelf_lip_height + shelf_lip_overlap
+            ]);
+
+        // Reuse the exact proven peg and flange geometry. Each circular flange
+        // overlaps the rear lip, making a continuous vertical load path from
+        // the hole to the shelf. Rotation makes the tubes point into the board
+        // while retaining the proven 39 mm insertion length.
+        for (side = [-1, 1]) {
+            translate([
+                side * spacing_center_distance / 2,
+                shelf_backplate_thickness,
+                shelf_peg_center_height
+            ])
+                rotate([90, 0, 0])
+                    fit_peg(
+                        diameter = locked_peg_diameter,
+                        length = locked_insertion_length,
+                        base_thickness = shelf_backplate_thickness
+                    );
+        }
+
+    }
+}
+
+module installed_preview() {
+    color([0.95, 0.72, 0.10])
+        final_shelf();
+
+    // Reference board only. Its lower edge is aligned to the shelf bottom,
+    // and the two cutouts expose the confirmed peg position and spacing.
+    color([0.78, 0.60, 0.38])
+        difference() {
+            translate([
+                -preview_board_width / 2,
+                -preview_board_depth,
+                -shelf_deck_thickness
+            ])
+                cube([
+                    preview_board_width,
+                    preview_board_depth,
+                    preview_board_height
+                ]);
+
+            for (side = [-1, 1]) {
+                translate([
+                    side * spacing_center_distance / 2,
+                    0.1,
+                    shelf_peg_center_height
+                ])
+                    rotate([90, 0, 0])
+                        cylinder(
+                            h = preview_board_depth + 0.2,
+                            d = locked_peg_diameter + preview_hole_clearance
+                        );
+            }
+        }
+}
+
 if (part == "fit-peg") {
     fit_peg();
 } else if (part == "spacing-gauge") {
     spacing_gauge();
+} else if (part == "shelf") {
+    final_shelf();
+} else if (part == "installed-preview") {
+    installed_preview();
 } else {
     assert(false, str("Unknown part selector: ", part));
 }

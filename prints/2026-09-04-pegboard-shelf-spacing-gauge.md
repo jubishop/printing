@@ -1,8 +1,8 @@
 # 2026-09-04 — Climbing pegboard shelf spacing gauge
 
-- Status: in progress; sent and accepted by printer
+- Status: completed; spacing confirmed on the first two-peg trial
 - Started: 2026-09-04 at 08:45 PDT
-- Completed: not completed
+- Completed: 2026-09-04; exact completion time not observed
 - Related issue: none
 
 ## Goal
@@ -97,23 +97,25 @@ of 55 C. Studio initially estimated completion at 09:57 PDT.
 
 ## Outcome
 
-- Actual result: accepted and starting; physical completion not yet confirmed
-- Dimensions/fit: not tested
-- Surface or structural defects: not tested
+- Actual result: completed; the user reported that it nailed the spacing on the
+  first try
+- Dimensions/fit: both fitted pegs entered their holes together, confirming the
+  178.5 mm modeled center spacing for the final shelf
+- Surface or structural defects: none reported
 - Photos: none stored
 - Print history or app evidence checked: prepared project, full sliced preview,
-  final send mapping/calibrations, live camera, and active Device-page job
+  final send mapping/calibrations, live camera, active Device-page job, and the
+  user's completed-fit report
 
 ## Diagnosis and next change
 
-First confirm the successful single peg fits each hole separately. Then test
-whether both connected pegs enter together and the contact faces seat against
-the board. Do not force insertion or bend the bar to make it fit. Pull evenly
-from both ends to remove it. Adjust spacing only if both pegs fit separately
-but not together; hole-axis alignment is another possible cause.
+No spacing change is needed. Reuse the successful 32.0 mm outside diameter,
+39.0 mm insertion length, and 178.5 mm center spacing in the final shelf.
 
 This is a spacing and alignment test, not a shelf load test.
 
 ## Durable lesson
 
-No new reusable result until the spacing gauge has been physically tested.
+The combination of 32.0 mm modeled peg diameter, 39.0 mm insertion length, and
+178.5 mm center spacing fits both holes simultaneously with this printer,
+material profile, orientation, and dimensional-compensation setup.

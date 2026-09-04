@@ -65,6 +65,11 @@ belongs in this repository.
 - Jubi wants hands-on app help and a complete preflight. Verify UI state after
   each consequential action and do not claim a configuration or slice was
   checked when it was not.
+- Immediately before sending a print, verify that every available calibration
+  control is explicitly set to `Auto`. This includes Auto Bed Leveling, Flow
+  Dynamics Calibration, and Nozzle Offset Calibration when Bambu Studio shows
+  them. Do not send the job if any available calibration is set to `On`, `Off`,
+  or a manual value.
 - Do not start or send a physical print unless Jubi explicitly asks after the
   preflight.
 - Treat settings in historical cases as evidence, not universal defaults.
