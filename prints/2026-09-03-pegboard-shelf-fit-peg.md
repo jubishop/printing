@@ -1,8 +1,8 @@
 # 2026-09-03 — Climbing pegboard shelf fit peg
 
-- Status: in progress
+- Status: completed
 - Started: 2026-09-03 13:12 PDT
-- Completed: not completed
+- Completed: by 2026-09-03 15:42 PDT
 - Related issue: none
 
 ## Goal
@@ -22,7 +22,8 @@ shelf a climbing-rated component.
 - Model URL: none; original local design
 - Exact profile/profile ID: local parametric OpenSCAD model
 - License and date checked: all rights reserved; 2026-09-03
-- Local files committed: none at print-planning time
+- Local files committed: source, STL, render, documentation, and this print
+  record in commit `59e3d7d`
 - Modifications from upstream: not applicable
 
 ## Observed dimensions
@@ -35,7 +36,7 @@ shelf a climbing-rated component.
 
 ## Hardware
 
-- Printer: Panda Factory, Bambu Lab X2D; synchronized from the live printer
+- Printer: Bambu Lab X2D; synchronized from the live printer
 - Nozzle size/type: main and auxiliary 0.4 mm, standard-flow configuration;
   main nozzle used for this print
 - Build plate: Textured PEI Plate, matched in the project and live camera view
@@ -86,18 +87,25 @@ object detection, with an estimated finish time of 13:51 PDT.
 
 ## Outcome
 
-- Actual result: printing; final result not yet observed
-- Dimensions/fit: not tested
-- Surface or structural defects: not tested
+- Actual result: print completed and the user tested it in the pegboard
+- Dimensions/fit: the tube entered to the flange, confirming that its 36.8 mm
+  insertion length was not too long. It remained noticeably wiggly. Because it
+  reached the flange, this test did not show whether the hole is deeper than
+  36.8 mm.
+- Surface or structural defects: none reported
 - Photos: none
 - Print history or app evidence checked: live Bambu Studio job acceptance and
-  startup state verified
+  startup state verified; later Device view showed 100%, layer 204/204, and
+  `Finished`
 
 ## Diagnosis and next change
 
-Do not force the gauge if it binds. Increase the modeled diametral clearance in
-0.2 mm steps if it is tight. Decrease it in 0.2 mm steps if it is clearly loose.
+Make the second gauge 31.2 mm in diameter, removing the nominal diametral
+clearance. Extend its insertion length to 39.0 mm, which is 0.7 mm beyond the
+measured depth, so rear contact is visible. Do not force it if it binds.
 
 ## Durable lesson
 
-No reusable lesson until the physical fit is tested.
+For this specific pegboard, a 30.8 mm printed PLA peg enters a nominal 31.2 mm
+hole but has more lateral movement than desired. A gauge shorter than the hole
+cannot establish the usable depth when its flange seats first.
