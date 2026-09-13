@@ -19,16 +19,19 @@ Repository context lives in `memory/`, `prints/`, and GitHub issues:
 - GitHub Issues (`jubishop/printing`): planned prints, tuning tasks, failures to
   investigate, and other lifecycle-tracked work.
 
-Use `qmd` for topic lookup when available:
+Use `bin/knowledge search "known term"` for exact topic lookup and
+`bin/knowledge query "question" --no-rerank` for broader questions.
+Read focused results with `bin/knowledge get <path> -l N`.
 
-- `qmd search "known term"` for printer names, model names, profile IDs, and
-  exact settings.
-- `qmd query "question" --no-rerank` for fuzzy or open-ended lookup.
-- `qmd get <path>[:line] -l N` to fetch a page or slice.
+Use direct reads or `rg` for known paths or after a successful lookup with no
+matches. If configured QMD fails, report it immediately and attempt repair.
+If repair fails, pause knowledge-dependent work until the user approves a
+fallback. Never silently bypass broken search with `rg` or direct reads.
 
-Hooks under `bin/hooks/` refresh the local qmd index after Git operations once
-`bin/install-hooks` has been run. If qmd is unavailable, use `rg` and read the
-known files directly.
+`bin/install-hooks` preserves the setup entry point and installs coordinated
+refresh hooks. Lookups automatically refresh stale inputs and refuse results
+when freshness cannot be established. Use `bin/doctor` and `bin/qmd-index` for
+diagnostics and recovery. Follow the [knowledge workflow](docs/knowledge-workflow.md).
 
 Cross-repository memory belongs in `~/memory/`; printing-specific knowledge
 belongs in this repository.

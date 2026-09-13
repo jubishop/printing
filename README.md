@@ -34,6 +34,8 @@ preflight.
 - [GitHub issues](https://github.com/jubishop/printing/issues): the print queue,
   tuning work, and other lifecycle-tracked tasks.
 
+- [Knowledge workflow](docs/knowledge-workflow.md): search setup, refresh, and recovery.
+
 ## Recording a print
 
 1. Open a print-job issue from the repository template.

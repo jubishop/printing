@@ -4,9 +4,10 @@ Long-lived repository notes for agents and humans: hardware facts, user
 preferences, validated workflows, troubleshooting lessons, and external
 references.
 
-Memory is not auto-loaded. Discover pages with `qmd` when available; otherwise
-use `rg`. Before writing, search first and update an existing related page when
-possible.
+Memory is not auto-loaded. Discover pages with `bin/knowledge`. Before writing,
+search first and update an existing related page when possible. If configured
+QMD fails, follow the [failure policy](../docs/knowledge-workflow.md#search-failures);
+do not silently substitute another search tool.
 
 ## Index
 
