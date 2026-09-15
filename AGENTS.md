@@ -36,6 +36,11 @@ diagnostics and recovery. Follow the [knowledge workflow](docs/knowledge-workflo
 Cross-repository memory belongs in `~/memory/`; printing-specific knowledge
 belongs in this repository.
 
+Keep memory, docs, and other Markdown pages focused on one topic or reader
+task. When extending a long page, review its scope and split independent
+topics into linked pages when that improves reading and maintenance. Use
+the [Markdown guidance](docs/knowledge-workflow.md#markdown-pages), without numeric size thresholds.
+
 ## Print workflow
 
 - Jubi uses a Bambu Lab X2D with 0.4 mm hardened-steel nozzles. Treat this as a

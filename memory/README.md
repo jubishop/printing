@@ -80,6 +80,13 @@ For `feedback` and `project` pages, lead with the rule or fact and then explain:
 Use `[[page-name]]` to cross-link memory pages. Keep this index updated whenever
 a page is added, moved, or removed.
 
+## Page organization
+
+Keep each page focused on one topic. Review a long page before adding more;
+split independent topics into linked pages when that improves reading and
+maintenance. Preserve the rule, reason, and evidence together. Follow the
+[Markdown guidance](../docs/knowledge-workflow.md#markdown-pages).
+
 ## Archive
 
 Move stale or superseded notes into `memory/archive/`. A resolved `project`
