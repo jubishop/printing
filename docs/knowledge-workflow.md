@@ -9,7 +9,22 @@ documents. Existing print records and memory formats remain unchanged.
 
 Run `bin/install-hooks` (or `bin/setup`) to prepare the repository search and
 its Git hooks. Run `bin/doctor` for read-only diagnostics. Each checkout has a
-separate index; existing model files are preserved.
+separate index at `.cache/qmd/index.sqlite`.
+
+All projects and worktrees share model files at `~/.cache/qmd/models`.
+This fixed path is independent of `XDG_CACHE_HOME`. Each checkout links its
+`.cache/qmd/models` there; its index stays in `.cache/qmd/index.sqlite` inside
+that checkout. Setup creates the shared directory. With QMD installed, initial
+embedding downloads a missing embedding model there; query expansion and
+reranking download their models on first use. Existing files are reused.
+
+Setup and refresh migrate old caches. They verify file contents before removing
+identical copies from a checkout-local directory. Conflicting filenames or
+unexpected entries stop migration without deleting those files. Inspect the
+reported paths before retrying. An old symlink is replaced, but its external
+target is retained because other consumers may still need it. Remove redundant
+external copies only after verifying their contents and redirecting all users.
+Do not delete `~/.cache/qmd/models` when cleaning up a repository or worktree.
 
 ## Search
 
