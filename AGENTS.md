@@ -1,17 +1,11 @@
 # Printing
 
-## Environment
-
-The user is in Pacific Time. Use PST/PDT unless asked otherwise. The user's
-default shell is fish.
-
 ## Project memory and tracking
 
 Repository context lives in `memory/`, `prints/`, and GitHub issues:
 
 - `memory/`: long-lived setup facts, preferences, validated workflows,
-  troubleshooting knowledge, and case histories. Search before writing and
-  update an existing note when possible. New or updated pages must follow
+  troubleshooting knowledge, and case histories. New or updated pages must follow
   `memory/README.md`; move stale notes to `memory/archive/`.
 - `prints/`: dated records of actual print attempts. Start from
   `prints/TEMPLATE.md` and record observed settings and outcomes, not intended
@@ -33,13 +27,8 @@ refresh hooks. Lookups automatically refresh stale inputs and refuse results
 when freshness cannot be established. Use `bin/doctor` and `bin/qmd-index` for
 diagnostics and recovery. Follow the [knowledge workflow](docs/knowledge-workflow.md).
 
-Cross-repository memory belongs in `~/memory/`; printing-specific knowledge
-belongs in this repository.
-
-Keep memory, docs, and other Markdown pages focused on one topic or reader
-task. When extending a long page, review its scope and split independent
-topics into linked pages when that improves reading and maintenance. Use
-the [Markdown guidance](docs/knowledge-workflow.md#markdown-pages), without numeric size thresholds.
+Keep [Markdown pages focused](docs/knowledge-workflow.md#markdown-pages)
+on one topic or reader task, without numeric size limits.
 
 ## Print workflow
 
