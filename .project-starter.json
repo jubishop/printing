@@ -4,5 +4,7 @@
   "components": [
     "knowledge-search"
   ],
-  "tested_qmd": "2.8.3"
+  "tested_qmd": "2.8.3",
+  "task_tracking_source_ref": "ddaac4300e1116a453d6f7a6a270a16f75060f9e",
+  "tested_td": "0.65.0"
 }

@@ -67,3 +67,11 @@ license:
 There is currently no repository-wide license. Third-party materials retain
 their upstream terms, and an individual original artifact may receive its own
 license later.
+
+## Local task tracking
+
+Use `td` for local tasks, progress, blockers, and session handoffs. After cloning,
+install td and run `td init` in the primary checkout. Use `td status` or
+`td monitor` to inspect progress. Follow the [task workflow](docs/task-tracking.md)
+for setup, review, worktrees, and local data. Keep GitHub Issues for shared scope
+and acceptance criteria, linked from related td tasks.

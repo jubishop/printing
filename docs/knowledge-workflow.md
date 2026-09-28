@@ -7,6 +7,9 @@ status: current
 Printing uses the Project Starter search component for its memory and reference
 documents. Existing print records and memory formats remain unchanged.
 
+Install td and run `td init` in the primary checkout as described in the
+[task workflow](task-tracking.md). This is separate from knowledge setup below.
+
 Run `bin/install-hooks` (or `bin/setup`) to prepare the repository search and
 its Git hooks. Run `bin/doctor` for read-only diagnostics. Each checkout has a
 separate index at `.cache/qmd/index.sqlite`.

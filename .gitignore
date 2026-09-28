@@ -17,3 +17,6 @@
 .config/qmd/
 __pycache__/
 *.py[cod]
+
+# Local td task state
+.todos/

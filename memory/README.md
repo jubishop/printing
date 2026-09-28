@@ -41,7 +41,7 @@ Use memory for:
 
 Do not use memory for:
 
-- Planned prints and TODOs; use GitHub issues.
+- Local tasks and progress; use [td](../docs/task-tracking.md). Keep planned prints and shared work in GitHub issues.
 - A full record of every print; use `prints/`.
 - Model files or generated slicer output; use `models/` subject to its policy.
 - Facts that can be derived directly from a checked-in artifact.

@@ -8,3 +8,4 @@ Preserve decision reasons and evidence. Follow the
 [Markdown guidance](knowledge-workflow.md#markdown-pages).
 
 - [Knowledge workflow](knowledge-workflow.md): search, automatic refresh, failures, and recovery.
+- [Local task tracking](task-tracking.md): td setup, progress, handoffs, review, and local data.
