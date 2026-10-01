@@ -13,16 +13,7 @@ Repository context lives in `memory/`, `prints/`, and GitHub issues:
 - GitHub Issues (`jubishop/printing`): planned prints, tuning tasks, failures to
   investigate, and other lifecycle-tracked work.
 
-Use `td` for work with multiple stages, interruptions, blockers, or agent
-handoffs. Tasks are optional for straightforward work completed in one session;
-read-only questions and small edits need no artificial task records. In each
-new agent context, run `td usage --new-session -q` once. Before substantive
-work, inspect and reuse relevant tasks. Record meaningful checkpoints and keep
-the current handoff accurate. Reuse required checks and actual review; task
-statuses do not add a separate review gate. Follow the
-[task workflow](docs/task-tracking.md) for setup and commands. Keep
-GitHub Issues for shared scope and acceptance criteria; link related issues
-from td.
+Follow the local [task workflow](docs/task-tracking.md) for td setup and commands.
 
 Use `bin/knowledge search "known term"` for exact topic lookup and
 `bin/knowledge query "question" --no-rerank` for broader questions.
