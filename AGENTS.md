@@ -1,5 +1,33 @@
 # Printing
 
+<!-- project-starter:begin -->
+Project Starter manages this block; add project rules after it.
+
+- Keep durable guidance and non-derivable context in [memory](memory/README.md),
+  and designs, decisions, and research in [docs](docs/README.md). Before
+  non-trivial work or writing memory, search with `bin/knowledge search "term"`
+  or `bin/knowledge query "question" --no-rerank`, then read results with
+  `bin/knowledge get <path> -l 80`. Markdown sources are authoritative.
+- If configured QMD fails, tell the user immediately and attempt repair. If
+  repair fails, pause knowledge-dependent work until the user approves a
+  fallback; never silently substitute `rg` or direct reads. See
+  [search failures](docs/foundation/knowledge-search.md#search-failures).
+- Use td for work with multiple stages, interruptions, blockers, or handoffs;
+  run `td usage --new-session -q` once per new context and keep handoffs
+  current. See [task tracking](docs/foundation/task-tracking.md).
+- Follow the [engineering policy](docs/foundation/engineering-policy.md):
+  fewer dependencies, red-green tests for behavior changes, cohesive files and
+  pages, checkout-isolated validation, and declared toolchain versions.
+- Run [checks](docs/foundation/engineering-policy.md#checks) by change:
+  `bin/check --documents-only` for Markdown, application checks for code, and
+  `bin/check --full` before merge or release unless an enforced CI gate runs
+  it. Skip checks for read-only work and reuse passing results.
+- Run `bin/setup` after cloning, `bin/doctor` to diagnose setup, and
+  `bin/qmd-index` after uncommitted knowledge edits. Managed files listed in
+  `.project-starter.json` change only through Project Starter or a recorded
+  override with its reason.
+<!-- project-starter:end -->
+
 ## Project memory and tracking
 
 Repository context lives in `memory/`, `prints/`, and GitHub issues:
@@ -12,25 +40,6 @@ Repository context lives in `memory/`, `prints/`, and GitHub issues:
   settings alone.
 - GitHub Issues (`jubishop/printing`): planned prints, tuning tasks, failures to
   investigate, and other lifecycle-tracked work.
-
-Follow the local [task workflow](docs/task-tracking.md) for td setup and commands.
-
-Use `bin/knowledge search "known term"` for exact topic lookup and
-`bin/knowledge query "question" --no-rerank` for broader questions.
-Read focused results with `bin/knowledge get <path> -l N`.
-
-Use direct reads or `rg` for known paths or after a successful lookup with no
-matches. If configured QMD fails, report it immediately and attempt repair.
-If repair fails, pause knowledge-dependent work until the user approves a
-fallback. Never silently bypass broken search with `rg` or direct reads.
-
-`bin/install-hooks` preserves the setup entry point and installs coordinated
-refresh hooks. Lookups automatically refresh stale inputs and refuse results
-when freshness cannot be established. Use `bin/doctor` and `bin/qmd-index` for
-diagnostics and recovery. Follow the [knowledge workflow](docs/knowledge-workflow.md).
-
-Keep [Markdown pages focused](docs/knowledge-workflow.md#markdown-pages)
-on one topic or reader task, without numeric size limits.
 
 ## Print workflow
 

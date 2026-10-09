@@ -1,5 +1,5 @@
 ---
-name: case-2026-08-07-skadis-firm-grip-clip
+name: 2026-08-07-skadis-firm-grip-clip
 description: SKADIS Firm-Grip Clip case validating slower PETG Basic top and solid paths after a repeated same-height failure
 type: reference
 ---

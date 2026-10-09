@@ -34,7 +34,7 @@ preflight.
 - [GitHub issues](https://github.com/jubishop/printing/issues): the print queue,
   tuning work, and other lifecycle-tracked tasks.
 
-- [Knowledge workflow](docs/knowledge-workflow.md): search setup, refresh, and recovery.
+- [Development workflow](docs/development-workflow.md): setup, search scope, and checks.
 
 ## Recording a print
 
@@ -72,6 +72,6 @@ license later.
 
 Use `td` for local tasks, progress, blockers, and session handoffs. After cloning,
 install td and run `td init` in the primary checkout. Use `td status` or
-`td monitor` to inspect progress. Follow the [task workflow](docs/task-tracking.md)
+`td monitor` to inspect progress. Follow the [task workflow](docs/foundation/task-tracking.md)
 for setup, review, worktrees, and local data. Keep GitHub Issues for shared scope
 and acceptance criteria, linked from related td tasks.

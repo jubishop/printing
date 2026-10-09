@@ -1,5 +1,5 @@
 ---
-name: case-2026-07-27-build-plate-holder
+name: 2026-07-27-build-plate-holder
 description: PETG build-plate-holder case with warp, likely layer shift, and support-interface routing
 type: reference
 ---

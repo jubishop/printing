@@ -6,7 +6,7 @@ references.
 
 Memory is not auto-loaded. Discover pages with `bin/knowledge`. Before writing,
 search first and update an existing related page when possible. If configured
-QMD fails, follow the [failure policy](../docs/knowledge-workflow.md#search-failures);
+QMD fails, follow the [failure policy](../docs/foundation/knowledge-search.md#search-failures);
 do not silently substitute another search tool.
 
 ## Index
@@ -41,7 +41,7 @@ Use memory for:
 
 Do not use memory for:
 
-- Local tasks and progress; use [td](../docs/task-tracking.md). Keep planned prints and shared work in GitHub issues.
+- Local tasks and progress; use [td](../docs/foundation/task-tracking.md). Keep planned prints and shared work in GitHub issues.
 - A full record of every print; use `prints/`.
 - Model files or generated slicer output; use `models/` subject to its policy.
 - Facts that can be derived directly from a checked-in artifact.
@@ -85,7 +85,7 @@ a page is added, moved, or removed.
 Keep each page focused on one topic. Review a long page before adding more;
 split independent topics into linked pages when that improves reading and
 maintenance. Preserve the rule, reason, and evidence together. Follow the
-[Markdown guidance](../docs/knowledge-workflow.md#markdown-pages).
+[Markdown guidance](../docs/foundation/engineering-policy.md#markdown-pages).
 
 ## Archive
 

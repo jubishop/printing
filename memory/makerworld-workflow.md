@@ -47,7 +47,7 @@ and strength settings. If a profile remains available after selecting X2D,
 Handy may be the correct path even when the downloaded 3MF names A1 or X1 as its
 source printer. See [Bambu Lab's one-step printing
 guide](https://blog.bambulab.com/makerworld-one-step-printing/) and
-[[case-2026-07-31-skadis-tool-holder]].
+[[2026-07-31-skadis-tool-holder]].
 
 Compatibility is not equivalence. Two profiles that have the same title,
 geometry, orientation, and X2D badge can still retain materially different

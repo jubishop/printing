@@ -5,7 +5,9 @@ Maintained reference guides for the printing repository.
 Keep each page focused on one topic or reader task. Review long pages before
 extending them, and move independent topics into linked pages when useful.
 Preserve decision reasons and evidence. Follow the
-[Markdown guidance](knowledge-workflow.md#markdown-pages).
+[Markdown guidance](foundation/engineering-policy.md#markdown-pages).
 
-- [Knowledge workflow](knowledge-workflow.md): search, automatic refresh, failures, and recovery.
-- [Local task tracking](task-tracking.md): td setup, progress, handoffs, review, and local data.
+- [Project Starter foundation](foundation/README.md): shared engineering,
+  knowledge search, and task tracking policy.
+- [Development workflow](development-workflow.md): this project's setup,
+  search scope, checks, versions, and deployment.

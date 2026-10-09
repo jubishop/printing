@@ -1,5 +1,5 @@
 ---
-name: case-2026-07-31-skadis-tool-holder
+name: 2026-07-31-skadis-tool-holder
 description: IKEA SKADIS profile comparison showing cross-printer Handy conversion and retained process differences
 type: reference
 ---

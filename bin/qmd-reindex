@@ -1,4 +1,0 @@
-#!/bin/sh
-# Compatibility entry point for the coordinated repository refresh.
-repo_root=$(git rev-parse --show-toplevel) || exit 1
-exec "$repo_root/bin/qmd-index" --background

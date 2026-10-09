@@ -1,4 +1,0 @@
-#!/bin/sh
-# Preserve the existing installation command.
-repo_root=$(git rev-parse --show-toplevel) || exit 1
-exec "$repo_root/bin/setup"
