@@ -1,6 +1,3 @@
-.DS_Store
-.cache/
-
 # Generated slicer output
 *.gcode
 *.gcode.3mf
@@ -14,12 +11,9 @@
 .local/
 
 # Generated absolute search configuration
-.config/qmd/
-__pycache__/
-*.py[cod]
 
 # Local td task state
-.todos/
+
 # project-starter:begin
 .DS_Store
 .cache/
