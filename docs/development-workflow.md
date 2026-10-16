@@ -49,7 +49,7 @@ requires.
 ## Deployment
 
 Nothing deploys from this repository. Pushing `main` publishes the notes,
-records, and redistributable models to GitHub and SourceHut.
+records, and redistributable models to GitHub.
 
 ## Project Starter
 
