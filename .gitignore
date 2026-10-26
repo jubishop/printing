@@ -12,8 +12,6 @@
 
 # Generated absolute search configuration
 
-# Local td task state
-
 # project-starter:begin
 .DS_Store
 .cache/
@@ -25,5 +23,4 @@
 __pycache__/
 *.py[cod]
 worktrees/
-.todos/
 # project-starter:end
