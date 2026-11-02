@@ -12,6 +12,10 @@ works for the user's paddle with the supported X2D setup recorded in the
 the user confirmed the single print finished and holds their paddle. A custom
 design is unnecessary for that tested use.
 
+The [configured Studio project](../../models/skadis-paddle-holder/README.md)
+is committed with attribution and its CC BY-NC-SA 4.0 license. Use it to retain
+the validated geometry and settings, then perform the live preflight again.
+
 ## What made this a Studio job
 
 The source profile, `0.2mm layer, 2 walls, 15% infill`, had supports disabled.

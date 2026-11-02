@@ -20,7 +20,9 @@ described.
   titled `0.2mm layer, 2 walls, 15% infill`
 - License observed 2026-11-02: Creative Commons Attribution-Noncommercial-Share
   Alike 4.0
-- Local files committed: none; this record contains no model, project, or G-code.
+- Committed artifact: [configured X2D project and provenance](../models/skadis-paddle-holder/README.md),
+  added after the successful print; account identifiers removed, geometry and
+  print settings preserved. No generated G-code is committed.
 - Modifications: adapted the source project to X2D; synchronized current
   materials; enabled tree supports with dedicated support interfaces.
 
@@ -75,7 +77,8 @@ feed. Other synchronized AMS materials were not assigned to this print.
 - [x] Auto Bed Leveling, Flow Dynamics Calibration, and Nozzle Offset
   Calibration all explicitly Auto immediately before sending
 - [x] User approved sending after receiving the completed preflight
-- [x] Third-party files and private printer/account data omitted from Git
+- [x] Private printer/account data and generated G-code omitted from Git;
+  redistribution license checked before committing the project
 
 There was only one designer profile. This was a Studio print; final Handy cloud
 slicing was not used or claimed to be verified.
