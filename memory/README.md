@@ -28,6 +28,9 @@ do not silently substitute another search tool.
 - [SKÅDIS Firm-Grip Clip PETG validation](cases/2026-08-07-skadis-firm-grip-clip.md) —
   same-height four-pack failure followed by a successful slower single-clip
   validation.
+- [SKÅDIS paddle-holder validation](cases/2026-11-02-skadis-paddle-holder.md) —
+  an existing model holds the user's paddle after adding supports and routing
+  dedicated interfaces in Studio.
 
 ## Scope
 

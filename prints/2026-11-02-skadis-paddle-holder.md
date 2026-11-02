@@ -1,15 +1,16 @@
 # 2026-11-02 — One SKÅDIS ping pong paddle holder
 
-- Status: in progress
+- Status: successful — completion and paddle fit confirmed by user
 - Started: 2026-11-02 11:28 PST
-- Completed: not yet observed
+- Completed: confirmed by user on 2026-11-02; exact finish time not recorded
 - Related issue: none
 
 ## Goal
 
 Print one holder for a ping pong paddle on an IKEA SKÅDIS pegboard. Success
-requires a completed print, removable supports, secure pegboard fit, and a
-stable paddle fit; none of those final outcomes has been observed yet.
+requires a completed print that holds the user's paddle. The user confirmed
+both outcomes. Support-removal quality and pegboard fit were not separately
+described.
 
 ## Source and provenance
 
@@ -85,18 +86,27 @@ The job was sent once after approval. Studio switched to the live Device view,
 showed the holder thumbnail, active pause/stop controls, layer 0/212, and the
 bed warming toward 55 °C. Its initial estimated finish time was 13:01 PST.
 
-Completion, physical first-layer quality, support removal, pegboard fit, and
-paddle fit have not yet been observed. No private camera photos are committed.
+On 2026-11-02, the user confirmed: "yeah its done and it does hold our paddle".
+This validates completion and the intended paddle-holding function for this
+single copy. Exact elapsed time, actual material consumption, first-layer
+quality, support-removal quality, and pegboard fit were not separately
+reported. No private camera photos are committed.
 
 ## Diagnosis and next change
 
 The upstream profile had supports disabled. A MakerWorld commenter reported
 problems printing the pegboard hooks, and the initial X2D slice independently
 reported floating regions. Enabling supports removed that warning and produced
-a `Slice ok` result. This establishes a corrected slice, not a successful
-physical print. Keep this evidence with this model rather than treating the
-support settings as universal defaults.
+a `Slice ok` result. The user subsequently confirmed the supported print
+completed and holds the paddle. No redesign is needed for the tested paddle,
+and no further change is indicated by this result. The unsupported version
+was not physically tested; keep this evidence with this model rather than
+treating the support settings as universal defaults.
 
 ## Durable lesson
 
-No general memory rule changed; this is a model-specific print attempt.
+See the [validated paddle-holder case](../memory/cases/2026-11-02-skadis-paddle-holder.md).
+This establishes a working existing model and supported X2D setup for the
+user's paddle. Inspect floating hook regions and explicitly route support
+interfaces before reusing the source profile; loaded auxiliary filament alone
+does not configure its use.
