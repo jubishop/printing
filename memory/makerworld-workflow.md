@@ -56,6 +56,11 @@ Compare those choices when there is a meaningful quality-versus-speed decision.
 
 ## Exact-profile preflight
 
+When Bambu Studio offers a newer version, always install the latest offered
+version before continuing Studio work. Jubi explicitly requested this standing
+preference on 2026-11-04. Preserve the project through the update, then reopen
+it and repeat the applicable preflight in the updated app.
+
 1. Confirm the model URL, exact profile/profile ID, live X2D eligibility,
    intended plate, and intended printed parts.
 2. Check whether support is enabled and whether support base and support
