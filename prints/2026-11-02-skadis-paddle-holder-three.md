@@ -1,15 +1,15 @@
 # 2026-11-02 — Three more SKÅDIS ping pong paddle holders
 
-- Status: in progress
+- Status: completed — Studio print history reports Success
 - Started: sent 2026-11-02 16:42 PST; printer startup confirmed afterward
-- Completed: not yet observed
+- Completed: confirmed in Studio history on 2026-11-04; exact finish time not recorded
 - Related issue: none
 
 ## Goal
 
 Print three additional white holders in one batch, bringing the total to four
 including the [successful first holder](2026-11-02-skadis-paddle-holder.md).
-Completion and fit of this batch remain unverified.
+Studio reports the batch completed successfully; physical fit remains unverified.
 
 ## Source and provenance
 
@@ -90,17 +90,21 @@ This is 22.07 g less than three times the earlier single-print estimate of
 Sent once through Studio. The Device view confirmed the three-holder thumbnail,
 49.15 g job, active pause/stop controls, and layer 0/212. It displayed
 `Changing filament` and `Filament loading...`, with an initial estimated finish
-time of 19:25 PST. This confirms acceptance and startup, not first-layer quality
-or successful completion. Batch fit and defects are not yet known.
+time of 19:25 PST.
+
+On 2026-11-04, Studio's print history showed the matching 2026-11-02 16:42
+holder job with a duration of 2.7h and status `Success`. This confirms reported
+job completion. Physical fit, support-removal quality, defects, and actual
+material consumption were not separately assessed.
 
 ## Diagnosis and next change
 
-No startup fault was displayed. No further process change is indicated by the
-observed startup state; completion remains unverified.
+No startup fault was displayed, and Studio subsequently reported success.
+No further process change is indicated by those observations.
 
 ## Durable lesson
 
 The [single-holder case](../memory/cases/2026-11-02-skadis-paddle-holder.md)
-remains the validated result. The three-copy slice demonstrates reduced
-estimated total material per holder, but this batch has not yet established a
-successful physical outcome. Keep that distinction in the run log.
+remains the result with user-confirmed paddle fit. The three-copy slice
+demonstrates reduced estimated total material per holder, and Studio reports
+successful completion. This batch's physical fit has not been confirmed.
