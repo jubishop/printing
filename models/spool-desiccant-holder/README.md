@@ -50,3 +50,8 @@ prints; see [the preference in memory](../../memory/spool-desiccant-holder.md).
 The [2026-11-08 print](../../prints/2026-11-08-two-red-spool-desiccant-holders.md)
 was sent successfully. Studio estimated **5h19m13s**, **91.66 g**, and
 **28.87 m** for the full plate. Completion and fit have not been observed.
+
+The [2026-11-09 blue repeat](../../prints/2026-11-09-two-blue-spool-desiccant-holders.md)
+uses the same geometry and layout, with all parts assigned to newly synchronized
+blue Bambu PLA Matte (AMS A2 at sending). Its local project is
+`.local/models/spool-desiccant-holder/two-blue-spool-holders-x2d.3mf`.
