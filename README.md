@@ -31,19 +31,23 @@ preflight.
   attempts and outcomes.
 - [`models/`](models/README.md): redistributable model files plus settings-only
   reconstruction recipes for licensed projects that cannot be republished.
-- [GitHub issues](https://github.com/jubishop/printing/issues): the print queue,
-  tuning work, and other lifecycle-tracked tasks.
+- [`docs/`](docs/README.md): designs, decisions, research, and progress on active
+  print iterations.
 
 - [Development workflow](docs/development-workflow.md): setup, search scope, and checks.
 
 ## Recording a print
 
-1. Open a print-job issue from the repository template.
-2. Record the source URL, exact profile or profile ID, observed license, desired
-   material, and intended result.
-3. After printing, copy [`prints/TEMPLATE.md`](prints/TEMPLATE.md) to a dated
+This reference and model repository does not use GitHub issues or a
+planned-print queue. Handle each print request in its chat. Use `docs/` to
+track progress when actively iterating on a print or design, not routine
+session blockers such as signing in.
+
+1. Record the source URL, exact profile or profile ID, observed license, desired
+   material, and intended result when documenting an active iteration.
+2. After printing, copy [`prints/TEMPLATE.md`](prints/TEMPLATE.md) to a dated
    file and record the actual configuration, result, photos, and lessons.
-4. Update an existing memory page when the result changes durable guidance;
+3. Update an existing memory page when the result changes durable guidance;
    do not use memory as a duplicate print log.
 
 ## Models and licensing

@@ -44,7 +44,9 @@ Use memory for:
 
 Do not use memory for:
 
-- Tasks and progress; use GitHub issues, including for planned prints.
+- Session tasks and blockers; keep those in the chat. Use `docs/` for progress
+  on active print iterations. This repository has no GitHub issue or
+  planned-print queue.
 - A full record of every print; use `prints/`.
 - Model files or generated slicer output; use `models/` subject to its policy.
 - Facts that can be derived directly from a checked-in artifact.

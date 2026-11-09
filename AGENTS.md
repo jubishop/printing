@@ -37,7 +37,15 @@ take precedence over this block and the foundation pages wherever they differ.
 
 ## Project memory and tracking
 
-Repository context lives in `memory/`, `prints/`, and GitHub issues:
+This is a reference and model repository, not a development project. Do not
+create GitHub issues for prints, troubleshooting, follow-ups, or user-only
+steps such as signing in. This overrides issue-tracking and pending-step
+requirements in the shared guidance. A print request is handled in its chat
+or left unprinted; do not create a planned-print queue or persist routine
+session blockers. Track progress in repository notes only for a print or
+design that is actively being iterated.
+
+Repository context lives in `memory/`, `docs/`, `prints/`, and `models/`:
 
 - `memory/`: long-lived setup facts, preferences, validated workflows,
   troubleshooting knowledge, and case histories. New or updated pages must follow
@@ -45,8 +53,8 @@ Repository context lives in `memory/`, `prints/`, and GitHub issues:
 - `prints/`: dated records of actual print attempts. Start from
   `prints/TEMPLATE.md` and record observed settings and outcomes, not intended
   settings alone.
-- GitHub Issues (`jubishop/printing`): planned prints, tuning tasks, failures to
-  investigate, and other lifecycle-tracked work.
+- `docs/`: designs, decisions, research, and progress on active print iterations.
+- `models/`: stored models and profiles with provenance and licensing records.
 
 ## Print workflow
 

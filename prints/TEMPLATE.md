@@ -1,9 +1,9 @@
 # YYYY-MM-DD — Print name
 
-- Status: planned | in progress | completed | failed
+- Status: in progress | completed | failed
 - Started: YYYY-MM-DD HH:MM PST/PDT
 - Completed: YYYY-MM-DD HH:MM PST/PDT
-- Related issue: `#N`
+- Related iteration notes:
 
 ## Goal
 
