@@ -9,9 +9,12 @@ printed together on one plate.
 - Source: <https://makerworld.com/en/models/1090858-dessicant-or-weight-container-for-bambu-lab-spool#profileId-1084332>.
 - Exact original profile: **0.20mm Standard @BBL X1C**, profile **1084332**.
 - License: **Standard Digital File License**, displayed on the source page and
-  embedded in the downloaded 3MF; checked **2026-11-08**. Consult the source
-  page's license terms. Redistribution permission has not been established, so
-  no upstream geometry or configured 3MF is committed here.
+  embedded in the downloaded 3MF; checked **2026-11-08**. Its
+  [published terms](https://makerworld.com/en/exclusive-model-policy), section
+  3.4.2(a), were checked **2026-11-09** and prohibit sharing, hosting, or
+  distributing the digital model and derivatives. Therefore neither upstream
+  geometry nor the configured 3MF may be added to this public repository
+  without separate permission from the creator.
 - This directory contains a settings-only reconstruction recipe. The modified
   project is retained locally at
   `.local/models/spool-desiccant-holder/two-red-spool-holders-x2d.3mf`.
@@ -39,6 +42,8 @@ printed together on one plate.
 
 The original X1C profile was adapted for X2D; this is not an unchanged reprint
 of a historical job. Jubi confirmed the model visually in MakerWorld.
+Jubi identified this as the usual spool-center desiccant holder for future
+prints; see [the preference in memory](../../memory/spool-desiccant-holder.md).
 
 ## Observed attempt
 

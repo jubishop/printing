@@ -13,6 +13,8 @@ do not silently substitute another search tool.
 
 - [X2D setup](x2d-setup.md) — stable hardware capabilities and verification
   boundaries.
+- [Usual spool-center desiccant holder](spool-desiccant-holder.md) — Jubi's
+  confirmed red holder model and saved setup for repeat prints.
 - [Skillmill rail measurement](skillmill-rail-measurement.md) — the provisional
   40 mm modeling input and physical-fit calibration rule.
 - [MakerWorld workflow](makerworld-workflow.md) — Handy-first routing and the
