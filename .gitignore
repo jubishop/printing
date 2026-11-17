@@ -1,6 +1,7 @@
 # Generated slicer output
 *.gcode
 *.gcode.3mf
+result.json
 
 # Local scratch files
 *.log
