@@ -52,33 +52,13 @@ Repository context lives in `memory/`, `docs/`, `prints/`, and `models/`:
 
 ## Print workflow
 
-- Jubi uses a Bambu Lab X2D with 0.4 mm hardened-steel nozzles. Treat this as a
-  hardware baseline and verify the active machine, plate, nozzle, and material
-  configuration for every print.
-- When given a MakerWorld URL, inspect the exact selected profile, intended
-  plate, and requested material before choosing a workflow.
-- Prefer Bambu Handy on iOS when a compatible profile can be printed unchanged
-  with ordinary filament mapping.
-- Do not require Studio solely because the uploaded profile was authored for a
-  different Bambu printer. If MakerWorld/Handy presents that exact profile as
-  compatible after selecting X2D, cloud slicing can adapt it to the selected
-  printer, filament, and plate while retaining important process choices.
-- X2D compatibility does not make otherwise similar profiles equivalent. When
-  multiple profile cards look alike, compare their actual support, strength,
-  adhesion, speed, and compensation settings before recommending one.
-- Use Bambu Studio for supports or support-interface routing, custom
-  material/nozzle assignments, tuning, orientation, preview inspection, or any
-  requested model/profile modification.
-- Handy can preserve and map a dedicated support filament already encoded in a
-  profile; it does not create that setup. If the mapping screen contains one
-  filament, a separate support spool will not be used.
-- Do not infer active material from embedded profile provenance. Verify project
-  assignments, sliced preview, print mapping, and, when diagnosing a completed
-  job, print history.
-- A 3MF downloaded after filtering MakerWorld for X2D may still be the original
-  uploader's printer-targeted file. Use it to inspect geometry and retained
-  process choices, not as proof of the final cloud-sliced X2D machine settings;
-  confirm live X2D eligibility and the final Handy mapping.
+- Jubi uses a Bambu Lab X2D with 0.4 mm hardened-steel nozzles, as
+  [X2D setup](memory/x2d-setup.md) records. Treat this as a hardware baseline
+  and verify the active machine, plate, nozzle, and material assignments for
+  every print, never inferring material from embedded profile provenance.
+- Prepare every print, MakerWorld URLs included, with the
+  [MakerWorld workflow](memory/makerworld-workflow.md): it chooses between
+  Bambu Handy and Bambu Studio and gives the exact-profile preflight.
 - Jubi wants hands-on app help and a complete preflight. Verify UI state after
   each consequential action and do not claim a configuration or slice was
   checked when it was not.
@@ -99,8 +79,8 @@ Repository context lives in `memory/`, `docs/`, `prints/`, and `models/`:
 - Do not commit third-party models or profiles until their redistribution terms
   have been checked and recorded. A repository-wide license cannot override an
   upstream asset's license.
-- Record source URL, creator, profile ID, observed license and date, local
-  modifications, and relevant tool versions alongside every committed model.
+- Record each committed model's provenance as the
+  [models policy](models/README.md#required-provenance) requires.
 - Inspect 3MF and slicer exports for embedded metadata before committing them.
 - Keep generated G-code out of Git. Introduce Git LFS before adding large binary
   model or project files; do not enable it speculatively.

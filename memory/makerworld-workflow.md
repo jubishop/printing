@@ -19,7 +19,7 @@ asks for help preparing a print.
 
 ## Choose the app
 
-Use Bambu Handy when all of the following are true:
+Use Bambu Handy on iOS when all of the following are true:
 
 - MakerWorld/Handy presents the exact profile as compatible after selecting the
   X2D and intended plate.
@@ -66,7 +66,8 @@ it and repeat the applicable preflight in the updated app.
 2. Check whether support is enabled and whether support base and support
    interface use different materials.
 3. If multiple profiles appear equivalent, compare their ratings, live X2D
-   estimates, and the process settings that matter for the intended material.
+   estimates, and the support, strength, adhesion, speed, and compensation
+   settings that matter for the intended material before recommending one.
 4. If page metadata is insufficient, inspect the authenticated 3MF. Relevant
    settings commonly live in `Metadata/project_settings.config` and
    `Metadata/model_settings.config`.
