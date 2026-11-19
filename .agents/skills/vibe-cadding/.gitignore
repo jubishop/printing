@@ -1,8 +1,0 @@
-.venv/
-__pycache__/
-*.py[cod]
-*.egg-info/
-.DS_Store
-
-# Project output is intentionally local and reproducible.
-projects/*/.vibecad/

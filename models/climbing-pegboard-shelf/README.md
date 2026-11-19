@@ -231,9 +231,34 @@ openscad --hardwarnings -D 'part="shelf"' \
 `part="installed-preview"` adds a non-printing reference board for the assembly
 render. Never export that preview scene as the printable shelf.
 
+## CadQuery source
+
+`source/pegboard-shelf.py` is a CadQuery model of the full shelf only, written
+alongside the OpenSCAD shelf on 2026-09-04 and moved here on 2026-11-18 from a
+since-removed CAD agent skill, rewritten as plain CadQuery without that skill's
+viewer library. The committed shelf export and renders came from
+OpenSCAD, not from this model. With its defaults it matches that export's
+installed bounds, and its mesh volume is within 0.02% of the export's. A change
+to the shelf in one source doesn't reach the other.
+
+Run it from the repository root with uv, which installs CadQuery from the
+script's inline metadata on first use. It was checked on 2026-11-18 with
+CadQuery 2.8.0 on Python 3.14:
+
+```sh
+uv run models/climbing-pegboard-shelf/source/pegboard-shelf.py /tmp/pegboard-shelf.stl
+```
+
+Options override the depth, lip, overhang, deck, corner, and backwall
+dimensions; `--help` lists them with their defaults. The peg fit and spacing
+stay fixed at the proven values. `--part installed-preview` adds the
+non-printing reference board, as the OpenSCAD preview does; never print that
+export.
+
 ## Files
 
-- Editable source: `source/pegboard-shelf.scad`
+- Editable OpenSCAD source: `source/pegboard-shelf.scad`
+- CadQuery shelf source: `source/pegboard-shelf.py`
 - First fit export: `exports/pegboard-fit-peg-30p8mm.stl`
 - Second fit export: `exports/pegboard-fit-peg-31p2x39p0mm.stl`
 - Second fit render: `renders/pegboard-fit-peg-31p2x39p0mm.png`
