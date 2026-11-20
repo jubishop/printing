@@ -59,6 +59,11 @@ Repository context lives in `memory/`, `docs/`, `prints/`, and `models/`:
 - Prepare every print, MakerWorld URLs included, with the
   [MakerWorld workflow](memory/makerworld-workflow.md): it chooses between
   Bambu Handy and Bambu Studio and gives the exact-profile preflight.
+- For every print that requires supports, use the dedicated support filament
+  for the support interface. Expect it to be loaded on the auxiliary nozzle's
+  external feed. Verify the live spool and final interface mapping. If the
+  spool appears absent or its presence on the auxiliary feed cannot be
+  verified, ask Jubi before sending the print.
 - Jubi wants hands-on app help and a complete preflight. Verify UI state after
   each consequential action and do not claim a configuration or slice was
   checked when it was not.
