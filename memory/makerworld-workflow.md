@@ -24,7 +24,8 @@ Use Bambu Handy on iOS when all of the following are true:
 - MakerWorld/Handy presents the exact profile as compatible after selecting the
   X2D and intended plate.
 - Orientation, supports, strength, adhesion, nozzle, and material choices are
-  already suitable.
+  already suitable, including support interfaces already routed to the
+  dedicated support filament when the print needs supports.
 - Only an ordinary supported filament mapping or substitution is needed.
 - No model or profile modification is requested.
 

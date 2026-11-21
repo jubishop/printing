@@ -36,18 +36,14 @@ create GitHub issues for prints, troubleshooting, follow-ups, or user-only
 steps such as signing in. This overrides issue-tracking and pending-step
 requirements in the shared guidance. A print request is handled in its chat
 or left unprinted; do not create a planned-print queue or persist routine
-session blockers. Track progress in repository notes only for a print or
-design that is actively being iterated.
+session blockers. Track progress in `docs/` only for a print or design that is
+actively being iterated.
 
-Repository context lives in `memory/`, `docs/`, `prints/`, and `models/`:
+Besides memory and docs, repository context lives in:
 
-- `memory/`: long-lived setup facts, preferences, validated workflows,
-  troubleshooting knowledge, and case histories. New or updated pages must follow
-  `memory/README.md`; move stale notes to `memory/archive/`.
 - `prints/`: dated records of actual print attempts. Start from
   `prints/TEMPLATE.md` and record observed settings and outcomes, not intended
   settings alone.
-- `docs/`: designs, decisions, research, and progress on active print iterations.
 - `models/`: stored models and profiles with provenance and licensing records.
 
 ## Print workflow
@@ -59,19 +55,17 @@ Repository context lives in `memory/`, `docs/`, `prints/`, and `models/`:
 - Prepare every print, MakerWorld URLs included, with the
   [MakerWorld workflow](memory/makerworld-workflow.md): it chooses between
   Bambu Handy and Bambu Studio and gives the exact-profile preflight.
-- For every print that requires supports, use the dedicated support filament
-  for the support interface. Expect it to be loaded on the auxiliary nozzle's
-  external feed. Verify the live spool and final interface mapping. If the
-  spool appears absent or its presence on the auxiliary feed cannot be
-  verified, ask Jubi before sending the print.
+- For every print that needs supports, use the dedicated support filament for
+  the support interfaces, expected on the auxiliary nozzle's external feed.
+  Verify the live spool and final interface mapping, and ask Jubi before
+  sending the print if the spool appears absent or can't be verified there.
 - Jubi wants hands-on app help and a complete preflight. Verify UI state after
   each consequential action and do not claim a configuration or slice was
   checked when it was not.
-- Immediately before sending a print, verify that every available calibration
-  control is explicitly set to `Auto`. This includes Auto Bed Leveling, Flow
-  Dynamics Calibration, and Nozzle Offset Calibration when Bambu Studio shows
-  them. Do not send the job if any available calibration is set to `On`, `Off`,
-  or a manual value.
+- Immediately before sending a print, verify that every calibration control
+  the app shows, such as Auto Bed Leveling, Flow Dynamics Calibration, and
+  Nozzle Offset Calibration, is explicitly `Auto`. Do not send the job while
+  any is `On`, `Off`, or a manual value.
 - Do not start or send a physical print unless Jubi explicitly asks after the
   preflight.
 - Treat settings in historical cases as evidence, not universal defaults.
@@ -80,12 +74,9 @@ Repository context lives in `memory/`, `docs/`, `prints/`, and `models/`:
 
 - Never commit credentials, Bambu account/session data, LAN access codes,
   printer serial numbers, private URLs or photos, or machine-specific absolute
-  paths.
-- Do not commit third-party models or profiles until their redistribution terms
-  have been checked and recorded. A repository-wide license cannot override an
-  upstream asset's license.
-- Record each committed model's provenance as the
-  [models policy](models/README.md#required-provenance) requires.
-- Inspect 3MF and slicer exports for embedded metadata before committing them.
-- Keep generated G-code out of Git. Introduce Git LFS before adding large binary
-  model or project files; do not enable it speculatively.
+  paths, including any embedded in 3MF or slicer-export metadata.
+- Commit models, profiles, and slicer exports only as the
+  [models policy](models/README.md) allows: a third-party one only once its
+  redistribution terms, which no repository-wide license overrides, are
+  checked and recorded, and never generated G-code. Set up Git LFS in the
+  commit that first adds a large binary model or project file, not before.
